@@ -3,6 +3,10 @@
 
     <string name="app_name">theSenser</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello bnrc!</string>
+    <string name="test_helloText">Hello bnrc! This is a test page.</string>
+    <string name="test_cameraBtn">照相</string>
+    
+    <string name="camera_helloText">Hello! 这个是照相界面。</string>
+    
 
 </resources>
