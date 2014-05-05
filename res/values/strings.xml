@@ -7,6 +7,7 @@
     <string name="test_cameraBtn">照相</string>
     
     <string name="camera_helloText">Hello! 这个是照相界面。</string>
+    <string name="photo_name">相片名称</string>
     
 
 </resources>
