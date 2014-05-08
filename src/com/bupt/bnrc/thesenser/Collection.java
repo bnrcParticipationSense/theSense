@@ -19,6 +19,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 //Connect
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo.State;;
 
 public class Collection implements SensorEventListener {
 	public float light;
@@ -37,6 +38,9 @@ public class Collection implements SensorEventListener {
 	
 	private BatteryReceiver receiver = null;
 	private ConnectivityManager connectManager;
+	
+	private int connectionState;
+	private int percent;
 	
 	public Collection(Activity app) {
 		this.app = app;
@@ -66,9 +70,10 @@ public class Collection implements SensorEventListener {
 		}
 		if (!flag) {
 			//error
+			connectionState = 0;
 		}
 		else {
-			int state = isNetworkAvailable();
+			connectionState = isNetworkAvailable();
 		}
 		
 		date = new Date();
@@ -127,7 +132,7 @@ public class Collection implements SensorEventListener {
 	}
 	
 	@SuppressWarnings("unused")
-	private void stopListener() {
+	public void stopListener() {
 		sensorManager.unregisterListener(this);
 		this.app.unregisterReceiver(receiver);
 	}
@@ -153,13 +158,24 @@ public class Collection implements SensorEventListener {
 			// TODO Auto-generated method stub
 			int current = arg1.getExtras().getInt("level");
 			int total = arg1.getExtras().getInt("scale");
-			int percent = current*100/total;
+			percent = current*100/total;
 			Log.i("BatteryReceiver","percent = "+percent);
 		}
 		
 	}
 	
 	private int isNetworkAvailable() {
+		State gprs = connectManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState();
+		State wifi = connectManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+		
+		if (wifi == State.CONNECTED || wifi == State.CONNECTING) {
+			Log.i("isNetworkAvailable","wifi state = 3");
+			return 3;
+		}
+		if (gprs == State.CONNECTED || gprs == State.CONNECTING) {
+			Log.i("isNetworkAvailable", "wifi state = 2");
+			return 2;
+		}
 		return 0;
 	}
 

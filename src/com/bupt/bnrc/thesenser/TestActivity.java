@@ -46,6 +46,7 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.collectBtn:
 			Log.i("zzy", "collectBtn");
+			collect.stopListener();
 			//collect = new Collection(this);
 			
 			break;
