@@ -51,7 +51,7 @@ public class CameraActivity extends BaseActivity {
 	Handler handler;
 	Bitmap nbm;
 	
-	// ¶¨ÒåÏµÍ³ËùÓÃµÄÕÕÏà»ú
+	// å®šä¹‰ç³»ç»Ÿæ‰€ç”¨çš„ç…§ç›¸æœº
 	Camera mcamera;
 	String imgName;
 	TextView infoText;
@@ -59,7 +59,7 @@ public class CameraActivity extends BaseActivity {
 	View saveView;
 	AlertDialog.Builder saveAlertBuilder;
 	AlertDialog saveAlertDialog;
-	//ÊÇ·ñÔÚä¯ÀÀÖĞ
+	//æ˜¯å¦åœ¨æµè§ˆä¸­
 	boolean isPreview = false;
 
 	private Camera.AutoFocusCallback mAutoFocusCallback;
@@ -82,19 +82,11 @@ public class CameraActivity extends BaseActivity {
 		setContentView(R.layout.activity_camera);
 		
 		
-		//Éè¶¨camera²ÎÊı (¹Ì¶¨)
-		//sensors.camera_rx  = AppConfig.IMGWIDTH;
-		//sensors.camera_ry  = AppConfig.IMGHEIGHT;
 		
-		
-
-//		Toast.makeText(getApplicationContext(),
-//		          "IMEI: "+sensors.user_imei + "\nConnection: " + connStr, Toast.LENGTH_LONG).show();
-				
-		//ÉèÖÃºáÆÁ£¡£¡
+		//è®¾ç½®æ¨ªå±ï¼ï¼
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 		
-		// ÉèÖÃÈ«ÆÁ
+		// è®¾ç½®å…¨å±
 //		requestWindowFeature(Window.FEATURE_NO_TITLE);
 //		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 //			WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -116,7 +108,7 @@ public class CameraActivity extends BaseActivity {
 		    	 
 		    	 
 		    	 
-		    	// ÅÄÕÕ
+		    	// æ‹ç…§
 				mcamera.takePicture(null, null , myjpegCallback);
 		    }
 		});
@@ -129,18 +121,18 @@ public class CameraActivity extends BaseActivity {
 //		WindowManager wm = (WindowManager) getSystemService(
 //			Context.WINDOW_SERVICE);
 //		Display display = wm.getDefaultDisplay();
-		// »ñÈ¡ÆÁÄ»µÄ¿íºÍ¸ß
+		// è·å–å±å¹•çš„å®½å’Œé«˜
 	//	screenWidth = display.getWidth();
 		//screenHeight = display.getHeight();
-		// »ñÈ¡½çÃæÖĞSurfaceView×é¼ş
+		// è·å–ç•Œé¢ä¸­SurfaceViewç»„ä»¶
 		
 		
-		// »ñµÃSurfaceViewµÄSurfaceHolder
+		// è·å¾—SurfaceViewçš„SurfaceHolder
 		surfaceHolder = sView.getHolder();
 		
 		//surfaceHolder.setFixedSize(960, 720); 
 		
-		// ÎªsurfaceHolderÌí¼ÓÒ»¸ö»Øµ÷¼àÌıÆ÷
+		// ä¸ºsurfaceHolderæ·»åŠ ä¸€ä¸ªå›è°ƒç›‘å¬å™¨
 		surfaceHolder.addCallback(new Callback()
 		{
 			@Override
@@ -152,10 +144,12 @@ public class CameraActivity extends BaseActivity {
 				
 				Log.i(ACTIVITY_TAG, LOG_PREFIX+"surfaceChanged");
 					
-				  Camera.Parameters parameters = mcamera.getParameters();// »ñµÃÏà»ú²ÎÊı
+				  Camera.Parameters parameters = mcamera.getParameters();// è·å¾—ç›¸æœºå‚æ•°
 				  Size s = parameters.getPictureSize();
 				  double h = s.width;
 				  double w = s.height;
+				  
+				  Log.i(ACTIVITY_TAG, LOG_PREFIX+"getPictureSize() width = "+h+" ; height = "+w);
 
 			        
 				  if( width>height )
@@ -168,7 +162,7 @@ public class CameraActivity extends BaseActivity {
 				  }
 				  
 				  // API 10 ERROR
-				  //parameters.setPreviewSize( height,width); // ÉèÖÃÔ¤ÀÀÍ¼Ïñ´óĞ¡
+				  //parameters.setPreviewSize( height,width); // è®¾ç½®é¢„è§ˆå›¾åƒå¤§å°
 				  Log.i(ACTIVITY_TAG, LOG_PREFIX+"Modified width: " + width + " ,height: " + height);
 				  Camera.Size optSize=getOptimalSize(supPreSize,height,width); //added
 	              Log.i(ACTIVITY_TAG, LOG_PREFIX+"Set modified preview size to " + Integer.valueOf((int)optSize.width) + "x" + Integer.valueOf((int)optSize.height));
@@ -177,25 +171,25 @@ public class CameraActivity extends BaseActivity {
 	              Camera.Size previewSize = mcamera.getParameters().getPreviewSize();
 	  		    Log.i(ACTIVITY_TAG, LOG_PREFIX+previewSize.width+" x "+previewSize.height);
 	              
-				  parameters.setPictureFormat(PixelFormat.JPEG); // ÉèÖÃÕÕÆ¬¸ñÊ½
+				  parameters.setPictureFormat(PixelFormat.JPEG); // è®¾ç½®ç…§ç‰‡æ ¼å¼
 				  
-				  mcamera.setParameters(parameters);// ÉèÖÃÏà»ú²ÎÊı
+				  mcamera.setParameters(parameters);// è®¾ç½®ç›¸æœºå‚æ•°
 				  
 				  
-				  mcamera.startPreview();// ¿ªÊ¼Ô¤ÀÀ
+				  mcamera.startPreview();// å¼€å§‹é¢„è§ˆ
 				  isPreview = true;
 				
 			}
 			@Override
 			public void surfaceCreated(SurfaceHolder holder)
 			{
-				// ´ò¿ªÉãÏñÍ·
+				// æ‰“å¼€æ‘„åƒå¤´
 				initCamera();
 			}
 			@Override
 			public void surfaceDestroyed(SurfaceHolder holder)
 			{
-				// Èç¹ûcamera²»Îªnull ,ÊÍ·ÅÉãÏñÍ·
+				// å¦‚æœcameraä¸ä¸ºnull ,é‡Šæ”¾æ‘„åƒå¤´
 				if (mcamera != null)
 				{
 					if (isPreview)
@@ -205,32 +199,32 @@ public class CameraActivity extends BaseActivity {
 				}
 			}		
 		});
-		// ÉèÖÃ¸ÃSurfaceView×Ô¼º²»Î¬»¤»º³å    
+		// è®¾ç½®è¯¥SurfaceViewè‡ªå·±ä¸ç»´æŠ¤ç¼“å†²    
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 	}
 
     @Override 
     protected void onStart() {  
-        Log.i(ACTIVITY_TAG, LOG_PREFIX+"¡¡onStart called!");  
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"ã€€onStart called!");  
         super.onStart();  
     }  
  
     @Override 
     protected void onRestart() {  
-        Log.i(ACTIVITY_TAG, LOG_PREFIX+"¡¡onRestart called!");  
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"ã€€onRestart called!");  
         super.onRestart();  
     }  
  
     @Override 
     protected void onResume() {  
-        Log.i(ACTIVITY_TAG, LOG_PREFIX+"¡¡onResume called!");
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"ã€€onResume called!");
         //sensors.SensorsInit();
         super.onResume();  
     }  
  
     @Override 
     protected void onPause() {  
-        Log.i(ACTIVITY_TAG, LOG_PREFIX+"¡¡onPause called!");  
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"ã€€onPause called!");  
      
         //sensors.SensorsRelease();
         super.onPause();  
@@ -238,11 +232,11 @@ public class CameraActivity extends BaseActivity {
  
     @Override 
     protected void onStop() {  
-        Log.i(ACTIVITY_TAG, LOG_PREFIX+"¡¡onStop called!");  
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"ã€€onStop called!");  
 
         super.finish();
-        //ÍË³öºóÌ¨Ïß³Ì,ÒÔ¼°Ïú»Ù¾²Ì¬±äÁ¿
-        System.exit(0);
+        //é€€å‡ºåå°çº¿ç¨‹,ä»¥åŠé”€æ¯é™æ€å˜é‡
+        //System.exit(0);
         super.onStop();  
     }  
  
@@ -265,7 +259,7 @@ public class CameraActivity extends BaseActivity {
 			try
 			{
 				Camera.Parameters parameters = mcamera.getParameters();
-				// ÉèÖÃÔ¤ÀÀÕÕÆ¬µÄ´óĞ¡
+				// è®¾ç½®é¢„è§ˆç…§ç‰‡çš„å¤§å°
 				
 				// show parameters:
 			    supPreSize = parameters.getSupportedPreviewSizes();
@@ -285,8 +279,11 @@ public class CameraActivity extends BaseActivity {
 				
                 Camera.Size optSize=getOptimalSize(supPreSize,1280,720); //added
                 Log.i(ACTIVITY_TAG, LOG_PREFIX+"Set preview size to " + Integer.valueOf((int)optSize.width) + "x" + Integer.valueOf((int)optSize.height));
-                //parameters.setPreviewSize((int)optSize.width,(int)optSize.height);
+                parameters.setPreviewSize((int)optSize.width,(int)optSize.height);
+                optSize=getOptimalSize(supPicSize,2048,1152);
                 parameters.setPictureSize((int)optSize.width,(int)optSize.height);
+                Log.i(ACTIVITY_TAG, LOG_PREFIX+"setPicâ€ ureSize() widâ€ h = "+(int)optSize.width+" ; hegihâ€  = "+(int)optSize.height);
+                //parameters.setPictureSize(1200, 1600);
 				// end show parameters
                 
 				
@@ -298,15 +295,15 @@ public class CameraActivity extends BaseActivity {
 				
 				// API 10 ERROR
 				//parameters.setPreviewSize(AppConfig.IMGHEIGHT,AppConfig.IMGWIDTH);//(screenWidth, screenHeight);
-				// Ã¿ÃëÏÔÊ¾15Ö¡
+				// æ¯ç§’æ˜¾ç¤º15å¸§
 				parameters.setPreviewFrameRate(Collections.max(supFps));
 				Log.i(ACTIVITY_TAG, LOG_PREFIX+"final frame rate: "+Collections.max(supFps));
 				
-				// ÉèÖÃÍ¼Æ¬¸ñÊ½
+				// è®¾ç½®å›¾ç‰‡æ ¼å¼
 				parameters.setPictureFormat(PixelFormat.JPEG);
-				// ÉèÖÃJPGÕÕÆ¬µÄÖÊÁ¿
+				// è®¾ç½®JPGç…§ç‰‡çš„è´¨é‡
 				parameters.set("jpeg-quality", 90);
-				//ÉèÖÃÕÕÆ¬µÄ´óĞ¡
+				//è®¾ç½®ç…§ç‰‡çš„å¤§å°
 				
 				//parameters.set("orientation", "landscape");
 				// API 10 ERROR BLACK SCREEN
@@ -383,9 +380,9 @@ public class CameraActivity extends BaseActivity {
 				
 				mcamera.setDisplayOrientation(90);
 				
-				//Í¨¹ıSurfaceViewÏÔÊ¾È¡¾°»­Ãæ
+				//é€šè¿‡SurfaceViewæ˜¾ç¤ºå–æ™¯ç”»é¢
 				mcamera.setPreviewDisplay(surfaceHolder);
-				// ¿ªÊ¼Ô¤ÀÀ
+				// å¼€å§‹é¢„è§ˆ
 				mcamera.startPreview();
 				
 				mAutoFocusCallback = new Camera.AutoFocusCallback() {
@@ -399,14 +396,14 @@ public class CameraActivity extends BaseActivity {
 					    	camera.setOneShotPreviewCallback(null);
 					    	
 //					        Toast.makeText(AQIClientActivity.this,
-//					          "×Ô¶¯¾Û½¹³É¹¦" , Toast.LENGTH_LONG).show();
+//					          "è‡ªåŠ¨èšç„¦æˆåŠŸ" , Toast.LENGTH_LONG).show();
 					    }
 					     
 					   }
 					  }; 
 				
 				
-				// ×Ô¶¯¶Ô½¹
+				// è‡ªåŠ¨å¯¹ç„¦
 				mcamera.autoFocus(mAutoFocusCallback);
 				
 			}
@@ -489,7 +486,7 @@ public class CameraActivity extends BaseActivity {
 			
 			
 			
-			// ¼ÓÔØ/layout/save.xmlÎÄ¼ş¶ÔÓ¦µÄ²¼¾Ö×ÊÔ´
+			// åŠ è½½/layout/save.xmlæ–‡ä»¶å¯¹åº”çš„å¸ƒå±€èµ„æº
 			saveView = getLayoutInflater().inflate(R.layout.save, null);
 			
 			photoInfoText = (TextView)saveView.findViewById(R.id.photo_name);
@@ -498,10 +495,10 @@ public class CameraActivity extends BaseActivity {
 			
 			photoInfoText.setText("......");
 			
-			// ¸ù¾İÅÄÕÕËùµÃµÄÊı¾İ´´½¨Î»Í¼
+			// æ ¹æ®æ‹ç…§æ‰€å¾—çš„æ•°æ®åˆ›å»ºä½å›¾
 			final Bitmap bm = BitmapFactory.decodeByteArray(data, 0, data.length);
 			
-			//½«ÕÕÆ¬Ğı×ª90¶È
+			//å°†ç…§ç‰‡æ—‹è½¬90åº¦
 			
 			Matrix matrix = new Matrix();  
 			matrix.preRotate(90);  
@@ -537,26 +534,26 @@ public class CameraActivity extends BaseActivity {
 				e.printStackTrace();
 			}
 			
-			//Toast.makeText(this, "ÅÄÕÕ³É¹¦£¬ÕÕÆ¬±£´æÔÚ"+fileName+"ÎÄ¼şÖĞ", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(this, "æ‹ç…§æˆåŠŸï¼Œç…§ç‰‡ä¿å­˜åœ¨"+fileName+"æ–‡ä»¶ä¸­", Toast.LENGTH_SHORT).show();
 			
-			// »ñÈ¡saveDialog¶Ô»°¿òÉÏµÄImageView×é¼ş
+			// è·å–saveDialogå¯¹è¯æ¡†ä¸Šçš„ImageViewç»„ä»¶
 			ImageView show = (ImageView) saveView.findViewById(R.id.show);
-			// ÏÔÊ¾¸Õ¸ÕÅÄµÃµÄÕÕÆ¬
+			// æ˜¾ç¤ºåˆšåˆšæ‹å¾—çš„ç…§ç‰‡
 			show.setImageBitmap(nbm);
-			//Ê¹ÓÃ¶Ô»°¿òÏÔÊ¾saveDialog×é¼ş
+			//ä½¿ç”¨å¯¹è¯æ¡†æ˜¾ç¤ºsaveDialogç»„ä»¶
 			saveAlertBuilder = new AlertDialog.Builder(CameraActivity.this);
 			saveAlertBuilder.setView(saveView);
-			saveAlertBuilder.setPositiveButton("±£´æ", new OnClickListener()
+			saveAlertBuilder.setPositiveButton("ä¿å­˜", new OnClickListener()
 				{
 
 					@Override
 					public void onClick(DialogInterface dialog,
 						int which)
 					{
-			            //¸üĞÂ½çÃæ  
+			            //æ›´æ–°ç•Œé¢  
 				    	
 				        //Button saveButton = saveAlertDialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE);
-						//saveButton.setText("ÉÏ´«ÖĞ...");
+						//saveButton.setText("ä¸Šä¼ ä¸­...");
 						//saveButton.setTextColor(Color.BLUE);
 						//saveButton.invalidate(); 
 					    
@@ -567,7 +564,7 @@ public class CameraActivity extends BaseActivity {
 					}
 					
 				});
-				saveAlertBuilder.setNegativeButton("È¡Ïû", new OnClickListener()
+				saveAlertBuilder.setNegativeButton("å–æ¶ˆ", new OnClickListener()
 				{
 					public void onClick(DialogInterface dialog,
 							int which)
@@ -580,7 +577,7 @@ public class CameraActivity extends BaseActivity {
 				saveAlertDialog = saveAlertBuilder.create();
 				saveAlertDialog.show();
 			
-			//ÖØĞÂä¯ÀÀ
+			//é‡æ–°æµè§ˆ
 			
 			camera.stopPreview();
 			

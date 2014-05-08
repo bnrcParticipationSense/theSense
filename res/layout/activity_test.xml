@@ -20,5 +20,32 @@
         android:layout_below="@id/helloText"
         android:text="@string/test_cameraBtn"
     />
+    
+    <Button android:id="@+id/collectBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cameraBtn"
+        android:text="collection"
+    />
+    
+    <Button android:id="@+id/getLightBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collectBtn"
+        android:text="getLight"
+    />
+    
+    <TextView
+        android:id="@+id/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/getLightBtn"
+        android:text="test_Text" />
+    <Button android:id="@+id/exitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Text"
+        android:text="Exit"
+    />
 
 </RelativeLayout>
