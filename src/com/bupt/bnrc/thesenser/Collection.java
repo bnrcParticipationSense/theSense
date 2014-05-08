@@ -60,7 +60,16 @@ public class Collection implements SensorEventListener {
 		
 		
 		//Connection
-		
+		boolean flag = false;
+		if (connectManager.getActiveNetworkInfo() != null) {
+			flag = connectManager.getActiveNetworkInfo().isAvailable();
+		}
+		if (!flag) {
+			//error
+		}
+		else {
+			int state = isNetworkAvailable();
+		}
 		
 		date = new Date();
 		
@@ -148,6 +157,10 @@ public class Collection implements SensorEventListener {
 			Log.i("BatteryReceiver","percent = "+percent);
 		}
 		
+	}
+	
+	private int isNetworkAvailable() {
+		return 0;
 	}
 
 	
