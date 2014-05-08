@@ -1,6 +1,5 @@
 package com.bupt.bnrc.thesenser.model;
 
-import java.io.File;
 import java.util.Date;
 
 import com.bupt.bnrc.thesenser.dao.DAOFactory;
