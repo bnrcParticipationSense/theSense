@@ -26,26 +26,36 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.location.BDNotifyListener;//假如用到位置提醒功能，需要import该类
+//假如用到位置提醒功能，需要import该类
+//import com.baidu.location.BDNotifyListener;
+//************//
+
 //如果使用地理围栏功能，需要import如下类
-import com.baidu.location.BDGeofence;
-import com.baidu.location.BDLocationStatusCodes;
-import com.baidu.location.GeofenceClient;
-import com.baidu.location.GeofenceClient.OnAddBDGeofencesResultListener;
-import com.baidu.location.GeofenceClient.OnGeofenceTriggerListener;
-import com.baidu.location.GeofenceClient.OnRemoveBDGeofencesResultListener;
+//import com.baidu.location.BDGeofence;
+//import com.baidu.location.BDLocationStatusCodes;
+//import com.baidu.location.GeofenceClient;
+//import com.baidu.location.GeofenceClient.OnAddBDGeofencesResultListener;
+//import com.baidu.location.GeofenceClient.OnGeofenceTriggerListener;
+//import com.baidu.location.GeofenceClient.OnRemoveBDGeofencesResultListener;
+//*****************************************************************//
+
+
 
 public class Collection implements SensorEventListener {
-	public float light;
 	
-	private float [] acceleration = new float[3];
-	private float [] magnetic_field = new float[3];
+	//TEST*****************************
+	private float light_test = 1000;
+	private float [] orientation_test = new float[] {1,2,3};
+	private String picName_test = "test.jpg";
+	private Date date_test = new Date();
+	private int connectionState_test = 1;
+	private int batteryState_test = 1;
+	private int percent_test = 85;
+	private float latitude_test = 123;
+	private float longitude_test = 321;
+	public int flog_test = 15;
+	//TEST*****************************
 	
-	public float [] orientation = new float[3];
-	public float [] sensor_orientation = new float[3];
-	
-	private String picName;
-	private Date date;
 	
 	private Activity app;
 	private SensorManager sensorManager;
@@ -54,9 +64,26 @@ public class Collection implements SensorEventListener {
 	private BatteryReceiver receiver = null;
 	private ConnectivityManager connectManager;
 	
+	//传感器
+	private float light;
+	
+	private float [] acceleration = new float[3];
+	private float [] magnetic_field = new float[3];
+	
+	public float [] orientation = new float[3];			//getOrientation();
+	public float [] sensor_orientation = new float[3];	//Sensor.TYPE_ORIENTATION
+	
+	//图片
+	private String picName;
+	private Date date;
+	
+	//电池&网络
 	private int connectionState;
 	private int batteryState;
 	private int percent;
+	//位置
+	private float latitude;
+	private float longitude;
 	
 	//is SensorListener registered
 	private boolean sensorlistener_flag = true;
@@ -64,7 +91,11 @@ public class Collection implements SensorEventListener {
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
 	
+	private BDLocation testLocation = new BDLocation();
+	
 	public class MyLocationListener implements BDLocationListener {
+		
+		
 	    @Override
 	   public void onReceiveLocation(BDLocation location) {
 	      if (location == null)
@@ -90,7 +121,11 @@ public class Collection implements SensorEventListener {
 	           sb.append(location.getAddrStr());
 	        } 
 	 
-	      logMsg(sb.toString());
+	      //testLocation = location;
+	      //logMsg(sb.toString());
+	      latitude =(float) location.getLatitude();
+	      longitude =(float) location.getLongitude();
+	      Log.i("BD_LBS_SDK", sb.toString());
 	    }
 	public void onReceivePoi(BDLocation poiLocation) {
 	//将在下个版本中去除poi功能
@@ -123,25 +158,27 @@ public class Collection implements SensorEventListener {
 	}
 	
 	private void logMsg(String str) {
-		Log.d("logMsg", str);
+		//Log.d("logMsg", str);
+		Toast toast = Toast.makeText(this.app, str, Toast.LENGTH_LONG);
+		toast.show();
 	}
 	//*******************************************************************************//
 	
 	public Collection(Activity app) {
 		this.app = app;
+		
 		sensorManager = (SensorManager) this.app.getSystemService(android.content.Context.SENSOR_SERVICE);
 		connectManager = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
 		mLocationClient = new LocationClient(this.app.getApplicationContext());     //声明LocationClient类
 	     
-		setValues();
+		setValues();//register every sensors
 	}
 	
-	@SuppressLint("InlinedApi")
 	public void setValues() {
-		setLight();
-		setAccelerometer();
-		setMagneticField();
-		setOrientation();
+		//setLight();
+		//setAccelerometer();
+		//setMagneticField();
+		//setOrientation();
 		
 		//calculateOrientation();
 		
@@ -169,6 +206,7 @@ public class Collection implements SensorEventListener {
 		
 		//Location
 		mLocationClient.registerLocationListener( myListener );
+		mLocationClient.start();
 		
 		date = new Date();
 		
@@ -207,6 +245,20 @@ public class Collection implements SensorEventListener {
 	}
 	
 	public float getLight() {
+		//double longitude = testLocation.getLongitude();
+		Log.i("getLight() -> light = ", ""+this.light);
+		Log.i("getLight() -> longitude = ", ""+longitude);
+		Log.i("getLight() -> latitude = ", ""+latitude);
+		Log.i("getLight() -> connect = ",""+this.connectionState);
+		Log.i("getLight() -> battery = ",""+this.batteryState+" , "+this.percent+"%");
+		Log.i("getLight() -> ///////////", "/////////////////////////");
+		Log.i("getLight() -> orientation", "x = "+this.orientation[0]);
+		Log.i("getLight() -> orientation", "y = "+this.orientation[1]);
+		Log.i("getLight() -> orientation", "z = "+this.orientation[2]);
+		Log.i("getLight() -> ///////////", "/////////////////////////");
+		Log.i("getLight() -> orientation", "x = "+this.sensor_orientation[0]);
+		Log.i("getLight() -> orientation", "y = "+this.sensor_orientation[1]);
+		Log.i("getLight() -> orientation", "z = "+this.sensor_orientation[2]);
 		return this.light;
 	}
 	
