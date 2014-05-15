@@ -1,11 +1,14 @@
 package com.bupt.bnrc.thesenser.dao;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.bupt.bnrc.thesenser.model.FileModel;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.bupt.bnrc.thesenser.utils.Logger;
@@ -51,6 +54,15 @@ public class FileDAO extends DAOHelper {
 		values.put(FILE_EXPOSURE_VALUE, file.getPhotoStats().getExposureValue());
 		values.put(FILE_FOCAL_DISTANCE, file.getPhotoStats().getFocalDistance());
 		values.put(FILE_APERTURE, file.getPhotoStats().getAperture());
+		values.put(FILE_TAG, file.getTag());
 		return values;
 	}
+	
+	/*
+	public List<FileModel> findNotUploadFiles(Integer num) {
+		List<FileModel> files = new ArrayList<FileModel>();
+		Cursor cursor = null;
+		
+	}
+	*/
 }

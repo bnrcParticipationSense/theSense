@@ -48,9 +48,10 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
     protected static final String FILE_EXPOSURE_VALUE = "exposure_value";
     protected static final String FILE_FOCAL_DISTANCE = "focal_distance";
     protected static final String FILE_APERTURE = "aperture";
+    protected static final String FILE_TAG = "tag";
     protected static final String[] FILE_ALL_COLUMS = { _ID, FILE_FILE_NAME, FILE_CREATE_TIME, FILE_X_DIRECT, 
     	FILE_Y_DIRECT, FILE_Z_DIRECT, FILE_LONGITUDE, FILE_LATITUDE, FILE_EXPOSURE_VALUE, FILE_FOCAL_DISTANCE,
-    	FILE_APERTURE };
+    	FILE_APERTURE, FILE_TAG };
     private static final String FILE_TABLE_CREATE = 
     		"CREATE TABLE" + FILE_TABLE_NAME + "(" +
     		_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
@@ -63,7 +64,8 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
     		FILE_LATITUDE + "FLOAT, " + 
     		FILE_EXPOSURE_VALUE + "INTEGER, " + 
     		FILE_FOCAL_DISTANCE + "FLOAT, " + 
-    		FILE_APERTURE + "FLOAT" +
+    		FILE_APERTURE + "FLOAT," +
+    		FILE_TAG + "INTEGER NOT NULL" +
     		");";
     		
 	// data datebase

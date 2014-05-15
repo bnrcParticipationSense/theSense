@@ -2,12 +2,16 @@ package com.bupt.bnrc.thesenser.model;
 
 import java.util.Date;
 
+import android.content.Context;
+
 import com.bupt.bnrc.thesenser.dao.DAOFactory;
+import com.bupt.bnrc.thesenser.dao.DataDAO;
+import com.bupt.bnrc.thesenser.utils.Logger;
 
 public class DataModel {
 	private Long m_id = null;
-	private Float m_lightIntensity = null;
-	private Float m_soundIntensity = null;
+	private Float m_lightIntensity = null; //光照
+	private Float m_soundIntensity = null; // 声音
 	private Date m_createTime = null; // 采集时间
 	private Integer m_chargeState = null; // 0：未充电， 1：充电
 	private Integer m_batteryState = null; // 电量的百分比
@@ -47,6 +51,22 @@ public class DataModel {
 		this.m_netState = data.getNetState();
 		this.m_latitude = data.getLatitude();
 		this.m_longitude = data.getLongitude();
+	}
+	
+	public DataModel save(Context context) {
+		DataDAO dao = null;
+		DataModel datas = null;
+		try {
+			dao = daoFactory.getDataDAO(context);
+			datas = dao.save(this);
+		} catch (Exception e) {
+			// TODO: handle exception
+			Logger.e(e.getMessage());
+		} finally {
+			dao.close();
+		}
+		
+		return datas;
 	}
 
 	public Long getId() {
