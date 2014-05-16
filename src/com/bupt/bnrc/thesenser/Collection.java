@@ -39,12 +39,14 @@ import com.baidu.location.LocationClientOption;
 //import com.baidu.location.GeofenceClient.OnRemoveBDGeofencesResultListener;
 //*****************************************************************//
 
-
+import com.bupt.bnrc.thesenser.model.FileModel;
+import com.bupt.bnrc.thesenser.model.PhotoStats;
 
 public class Collection implements SensorEventListener {
 	
 	//TEST*****************************
 	private float light_test = 1000;
+	private float noise_test = 36;
 	private float [] orientation_test = new float[] {1,2,3};
 	private String picName_test = "test.jpg";
 	private Date date_test = new Date();
@@ -53,9 +55,32 @@ public class Collection implements SensorEventListener {
 	private int percent_test = 85;
 	private float latitude_test = 123;
 	private float longitude_test = 321;
-	public int flog_test = 15;
-	//TEST*****************************
 	
+	private int exposureValue = 100;
+	private float focalDistance = 35;
+	private float aperture = 1/200;
+	
+	public int flog_test = 15;
+	
+	
+	public void save() {
+		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
+				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
+		fileModel.save(this.app);
+	}
+	public FileModel getFileModel() {
+		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
+				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
+		return fileModel;
+	}
+//	public float getLight() {
+//		return this.light_test;
+//	}
+	public float[] getOrientation() {
+		return this.orientation_test;
+	}
+	//TEST*****************************
+
 	
 	private Activity app;
 	private SensorManager sensorManager;

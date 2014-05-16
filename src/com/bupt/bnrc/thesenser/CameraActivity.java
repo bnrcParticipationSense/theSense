@@ -74,12 +74,13 @@ public class CameraActivity extends BaseActivity {
 	
 	boolean GPSState;
 	
-	
+	Collection collect = null;
     @Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
+		collect = new Collection(this);
 		
 		
 		
