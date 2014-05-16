@@ -64,15 +64,15 @@ public class Collection implements SensorEventListener {
 	
 	
 	public void save() {
-		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
-				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
-		fileModel.save(this.app);
+//		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
+//				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
+//		fileModel.save(this.app);
 	}
-	public FileModel getFileModel() {
-		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
-				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
-		return fileModel;
-	}
+//	public FileModel getFileModel() {
+//		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
+//				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
+//		return fileModel;
+//	}
 //	public float getLight() {
 //		return this.light_test;
 //	}

@@ -7,8 +7,9 @@ public class DAOFactory {
 	
 	private Context globalContext = null;
     private boolean cacheDAOInstances = false;
-    private TestDAO cachedTeamDAO = null;
+    private TestDAO cachedTestDAO = null;
     private FileDAO cachedFileDAO = null;
+    private DataDAO cachedDataDAO = null;
 
     public static DAOFactory getInstance() {
         if (instance == null) {
@@ -31,6 +32,16 @@ public class DAOFactory {
         }
     }
     
+    public DataDAO getDataDAO(Context context) {
+    	if(cacheDAOInstances) {
+    		if(cachedDataDAO == null) {
+    			cachedDataDAO = new DataDAO(getProperDAOContext(context));
+    		}
+    		return cachedDataDAO;
+    	} else {
+    		return new DataDAO(getProperDAOContext(context));
+    	}
+    }
     private Context getProperDAOContext(Context context) {
         if (globalContext != null) {
             return globalContext;
