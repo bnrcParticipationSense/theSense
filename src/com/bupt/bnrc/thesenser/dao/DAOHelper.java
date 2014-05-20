@@ -56,7 +56,7 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
     		"CREATE TABLE" + FILE_TABLE_NAME + "(" +
     		_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
     		FILE_FILE_NAME + "NTEXT NOT NULL, " +
-    		FILE_CREATE_TIME + "DATE NOT NULL, " +
+    		FILE_CREATE_TIME + "INTEGER NOT NULL, " +
     		FILE_X_DIRECT + "FLOAT, " + 
     		FILE_Y_DIRECT + "FLOAT, " + 
     		FILE_Z_DIRECT + "FLOAT, " +
@@ -86,7 +86,7 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
     	    _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
     	    DATA_LIGHT_INTENSITY + "FLOAT, " +
     	    DATA_SOUND_INTENSITY + "FLOAT, " +
-    	    DATA_CREATE_TIME + "DATE, " +
+    	    DATA_CREATE_TIME + "INTEGER NOT NULL, " +
     	    DATA_LONGTITUDE + "FLOAT, " + 
     	    DATA_LATITUDE + "FLOAT, " + 
     	    DATA_CHARGE_STATE + "INTEGER, " + 

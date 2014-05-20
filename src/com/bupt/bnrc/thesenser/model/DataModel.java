@@ -1,11 +1,13 @@
 package com.bupt.bnrc.thesenser.model;
 
 import java.util.Date;
+import java.util.List;
 
 import android.content.Context;
 
 import com.bupt.bnrc.thesenser.dao.DAOFactory;
 import com.bupt.bnrc.thesenser.dao.DataDAO;
+import com.bupt.bnrc.thesenser.dao.FileDAO;
 import com.bupt.bnrc.thesenser.utils.Logger;
 
 public class DataModel {
@@ -26,6 +28,27 @@ public class DataModel {
 		if(lightIntensisy == null && soundIntensity == null) {
 			throw new IllegalArgumentException("light or sound must have at least one not null");
 		}
+		this.m_lightIntensity = lightIntensisy;
+		this.m_soundIntensity = soundIntensity;
+		
+		if(createTime == null) {
+			throw new IllegalArgumentException("Date create time must not be null");
+		}
+		this.m_createTime = createTime;
+		
+		this.m_chargeState = chargeState;
+		this.m_batteryState = batteryState;
+		this.m_netState = netState;
+		this.m_longitude = longtitude;
+		this.m_latitude = latitude;
+	}
+	
+	public DataModel(Long id, Float lightIntensisy, Float soundIntensity, Date createTime, Integer chargeState, 
+			Integer batteryState, Integer netState, Float longtitude, Float latitude) {
+		if(lightIntensisy == null && soundIntensity == null) {
+			throw new IllegalArgumentException("light or sound must have at least one not null");
+		}
+		this.m_id = id;
 		this.m_lightIntensity = lightIntensisy;
 		this.m_soundIntensity = soundIntensity;
 		
@@ -67,6 +90,19 @@ public class DataModel {
 		}
 		
 		return datas;
+	}
+	
+	public static List<DataModel> findNotUploadDatas(Integer num, Context context) {
+		DataDAO dao = null;
+		try {
+			dao = daoFactory.getDataDAO(context);
+			return dao.findNotUploadDatas(num, context);
+		} finally {
+			if(dao != null) {
+				dao.close();
+			}
+		}
+		
 	}
 
 	public Long getId() {

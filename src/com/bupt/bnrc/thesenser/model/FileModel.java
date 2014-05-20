@@ -14,8 +14,8 @@ public class FileModel {
 	private Long m_id = null;
 	private String m_fileName = null;
 	private Date m_createTime = null;
-	private Integer m_tag = null; // 用来表示文件类型 0为普通文件，>0为训练集，序号相同为一组
 	private PhotoStats m_photoStats = null;
+	private Integer m_tag = null; // 用来表示文件类型 ：0为照片文件， 1为视频文件， 2为文本文件，>10为pm2.5训练集，序号相同为一组，3-10为保留
 	
 	private static DAOFactory daoFactory = DAOFactory.getInstance();
 	
@@ -64,6 +64,14 @@ public class FileModel {
 		this(fileName, createTime, tag);
 		this.m_photoStats = new PhotoStats(xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture);
 	}
+	
+	public FileModel(Long id, String fileName, Date createTime, Float xDirect, Float yDirect, Float zDirect, 
+			Float longitude, Float latitude, Integer exposureValue, Float focalDistance, Float aperture, Integer tag) {
+		
+		this(fileName, createTime, tag);
+		this.m_photoStats = new PhotoStats(xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture);
+		this.m_id = id;
+	}
 
 	public FileModel(Long id, FileModel file) {
 		this.m_id = id;
@@ -87,6 +95,31 @@ public class FileModel {
 		}
 		
 		return file;
+	}
+	
+	public static List<FileModel> findNotUploadFiles(Integer num, Context context) {
+		FileDAO dao = null;
+		try {
+			dao = daoFactory.getFileDAO(context);
+			return dao.findNotUploadFiles(num, context);
+		} finally {
+			if(dao != null) {
+				dao.close();
+			}
+		}
+		
+	}
+	
+	public static List<FileModel> findFilesToBeModeled(Integer index, Context context) {
+		FileDAO dao = null;
+		try {
+			dao = daoFactory.getFileDAO(context);
+			return dao.findFilesToBeModeled(index, context);
+		} finally {
+			if(dao != null) {
+				dao.close();
+			}
+		}
 	}
 	
 	public Long getId() {
