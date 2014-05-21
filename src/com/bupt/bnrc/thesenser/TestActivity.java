@@ -28,11 +28,13 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 		View cameraBtn = findViewById(R.id.cameraBtn);
 		View collectBtn = findViewById(R.id.collectBtn);
 		View getLightBtn = findViewById(R.id.getLightBtn);
+		View saveInfo = findViewById(R.id.saveInfo);
 		TextView text = (TextView) findViewById(R.id.Text);
 		View exitBtn = findViewById(R.id.exitBtn);
 		cameraBtn.setOnClickListener(this);
 		collectBtn.setOnClickListener(this);
 		getLightBtn.setOnClickListener(this);
+		saveInfo.setOnClickListener(this);
 		exitBtn.setOnClickListener(this);
 		//text.setText(""+collect.light);
 	}
@@ -67,6 +69,10 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 				//Log.i("TestActivity", "this.collect.SensorOrientation = "+this.collect.sensor_orientation[1]);
 				//Log.i("TestActivity", "this.collect.SensorOrientation = "+this.collect.sensor_orientation[2]);
 			}
+			break;
+		case R.id.saveInfo:
+			Log.i("TestActivity", "this.collect.save()");
+			this.collect.save();
 			break;
 			
 		case R.id.exitBtn:

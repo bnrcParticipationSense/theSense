@@ -41,6 +41,7 @@ import com.baidu.location.LocationClientOption;
 
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PhotoStats;
+import com.bupt.bnrc.thesenser.model.DataModel;
 
 public class Collection implements SensorEventListener {
 	
@@ -63,11 +64,11 @@ public class Collection implements SensorEventListener {
 	public int flog_test = 15;
 	
 	
-	public void save() {
+//	public void save() {
 //		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
 //				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
 //		fileModel.save(this.app);
-	}
+//	}
 //	public FileModel getFileModel() {
 //		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
 //				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
@@ -377,6 +378,11 @@ public class Collection implements SensorEventListener {
 			return 2;
 		}
 		return 0;
+	}
+	
+	public void save() {
+		DataModel model = new DataModel(this.light, this.noise_test, this.date, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
+		model.save(app);
 	}
 
 	
