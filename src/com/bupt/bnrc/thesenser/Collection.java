@@ -95,8 +95,8 @@ public class Collection implements SensorEventListener {
 	private float [] acceleration = new float[3];
 	private float [] magnetic_field = new float[3];
 	
-	public float [] orientation = new float[3];			//getOrientation();
-	public float [] sensor_orientation = new float[3];	//Sensor.TYPE_ORIENTATION
+	private float [] orientation = new float[3];			//getOrientation();
+	private float [] sensor_orientation = new float[3];	//Sensor.TYPE_ORIENTATION
 	
 	//Í¼Æ¬
 	private String picName;
@@ -192,6 +192,8 @@ public class Collection implements SensorEventListener {
 	public Collection(Activity app) {
 		this.app = app;
 		
+		Log.i("new Collection()", "new Collection @ Activity = "+this.app.getApplicationInfo().toString());
+		
 		sensorManager = (SensorManager) this.app.getSystemService(android.content.Context.SENSOR_SERVICE);
 		connectManager = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
 		mLocationClient = new LocationClient(this.app.getApplicationContext());     //ÉùÃ÷LocationClientÀà
@@ -200,12 +202,12 @@ public class Collection implements SensorEventListener {
 	}
 	
 	public void setValues() {
-		//setLight();
-		//setAccelerometer();
-		//setMagneticField();
-		//setOrientation();
+		setLight();
+		setAccelerometer();
+		setMagneticField();
+		setOrientation();
 		
-		//calculateOrientation();
+		calculateOrientation();
 		
 		//Battery
 		receiver = new BatteryReceiver();
@@ -244,7 +246,7 @@ public class Collection implements SensorEventListener {
 		SensorManager.getRotationMatrix(R, null, acceleration, magnetic_field);
 		SensorManager.getOrientation(R, orientation);
 		
-		Log.i("calculateOrientation", "collect.orientation = "+orientation[0]+" , "+orientation[1]+" , "+orientation[2]);
+		//Log.i("calculateOrientation", "collect.orientation = "+orientation[0]+" , "+orientation[1]+" , "+orientation[2]);
 	}
 	
 	
@@ -286,27 +288,30 @@ public class Collection implements SensorEventListener {
 		Log.i("getLight() -> orientation", "z = "+this.sensor_orientation[2]);
 		return this.light;
 	}
+	public Date getDate() {
+		return this.date;
+	}
 	
 	private void returnValues(float [] e ,int Type) {
 		//Log.i("SensorEvent","sensor.Type = "+Type);
 		switch(Type){
 		case Sensor.TYPE_LIGHT:
 			this.light = e[0];
-			Log.i("SensorEvent","Collection->this.light = "+this.light);
+			//Log.i("SensorEvent","Collection->this.light = "+this.light);
 			break;
 		case Sensor.TYPE_ACCELEROMETER:
 			this.acceleration = e;
-			Log.i("SensorEvent","Collection->this.acceleration = "+this.acceleration[0]+" , "+this.acceleration[1]+" , "+this.acceleration[2]);
+			//Log.i("SensorEvent","Collection->this.acceleration = "+this.acceleration[0]+" , "+this.acceleration[1]+" , "+this.acceleration[2]);
 			calculateOrientation();
 			break;
 		case Sensor.TYPE_MAGNETIC_FIELD:
 			this.magnetic_field = e;
-			Log.i("SensorEvent","Collection->this.magnetic_field = "+this.magnetic_field[0]+" , "+this.magnetic_field[1]+" , "+this.magnetic_field[2]);
+			//Log.i("SensorEvent","Collection->this.magnetic_field = "+this.magnetic_field[0]+" , "+this.magnetic_field[1]+" , "+this.magnetic_field[2]);
 			calculateOrientation();
 			break;
 		case Sensor.TYPE_ORIENTATION:
 			this.sensor_orientation = e;
-			Log.i("SensorEvent","Collection->this.sensor_orientation = "+this.sensor_orientation[0]+" , "+this.sensor_orientation[1]+" , "+this.sensor_orientation[2]);
+			//Log.i("SensorEvent","Collection->this.sensor_orientation = "+this.sensor_orientation[0]+" , "+this.sensor_orientation[1]+" , "+this.sensor_orientation[2]);
 			break;
 		default:
 			break;
@@ -337,7 +342,7 @@ public class Collection implements SensorEventListener {
 	public void onSensorChanged(SensorEvent arg0) {
 		// TODO Auto-generated method stub
 		//Log.i("SensorEvent","arg0.values[0] = "+arg0.values[0]);
-		Log.i("SensorEvent","sensor.Type = "+arg0.sensor.getType());
+		//Log.i("SensorEvent","sensor.Type = "+arg0.sensor.getType());
 		
 		returnValues(arg0.values, arg0.sensor.getType());
 	}
