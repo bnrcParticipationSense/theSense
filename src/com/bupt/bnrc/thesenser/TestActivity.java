@@ -46,6 +46,7 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 			break;
 		case R.id.collectBtn:
 			Log.i("zzy", "collectBtn");
+			collect.stopListener();
 			//collect = new Collection(this);
 			
 			break;
@@ -57,10 +58,14 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 			}
 			else {
 				Toast.makeText(this, "Light = "+this.collect.getLight(), Toast.LENGTH_LONG).show();
-				Log.i("TestActivity", "this.collect.light = "+this.collect.light);
-				Log.i("TestActivity", "this.collect.Orientation = "+this.collect.orientation[0]);
-				Log.i("TestActivity", "this.collect.Orientation = "+this.collect.orientation[1]);
-				Log.i("TestActivity", "this.collect.Orientation = "+this.collect.orientation[2]);
+				//Log.i("TestActivity", "this.collect.light = "+this.collect.light);
+				//Log.i("TestActivity", "this.collect.Orientation = "+this.collect.orientation[0]);
+				//Log.i("TestActivity", "this.collect.Orientation = "+this.collect.orientation[1]);
+				//Log.i("TestActivity", "this.collect.Orientation = "+this.collect.orientation[2]);
+				
+				//Log.i("TestActivity", "this.collect.SensorOrientation = "+this.collect.sensor_orientation[0]);
+				//Log.i("TestActivity", "this.collect.SensorOrientation = "+this.collect.sensor_orientation[1]);
+				//Log.i("TestActivity", "this.collect.SensorOrientation = "+this.collect.sensor_orientation[2]);
 			}
 			break;
 			
