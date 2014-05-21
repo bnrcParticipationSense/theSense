@@ -66,6 +66,27 @@ public class DataDAO extends DAOHelper {
 		return datas;
 	}
 
+	public DataModel findDataById(Long id) {
+		Cursor cursor = null;
+		DataModel data = null;
+		
+		try {
+			SQLiteDatabase db = getReadableDatabase();
+			cursor = db.query(DATA_TABLE_NAME, DATA_ALL_COLUMS, _ID + "= ?", new String[]{id.toString()}, 
+					null, null, null);
+			
+			if(cursor.getCount() == 1 ) {
+				if(cursor.moveToFirst()) {
+					data = createDataFromCursorData(cursor);
+				}
+			}
+		} finally {
+			closeCursor(cursor);
+		}
+		
+		return data;
+	}
+	
 	private DataModel createNewFile(SQLiteDatabase db, DataModel data) {
 		// TODO Auto-generated method stub
 		// Log

@@ -23,6 +23,8 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 	private void initViews() {
 		View cameraBtn = findViewById(R.id.cameraBtn);
 		cameraBtn.setOnClickListener(this);
+		View dataBtn = findViewById(R.id.dataTestBtn);
+		dataBtn.setOnClickListener(this);
 	}
 	
 	@Override
@@ -32,7 +34,16 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 		case R.id.cameraBtn:
 			processCameraBtnClick();
 			break;
+		case R.id.dataTestBtn:
+			processDataBtnClick();
+			break;
 		}
+	}
+
+	private void processDataBtnClick() {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(TestActivity.this, DataActivity.class);
+		startActivity(intent);
 	}
 
 	private void processCameraBtnClick() {

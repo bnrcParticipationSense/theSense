@@ -5,9 +5,14 @@
     <string name="action_settings">Settings</string>
     <string name="test_helloText">Hello bnrc! This is a test page.</string>
     <string name="test_cameraBtn">照相</string>
+    <string name="test_dataTestBtn">数据测试</string>
     
     <string name="camera_helloText">Hello! 这个是照相界面。</string>
     <string name="photo_name">相片名称</string>
+    
+    <string name="data_saveBtn">保存数据</string>
+    <string name="data_lookBtn">查看数据</string>
+    
     
 
 </resources>

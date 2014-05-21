@@ -1,5 +1,6 @@
 package com.bupt.bnrc.thesenser.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -104,6 +105,18 @@ public class DataModel {
 		}
 		
 	}
+	
+	public static DataModel findDataById(Long id, Context context) {
+		DataDAO dao = null;
+		try {
+			dao = daoFactory.getDataDAO(context);
+			return dao.findDataById(id);
+		} finally {
+			if(dao != null) {
+				dao.close();
+			}
+		}
+	}
 
 	public Long getId() {
 		return m_id;
@@ -139,6 +152,11 @@ public class DataModel {
 
 	public Float getLatitude() {
 		return m_latitude;
+	}
+	
+	public String getCreateTimeString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return new String(sdf.format(m_createTime));
 	}
 
 }
