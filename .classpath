@@ -6,6 +6,5 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="libs/locSDK_4.1.jar"/>
-	<classpathentry kind="lib" path="/Users/zhuzhiyuan/Downloads/疯狂JAVA/19/auction/WEB-INF/lib/json.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
