@@ -27,13 +27,13 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
     protected static final String TEST_DOUBLE = "double";
     protected static final String[] TEST_ALL_COLUMS = { _ID, TEST_NAME, TEST_INT, TEST_CHAR, TEST_FLOAT, TEST_DOUBLE };
     private static final String TEST_TABLE_CREATE = 
-    		"CREATE TABLE" + TEST_TABLE_NAME + "(" +
+    		"CREATE TABLE " + TEST_TABLE_NAME + "(" +
     		_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-    		TEST_NAME + "NTEXT NOT NULL, " +
-    		TEST_INT + "INTEGER, " + 
-    		TEST_CHAR + "NCHAR(1), " +
-    		TEST_FLOAT + "FLOAT," +
-    		TEST_DOUBLE + "DOUBLE" + 
+    		TEST_NAME + " NTEXT NOT NULL, " +
+    		TEST_INT + " INTEGER, " + 
+    		TEST_CHAR + " NCHAR(1), " +
+    		TEST_FLOAT + " FLOAT," +
+    		TEST_DOUBLE + " DOUBLE" + 
     		");";
     
     // file datebase
@@ -53,19 +53,19 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
     	FILE_Y_DIRECT, FILE_Z_DIRECT, FILE_LONGITUDE, FILE_LATITUDE, FILE_EXPOSURE_VALUE, FILE_FOCAL_DISTANCE,
     	FILE_APERTURE, FILE_TAG };
     private static final String FILE_TABLE_CREATE = 
-    		"CREATE TABLE" + FILE_TABLE_NAME + "(" +
+    		"CREATE TABLE " + FILE_TABLE_NAME + "(" +
     		_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-    		FILE_FILE_NAME + "NTEXT NOT NULL, " +
-    		FILE_CREATE_TIME + "DATE NOT NULL, " +
-    		FILE_X_DIRECT + "FLOAT, " + 
-    		FILE_Y_DIRECT + "FLOAT, " + 
-    		FILE_Z_DIRECT + "FLOAT, " +
-    		FILE_LONGITUDE + "FLOAT, " + 
-    		FILE_LATITUDE + "FLOAT, " + 
-    		FILE_EXPOSURE_VALUE + "INTEGER, " + 
-    		FILE_FOCAL_DISTANCE + "FLOAT, " + 
-    		FILE_APERTURE + "FLOAT," +
-    		FILE_TAG + "INTEGER NOT NULL" +
+    		FILE_FILE_NAME + " NTEXT NOT NULL, " +
+    		FILE_CREATE_TIME + " INTEGER NOT NULL, " +
+    		FILE_X_DIRECT + " FLOAT, " + 
+    		FILE_Y_DIRECT + " FLOAT, " + 
+    		FILE_Z_DIRECT + " FLOAT, " +
+    		FILE_LONGITUDE + " FLOAT, " + 
+    		FILE_LATITUDE + " FLOAT, " + 
+    		FILE_EXPOSURE_VALUE + " INTEGER, " + 
+    		FILE_FOCAL_DISTANCE + " FLOAT, " + 
+    		FILE_APERTURE + " FLOAT," +
+    		FILE_TAG + " INTEGER NOT NULL" +
     		");";
     		
 	// data datebase
@@ -82,16 +82,16 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
     	DATA_CREATE_TIME, DATA_LONGTITUDE, DATA_LATITUDE, DATA_CHARGE_STATE, DATA_BATTERY_STATE, DATA_NET_STATE
     };
     private static final String DATA_TABLE_CREATE = 
-    		"CREATE TABLE" + DATA_TABLE_NAME + "(" +
+    		"CREATE TABLE " + DATA_TABLE_NAME + "(" +
     	    _ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
-    	    DATA_LIGHT_INTENSITY + "FLOAT, " +
-    	    DATA_SOUND_INTENSITY + "FLOAT, " +
-    	    DATA_CREATE_TIME + "DATE, " +
-    	    DATA_LONGTITUDE + "FLOAT, " + 
-    	    DATA_LATITUDE + "FLOAT, " + 
-    	    DATA_CHARGE_STATE + "INTEGER, " + 
-    	    DATA_BATTERY_STATE + "INTEGER, " + 
-    	    DATA_NET_STATE + "INTEGER, " + 
+    	    DATA_LIGHT_INTENSITY + " FLOAT, " +
+    	    DATA_SOUND_INTENSITY + " FLOAT, " +
+    	    DATA_CREATE_TIME + " INTEGER NOT NULL, " +
+    	    DATA_LONGTITUDE + " FLOAT, " + 
+    	    DATA_LATITUDE + " FLOAT, " + 
+    	    DATA_CHARGE_STATE + " INTEGER, " + 
+    	    DATA_BATTERY_STATE + " INTEGER, " + 
+    	    DATA_NET_STATE + " INTEGER" + 
     	    ");";
     
 	public DAOHelper(Context context, String name, CursorFactory factory,
@@ -103,7 +103,7 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		db.execSQL(TEST_TABLE_CREATE);
+		// db.execSQL(TEST_TABLE_CREATE);
 		db.execSQL(FILE_TABLE_CREATE);
 		db.execSQL(DATA_TABLE_CREATE);
 		
@@ -112,7 +112,7 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements DatabaseCons
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// TODO Auto-generated method stub
-		db.execSQL("DROP TABLE IF EXISTS " + TEST_TABLE_NAME);
+		// db.execSQL("DROP TABLE IF EXISTS " + TEST_TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + FILE_TABLE_NAME);
 		db.execSQL("DROP TABLE IF EXISTS " + DATA_TABLE_NAME);
 		onCreate(db);

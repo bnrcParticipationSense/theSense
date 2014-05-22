@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+        
+    <EditText
+        android:id="@+id/data_light"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入光照强度（float）"
+        android:inputType="numberDecimal"
+    />
+    
+    <EditText
+        android:id="@+id/data_sound"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入声音强度（float）"
+        android:inputType="numberDecimal"
+    />
+    
+    <EditText
+        android:id="@+id/data_charge"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入充电状态（int）"
+        android:inputType="number"
+    />
+    
+    <EditText
+        android:id="@+id/data_battary"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入电量百分比（int）"
+        android:inputType="number"
+    />
+    
+    <EditText
+        android:id="@+id/data_net"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入网络状况（int）"
+        android:inputType="number"
+    />
+    
+    <EditText
+        android:id="@+id/data_longitude"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入经度（float）"
+        android:inputType="numberDecimal"
+    />
+    
+    <EditText
+        android:id="@+id/data_latitude"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入纬度（float）"
+        android:inputType="numberDecimal"
+    />
+    
+    <LinearLayout 
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:orientation="horizontal" >
+        
+        <Button 
+            android:id="@+id/data_saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/data_saveBtn"
+            />
+        
+        <Button 
+            android:id="@+id/data_lookBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/data_lookBtn"
+            />
+        
+    </LinearLayout>
+
+</LinearLayout>

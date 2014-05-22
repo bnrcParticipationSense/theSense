@@ -20,5 +20,13 @@
         android:layout_below="@id/helloText"
         android:text="@string/test_cameraBtn"
     />
+    
+    <Button android:id="@+id/dataTestBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cameraBtn"
+        android:text="@string/test_dataTestBtn"
+
+    />
 
 </RelativeLayout>
