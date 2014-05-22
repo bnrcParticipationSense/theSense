@@ -10,13 +10,15 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
 public class DataActivity extends BaseActivity implements OnClickListener {
 	private List<DataModel> datas;
-	
+	private View textEntryView = null;
+	private Long selectId = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -50,8 +52,21 @@ public class DataActivity extends BaseActivity implements OnClickListener {
 
 	private void OnClickLookBtn() {
 		// TODO Auto-generated method stub
+		AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+		builder1.setTitle("要查找的id");
+		builder1.setView(getTextEntryView());
+		builder1.setCancelable(true);
+        builder1.setPositiveButton("确定", addTeamButtonListener());
+        builder1.setNegativeButton("取消", cancelListener());
+        builder1.create().show();
+		
+	}
+	
+	public void showData(Long selectId) {
 		DataModel data;
-		data = DataModel.findDataById(Long.valueOf(1), this);	
+		if(selectId == null)
+			selectId = Long.valueOf(1);
+		data = DataModel.findDataById(selectId, this);	
 		String message = transDataToMsg(data);
 		
 		if(message == null) {
@@ -65,6 +80,24 @@ public class DataActivity extends BaseActivity implements OnClickListener {
 		builder.create().show();
 	}
 
+	protected DialogInterface.OnClickListener addTeamButtonListener() {
+        return new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                EditText collectedTextView = (EditText) getTextEntryView().findViewById(R.id.get_id);
+                String dataId = collectedTextView.getText().toString();
+                selectId = Long.parseLong(dataId);
+                showData(selectId);
+            }
+        };
+    }
+	
+	protected DialogInterface.OnClickListener cancelListener() {
+        return new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.cancel();
+            }
+        };
+    }
 
 	private String transDataToMsg(DataModel data) {
 		// TODO Auto-generated method stub
@@ -83,6 +116,14 @@ public class DataActivity extends BaseActivity implements OnClickListener {
 		}
 		return message;
 	}
+	
+	synchronized protected View getTextEntryView() {
+        if (textEntryView == null) {
+            LayoutInflater factory = LayoutInflater.from(this);
+            textEntryView = factory.inflate(R.layout.get_data_id, null);
+        }
+        return textEntryView;
+    }
 
 	private void OnClickSaveBtn() {
 		// 得到明面上的数据

@@ -26,7 +26,7 @@ public final class R {
     }
     public static final class id {
         public static final int Text=0x7f080009;
-        public static final int action_settings=0x7f080017;
+        public static final int action_settings=0x7f080018;
         public static final int cameraBtn=0x7f080004;
         public static final int collectBtn=0x7f080006;
         public static final int dataTestBtn=0x7f080005;
@@ -41,20 +41,22 @@ public final class R {
         public static final int data_sound=0x7f08000c;
         public static final int exitBtn=0x7f08000a;
         public static final int getLightBtn=0x7f080007;
+        public static final int get_id=0x7f080014;
         public static final int helloText=0x7f080003;
         public static final int info=0x7f080001;
-        public static final int phone_name=0x7f080015;
+        public static final int phone_name=0x7f080016;
         public static final int photoBut=0x7f080002;
-        public static final int photo_name=0x7f080014;
+        public static final int photo_name=0x7f080015;
         public static final int sView=0x7f080000;
         public static final int saveInfo=0x7f080008;
-        public static final int show=0x7f080016;
+        public static final int show=0x7f080017;
     }
     public static final class layout {
         public static final int activity_camera=0x7f030000;
         public static final int activity_test=0x7f030001;
         public static final int antivity_data=0x7f030002;
-        public static final int save=0x7f030003;
+        public static final int get_data_id=0x7f030003;
+        public static final int save=0x7f030004;
     }
     public static final class menu {
         public static final int test=0x7f070000;
