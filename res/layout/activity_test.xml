@@ -28,5 +28,38 @@
         android:text="@string/test_dataTestBtn"
 
     />
+    
+    <Button android:id="@+id/collectBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dataTestBtn"
+        android:text="Stop Collect"
+    />
+    
+    <Button android:id="@+id/getLightBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/collectBtn"
+        android:text="getInfo"
+    />
+    <Button android:id="@+id/saveInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/getLightBtn"
+        android:text="saveInfo"
+    />
+    
+    <TextView
+        android:id="@+id/Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/saveInfo"
+        android:text="test_Text" />
+    <Button android:id="@+id/exitBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Text"
+        android:text="Exit"
+    />
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import java.util.List;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -22,6 +23,7 @@ import android.graphics.Rect;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.hardware.Camera.Size;
+import android.hardware.Camera.ShutterCallback;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,6 +38,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.media.ExifInterface;
+import com.bupt.bnrc.thesenser.model.FileModel;
+import com.bupt.bnrc.thesenser.model.PhotoStats;
 
 public class CameraActivity extends BaseActivity {
 
@@ -74,12 +80,16 @@ public class CameraActivity extends BaseActivity {
 	
 	boolean GPSState;
 	
+	Collection collect = null;
+	private Activity app;
 	
     @Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
+		collect = new Collection(this);
+		app = this;
 		
 		
 		
@@ -109,7 +119,11 @@ public class CameraActivity extends BaseActivity {
 		    	 
 		    	 
 		    	// 拍照
-				mcamera.takePicture(null, null , myjpegCallback);
+				mcamera.takePicture(new ShutterCallback() {
+					public void onShutter() {
+						collect.getLight();
+					}
+				}, null , myjpegCallback);
 		    }
 		});
 		
@@ -464,6 +478,10 @@ public class CameraActivity extends BaseActivity {
   	 return optimalSize;
   	}
 	
+	public void getExifInfo(String picName) {
+		
+	}
+	
 	
 	
 	
@@ -507,32 +525,6 @@ public class CameraActivity extends BaseActivity {
 			
 			
 			
-			// name the img in term of date.
-			
-			
-			String fileName = Environment.getExternalStorageDirectory().toString()
-					+File.separator
-					+"SensorTest1"
-					+File.separator
-					+"ST_"
-					+System.currentTimeMillis()
-					+".jpg";
-			File file = new File(fileName);
-			if(!file.getParentFile().exists()){
-				file.getParentFile().mkdirs();
-			}
-			Log.i(ACTIVITY_TAG,LOG_PREFIX+"new bos!");
-			BufferedOutputStream bos;
-			try {
-				bos = new BufferedOutputStream(new FileOutputStream(file));
-				nbm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-				bos.flush();
-				Log.i(ACTIVITY_TAG,LOG_PREFIX+"bos.flush()");
-				bos.close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 			
 			//Toast.makeText(this, "拍照成功，照片保存在"+fileName+"文件中", Toast.LENGTH_SHORT).show();
 			
@@ -543,7 +535,7 @@ public class CameraActivity extends BaseActivity {
 			//使用对话框显示saveDialog组件
 			saveAlertBuilder = new AlertDialog.Builder(CameraActivity.this);
 			saveAlertBuilder.setView(saveView);
-			saveAlertBuilder.setPositiveButton("保存", new OnClickListener()
+			saveAlertBuilder.setPositiveButton("上传", new OnClickListener()
 				{
 
 					@Override
@@ -559,16 +551,52 @@ public class CameraActivity extends BaseActivity {
 					    
 					    //handler=new Handler(); 
 					    //handler.post(UploadingProcess); 
+						
+						mcamera.startPreview(); //do this function later
 
 						Log.i(ACTIVITY_TAG, LOG_PREFIX+"saving..");
 					}
 					
 				});
-				saveAlertBuilder.setNegativeButton("取消", new OnClickListener()
+				saveAlertBuilder.setNegativeButton("保存", new OnClickListener()
 				{
 					public void onClick(DialogInterface dialog,
 							int which)
 					{
+						// name the img in term of date.
+						
+						
+						String fileName = Environment.getExternalStorageDirectory().toString()
+								+File.separator
+								+"SensorTest1"
+								+File.separator
+								+"ST_"
+								+System.currentTimeMillis()
+								+".jpg";
+						File file = new File(fileName);
+						if(!file.getParentFile().exists()){
+							file.getParentFile().mkdirs();
+						}
+						Log.i(ACTIVITY_TAG,LOG_PREFIX+"new bos!");
+						BufferedOutputStream bos;
+						try {
+							bos = new BufferedOutputStream(new FileOutputStream(file));
+							nbm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+							bos.flush();
+							Log.i(ACTIVITY_TAG,LOG_PREFIX+"bos.flush()");
+							bos.close();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						//**************Exif设置*************
+						
+						//**************Exif设置***END*******
+						
+						FileModel fileModel = new FileModel(fileName, collect.getDate());
+						fileModel.save(app);
+						
 						mcamera.startPreview();
 					
 					}
@@ -585,67 +613,4 @@ public class CameraActivity extends BaseActivity {
 		}
 	};
 	
-	
-	
-	
-	/*Runnable   UploadingProcess=new  Runnable()
-	{  
-      public void run() 
-      {  
-    	  Log.i(ACTIVITY_TAG, LOG_PREFIX+"UploadingProcess..");
-			
-    	  if(IOUtil.checkSD() && IOUtil.checkAppDir())
-			{
-				
-				if(IOUtil.writeImg(nbm, imgName))
-				{
-					
-					DataManager dm = new DataManager(sensors,IOUtil.getImgFile(imgName),date);
-					
-					if(conn.checkConn() != ConnUtil.connState.NO_CONN)
-					{
-						
-					JSONObject receiveJson = conn.uploadJson(dm.json);
-						if(receiveJson == null)
-						{
-							Toast.makeText(getApplicationContext(),
-							          "uploading error!" , Toast.LENGTH_LONG).show();
-						}	
-						else  // upload success
-						{
-							String ret = null;
-							try {
-								ret = receiveJson.getString("msg");
-							} catch (JSONException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							Toast.makeText(getApplicationContext(),
-									ret, Toast.LENGTH_LONG).show();
-							// TO-DO 
-						}
-					
-					}
-					else
-					{
-						Toast.makeText(getApplicationContext(),
-						          "upload error, check connection!" , Toast.LENGTH_LONG).show();
-					}
-	
-				}
-				else
-				{
-					Toast.makeText(getApplicationContext(),
-					          "save error!" , Toast.LENGTH_LONG).show();
-				}
-			}
-
-			mcamera.startPreview();
-			sensors.OSensorStart();
-      }
-			
-        
-          
-    };
-    */
 }
