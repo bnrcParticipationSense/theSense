@@ -359,6 +359,7 @@ public class Collection implements SensorEventListener {
 			int total = arg1.getExtras().getInt("scale");
 			int bs = arg1.getExtras().getInt(BatteryManager.EXTRA_STATUS);
 			percent = current*100/total;
+			batteryState = bs;
 			Log.i("BatteryReceiver","percent = "+percent);
 			Log.i("BatterManager", "BatteryManager.isCHARGING = "+bs);
 		}
