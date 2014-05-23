@@ -26,11 +26,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-//假如用到位置提醒功能，需要import该类
+//���濡���ㄥ�颁��缃������������斤�����瑕�import璇ョ被
 //import com.baidu.location.BDNotifyListener;
 //************//
 
-//如果使用地理围栏功能，需要import如下类
+//濡����浣跨�ㄥ�扮����存�������斤�����瑕�import濡�涓�绫�
 //import com.baidu.location.BDGeofence;
 //import com.baidu.location.BDLocationStatusCodes;
 //import com.baidu.location.GeofenceClient;
@@ -90,7 +90,7 @@ public class Collection implements SensorEventListener {
 	private BatteryReceiver receiver = null;
 	private ConnectivityManager connectManager;
 	
-	//传感器
+	//浼�������
 	private float light;
 	
 	private float [] acceleration = new float[3];
@@ -99,15 +99,15 @@ public class Collection implements SensorEventListener {
 	private float [] orientation = new float[3];			//getOrientation();
 	private float [] sensor_orientation = new float[3];	//Sensor.TYPE_ORIENTATION
 	
-	//图片
+	//��剧��
 	private String picName;
 	private Date date;
 	
-	//电池&网络
+	//��垫��&缃�缁�
 	private int connectionState;
 	private int batteryState;
 	private int percent;
-	//位置
+	//浣�缃�
 	private float latitude;
 	private float longitude;
 	
@@ -154,7 +154,7 @@ public class Collection implements SensorEventListener {
 	      Log.i("BD_LBS_SDK", sb.toString());
 	    }
 	public void onReceivePoi(BDLocation poiLocation) {
-	//将在下个版本中去除poi功能
+	//灏���ㄤ��涓�������涓���婚��poi������
 	         if (poiLocation == null){
 	                return ;
 	          }
@@ -197,7 +197,7 @@ public class Collection implements SensorEventListener {
 		
 		sensorManager = (SensorManager) this.app.getSystemService(android.content.Context.SENSOR_SERVICE);
 		connectManager = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
-		mLocationClient = new LocationClient(this.app.getApplicationContext());     //声明LocationClient类
+		mLocationClient = new LocationClient(this.app.getApplicationContext());     //澹版��LocationClient绫�
 	     
 		setValues();//register every sensors
 	}
@@ -359,6 +359,7 @@ public class Collection implements SensorEventListener {
 			int total = arg1.getExtras().getInt("scale");
 			int bs = arg1.getExtras().getInt(BatteryManager.EXTRA_STATUS);
 			percent = current*100/total;
+			batteryState = bs;
 			Log.i("BatteryReceiver","percent = "+percent);
 			Log.i("BatterManager", "BatteryManager.isCHARGING = "+bs);
 		}
