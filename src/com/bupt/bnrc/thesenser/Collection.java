@@ -359,6 +359,7 @@ public class Collection implements SensorEventListener {
 			int total = arg1.getExtras().getInt("scale");
 			int bs = arg1.getExtras().getInt(BatteryManager.EXTRA_STATUS);
 			percent = current*100/total;
+			batteryState = bs;
 			Log.i("BatteryReceiver","percent = "+percent);
 			Log.i("BatterManager", "BatteryManager.isCHARGING = "+bs);
 		}
@@ -381,7 +382,8 @@ public class Collection implements SensorEventListener {
 	}
 	
 	public void save() {
-		DataModel model = new DataModel(this.light, this.noise_test, this.date, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
+		Date tempDate = new Date();
+		DataModel model = new DataModel(this.light, this.noise_test, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
 		model.save(app);
 	}
 

@@ -4,20 +4,13 @@
     android:layout_height="match_parent"
     android:layout_marginLeft="2dp"
     android:orientation="vertical" >
+   
     
     <Button 
-        android:id="@+id/data_lookOneBtn"
+        android:id="@+id/file_lookListBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/data_lookOneBtn"
+        android:text="@string/file_lookListBtn"
         />
-    
-    <Button 
-        android:id="@+id/data_lookListBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/data_lookListBtn"
-        />
-        
 
 </LinearLayout>

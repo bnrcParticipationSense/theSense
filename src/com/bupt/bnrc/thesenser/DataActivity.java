@@ -1,14 +1,12 @@
 package com.bupt.bnrc.thesenser;
 
-import java.util.Date;
-import java.util.List;
-
 import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.utils.Logger;
 
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,12 +14,12 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 
 public class DataActivity extends BaseActivity implements OnClickListener {
-	private List<DataModel> datas;
-	private View textEntryView = null;
-	private Long selectId = null;
+	private View listView = null;
+	private View OneView = null;
+	private Dialog listDialog = null;
+	private Dialog oneDialog = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		Logger.i("打开数据测试页");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.antivity_data);
@@ -30,36 +28,68 @@ public class DataActivity extends BaseActivity implements OnClickListener {
 	}
 	
 	private void initViews() {
-		View saveBtn = findViewById(R.id.data_saveBtn);
-		saveBtn.setOnClickListener(this);
-		View lookBtn = findViewById(R.id.data_lookBtn);
-		lookBtn.setOnClickListener(this);
+		View lookOneBtn = findViewById(R.id.data_lookOneBtn);
+		View lookListBtn = findViewById(R.id.data_lookListBtn);
+		
+		lookOneBtn.setOnClickListener(this);
+		lookListBtn.setOnClickListener(this);
 	}
 	
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
 		switch (v.getId()) {
-		case R.id.data_saveBtn:
-			OnClickSaveBtn();
+		case R.id.data_lookOneBtn:
+			OnClickLookOneBtn();
 			break;
-		case R.id.data_lookBtn:
-			OnClickLookBtn();
+		case R.id.data_lookListBtn:
+			OnClickLookListBtn();
 		default:
 			break;
 		}
 	}
 
-	private void OnClickLookBtn() {
+	private void OnClickLookListBtn() {
 		// TODO Auto-generated method stub
-		AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-		builder1.setTitle("要查找的id");
-		builder1.setView(getTextEntryView());
-		builder1.setCancelable(true);
-        builder1.setPositiveButton("确定", addTeamButtonListener());
-        builder1.setNegativeButton("取消", cancelListener());
-        builder1.create().show();
+		if (listDialog == null) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("要查找的前n个数据");
+			builder.setView(getListView());
+			builder.setCancelable(true);
+	        builder.setPositiveButton("确定", lookListData());
+	        builder.setNegativeButton("取消", cancelListener());
+	        listDialog = builder.create();
+		}
+		listDialog.show();
 		
+		
+	}
+
+	private DialogInterface.OnClickListener lookListData() {
+		return new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                EditText collectedTextView = (EditText) getListView().findViewById(R.id.get_list);
+                String dataId = collectedTextView.getText().toString();
+                Integer inputNum = Integer.parseInt(dataId);
+                Bundle bundle = new Bundle();
+                bundle.putInt("num", inputNum);
+                Intent intent = new Intent(DataActivity.this, ListDataActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        };
+	}
+
+	private void OnClickLookOneBtn() {
+		if(oneDialog == null) {
+			AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
+			builder1.setTitle("要查找的id");
+			builder1.setView(getOneView());
+			builder1.setCancelable(true);
+	        builder1.setPositiveButton("确定", lookOneData());
+	        builder1.setNegativeButton("取消", cancelListener());
+	        oneDialog = builder1.create();
+		}
+		oneDialog.show();
 	}
 	
 	public void showData(Long selectId) {
@@ -80,13 +110,13 @@ public class DataActivity extends BaseActivity implements OnClickListener {
 		builder.create().show();
 	}
 
-	protected DialogInterface.OnClickListener addTeamButtonListener() {
+	protected DialogInterface.OnClickListener lookOneData() {
         return new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                EditText collectedTextView = (EditText) getTextEntryView().findViewById(R.id.get_id);
+                EditText collectedTextView = (EditText) getOneView().findViewById(R.id.get_id);
                 String dataId = collectedTextView.getText().toString();
-                selectId = Long.parseLong(dataId);
-                showData(selectId);
+                Long inputNum = Long.parseLong(dataId);
+                showData(inputNum);
             }
         };
     }
@@ -100,7 +130,6 @@ public class DataActivity extends BaseActivity implements OnClickListener {
     }
 
 	private String transDataToMsg(DataModel data) {
-		// TODO Auto-generated method stub
 		String message = null;
 		if(data != null) {
 			message = "取到的数据是:\n";
@@ -117,16 +146,26 @@ public class DataActivity extends BaseActivity implements OnClickListener {
 		return message;
 	}
 	
-	synchronized protected View getTextEntryView() {
-        if (textEntryView == null) {
+	synchronized protected View getListView() {
+        if (listView == null) {
             LayoutInflater factory = LayoutInflater.from(this);
-            textEntryView = factory.inflate(R.layout.get_data_id, null);
+            listView = factory.inflate(R.layout.get_data_list, null);
         }
-        return textEntryView;
+        return listView;
     }
-
+	
+	synchronized protected View getOneView() {
+        if (OneView == null) {
+            LayoutInflater factory = LayoutInflater.from(this);
+            OneView = factory.inflate(R.layout.get_data_id, null);
+        }
+        return OneView;
+    }
+	
+	/*
 	private void OnClickSaveBtn() {
 		// 得到明面上的数据
+		
 		String temp = ((EditText)findViewById(R.id.data_light)).getText().toString();
 		Float lightIntensity = Float.parseFloat(temp); //光照
 		temp = ((EditText)findViewById(R.id.data_sound)).getText().toString();
@@ -151,4 +190,5 @@ public class DataActivity extends BaseActivity implements OnClickListener {
 		
 		
 	}
+	*/
 }
