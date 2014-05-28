@@ -47,6 +47,29 @@ public class Json {
 		return obj;
 	}
 	
+	static public JSONObject toJSON(DataModel data) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("username", "zzy");
+				
+			obj.put("Time", data.getCreateTime());
+				
+			obj.put("Light", data.getLightIntensity());
+			obj.put("Noise", data.getSoundIntensity());
+				
+			obj.put("BatteryState", data.getBatteryState());
+			obj.put("ChargeState", data.getChargeState());
+			obj.put("NetState", data.getNetState());
+				
+			obj.put("Latitude", data.getLatitude());
+			obj.put("Longitude", data.getLongitude());
+				
+		} catch(JSONException e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
+	
 	static public JSONObject toJSON(FileModel file) {
 		JSONObject obj = new JSONObject();
 		try {

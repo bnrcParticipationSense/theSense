@@ -1,6 +1,9 @@
 package com.bupt.bnrc.thesenser;
 
 import java.util.Date;
+
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
@@ -42,6 +45,8 @@ import com.baidu.location.LocationClientOption;
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PhotoStats;
 import com.bupt.bnrc.thesenser.model.DataModel;
+import com.bupt.bnrc.thesenser.utils.Json;
+import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class Collection implements SensorEventListener {
 	
@@ -118,6 +123,8 @@ public class Collection implements SensorEventListener {
 	public BDLocationListener myListener = new MyLocationListener();
 	
 	private BDLocation testLocation = new BDLocation();
+	
+	JSONObject obj;
 	
 	public class MyLocationListener implements BDLocationListener {
 		
@@ -383,7 +390,20 @@ public class Collection implements SensorEventListener {
 	
 	public void save() {
 		DataModel model = new DataModel(this.light, this.noise_test, this.date, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
-		model.save(app);
+		obj = Json.toJSON(model);
+		//Upload.Uploadint("", obj);
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
+					Upload.Uploading("", obj);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		t.start();
+		//model.save(app);
 	}
 
 	
