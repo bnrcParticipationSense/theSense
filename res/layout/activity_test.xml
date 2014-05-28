@@ -29,37 +29,33 @@
 
     />
     
-    <Button android:id="@+id/collectBtn"
+    <Button android:id="@+id/fileTestBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/dataTestBtn"
-        android:text="Stop Collect"
+        android:text="@string/test_fileTestBtn"
+
     />
     
-    <Button android:id="@+id/getLightBtn"
+    <Button android:id="@+id/collectBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/collectBtn"
-        android:text="getInfo"
+        android:layout_below="@id/fileTestBtn"
+        android:text="停止数据采集模块"
     />
+   
     <Button android:id="@+id/saveInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/getLightBtn"
-        android:text="saveInfo"
+        android:layout_below="@id/collectBtn"
+        android:text="保存数据"
     />
-    
-    <TextView
-        android:id="@+id/Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/saveInfo"
-        android:text="test_Text" />
+   
     <Button android:id="@+id/exitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/Text"
-        android:text="Exit"
+        android:layout_below="@id/saveInfo"
+        android:text="退出"
     />
 
 </RelativeLayout>

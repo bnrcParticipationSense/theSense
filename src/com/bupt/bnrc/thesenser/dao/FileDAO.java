@@ -50,14 +50,16 @@ public class FileDAO extends DAOHelper {
 		ContentValues values = new ContentValues();
 		values.put(FILE_FILE_NAME, file.getFileName());
 		values.put(FILE_CREATE_TIME, file.getCreateTime().getTime());
-		values.put(FILE_X_DIRECT, file.getPhotoStats().getXDirect());
-		values.put(FILE_Y_DIRECT, file.getPhotoStats().getYDirect());
-		values.put(FILE_Z_DIRECT, file.getPhotoStats().getZDirect());
-		values.put(FILE_LONGITUDE, file.getPhotoStats().getLongitude());
-		values.put(FILE_LATITUDE, file.getPhotoStats().getLatitude());
-		values.put(FILE_EXPOSURE_VALUE, file.getPhotoStats().getExposureValue());
-		values.put(FILE_FOCAL_DISTANCE, file.getPhotoStats().getFocalDistance());
-		values.put(FILE_APERTURE, file.getPhotoStats().getAperture());
+		if(file.getPhotoStats() != null) {
+			values.put(FILE_X_DIRECT, file.getPhotoStats().getXDirect());
+			values.put(FILE_Y_DIRECT, file.getPhotoStats().getYDirect());
+			values.put(FILE_Z_DIRECT, file.getPhotoStats().getZDirect());
+			values.put(FILE_LONGITUDE, file.getPhotoStats().getLongitude());
+			values.put(FILE_LATITUDE, file.getPhotoStats().getLatitude());
+			values.put(FILE_EXPOSURE_VALUE, file.getPhotoStats().getExposureValue());
+			values.put(FILE_FOCAL_DISTANCE, file.getPhotoStats().getFocalDistance());
+			values.put(FILE_APERTURE, file.getPhotoStats().getAperture());
+		}
 		values.put(FILE_TAG, file.getTag());
 		return values;
 	}

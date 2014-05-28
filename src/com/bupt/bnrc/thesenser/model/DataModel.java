@@ -84,7 +84,6 @@ public class DataModel {
 			dao = daoFactory.getDataDAO(context);
 			datas = dao.save(this);
 		} catch (Exception e) {
-			// TODO: handle exception
 			Logger.e(e.getMessage());
 		} finally {
 			dao.close();

@@ -53,7 +53,7 @@ public class DataDAO extends DAOHelper {
 			cursor = db.query(DATA_TABLE_NAME, DATA_ALL_COLUMS, _ID + "> ?", new String[]{index.toString()}, 
 					null, null, null, num.toString());
 			index += cursor.getCount();
-			editor.putLong("file_index", index);
+			editor.putLong("data_index", index);
 			editor.commit();
 			while(cursor.moveToNext()) {
 				datas.add(createDataFromCursorData(cursor));

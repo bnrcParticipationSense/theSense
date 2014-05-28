@@ -382,7 +382,8 @@ public class Collection implements SensorEventListener {
 	}
 	
 	public void save() {
-		DataModel model = new DataModel(this.light, this.noise_test, this.date, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
+		Date tempDate = new Date();
+		DataModel model = new DataModel(this.light, this.noise_test, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
 		model.save(app);
 	}
 

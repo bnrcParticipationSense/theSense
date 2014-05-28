@@ -1,5 +1,6 @@
 package com.bupt.bnrc.thesenser.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -142,6 +143,9 @@ public class FileModel {
 		return m_tag;
 	}
 
-	
+	public String getCreateTimeString() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return new String(sdf.format(m_createTime));
+	}
 	
 }
