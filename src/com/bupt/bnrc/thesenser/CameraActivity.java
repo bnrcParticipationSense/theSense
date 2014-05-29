@@ -18,6 +18,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.PixelFormat;
@@ -40,6 +41,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.SurfaceHolder.Callback;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -88,6 +90,7 @@ public class CameraActivity extends BaseActivity {
 
 	Collection collect = null;
 	PhotoStats photoStats = null;
+	String fileName;
 	private Activity app;
 	
 	@Override
@@ -242,7 +245,13 @@ public class CameraActivity extends BaseActivity {
 		public void onPictureTaken(byte[] data, Camera camera)
 		{
 			
-			
+			fileName = Environment.getExternalStorageDirectory().toString()
+					+File.separator
+					+"SensorTest1"
+					+File.separator
+					+"ST_"
+					+System.currentTimeMillis()
+					+".jpg";
 			
 			// 根据拍照所得的数据创建位图
 			final Bitmap bm = BitmapFactory.decodeByteArray(data, 0,
@@ -296,10 +305,10 @@ public class CameraActivity extends BaseActivity {
 			
 			
 			
-			//使用对话框显示saveDialog组件
-			saveAlertBuilder = new AlertDialog.Builder(CameraActivity.this);
-			saveAlertBuilder.setView(saveView);
-			saveAlertBuilder.setPositiveButton("上传", new OnClickListener()
+				//使用对话框显示saveDialog组件
+				saveAlertBuilder = new AlertDialog.Builder(CameraActivity.this);
+				saveAlertBuilder.setView(saveView);
+				saveAlertBuilder.setPositiveButton("上传", new OnClickListener()
 				{
 
 					@Override
@@ -308,17 +317,39 @@ public class CameraActivity extends BaseActivity {
 					{
 			            //更新界面  
 
-				        //Button saveButton = saveAlertDialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE);
-						//saveButton.setText("上传中...");
-						//saveButton.setTextColor(Color.BLUE);
-						//saveButton.invalidate(); 
+				        Button saveButton = saveAlertDialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE);
+						saveButton.setText("上传中...");
+						saveButton.setTextColor(Color.BLUE);
+						saveButton.invalidate(); 
 
 					    //handler=new Handler(); 
 					    //handler.post(UploadingProcess); 
+						File file = new File(fileName);
+						if(!file.getParentFile().exists()){
+							file.getParentFile().mkdirs();
+						}
+						Log.i("CaptureImage","new bos!");
+						BufferedOutputStream bos;
+						try {
+							bos = new BufferedOutputStream(new FileOutputStream(file));
+							bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+							bos.flush();
+							Log.i("CaptureImage","bos.flush()");
+							bos.close();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						Log.i("CaptureImage", "uploading...");
+						
+						Thread t = new Thread() {
+							
+						};
+						t.start();
 
 						mcamera.startPreview(); //do this function later
 
-						Log.i("CaptureImage", "uploading...");
+						
 					}
 
 				});
@@ -330,6 +361,7 @@ public class CameraActivity extends BaseActivity {
 						// name the img in term of date.
 
 
+						/*
 						String fileName = Environment.getExternalStorageDirectory().toString()
 								+File.separator
 								+"SensorTest1"
@@ -337,6 +369,7 @@ public class CameraActivity extends BaseActivity {
 								+"ST_"
 								+System.currentTimeMillis()
 								+".jpg";
+								*/
 						File file = new File(fileName);
 						if(!file.getParentFile().exists()){
 							file.getParentFile().mkdirs();
@@ -368,10 +401,10 @@ public class CameraActivity extends BaseActivity {
 
 				saveAlertDialog = saveAlertBuilder.create();
 				saveAlertDialog.show();
-			// 重新浏览
-			camera.stopPreview();
-			camera.startPreview();
-			isPreview = true;
+				// 重新浏览
+				camera.stopPreview();
+				camera.startPreview();
+				isPreview = true;
 		}
 	};
     
