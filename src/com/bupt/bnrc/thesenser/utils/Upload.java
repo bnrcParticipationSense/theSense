@@ -8,13 +8,21 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.File;
+import java.net.ContentHandler;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -22,6 +30,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
@@ -31,10 +40,11 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
-public class Upload {
+public class Upload extends Activity {
 	
 	static public JSONObject Uploading(String uploadUrl, JSONObject sendObj) {
 		//HttpPost post = new HttpPost(uploadUrl);
@@ -50,15 +60,10 @@ public class Upload {
 		httpClient = new DefaultHttpClient(httpParameters);
 		
 		try
-		{
-			//String encoderJson = URLEncoder.encode(sendObj.toString(), HTTP.UTF_8);
-
-	        //DefaultHttpClient httpClient = new DefaultHttpClient();
-	        post.addHeader(HTTP.CONTENT_TYPE, "application/json");
-	        StringEntity se = new StringEntity(sendObj.toString());//(encoderJson);
-	        se.setContentType("text/json");
-	        se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
-	        post.setEntity(se);
+		{	
+			List<NameValuePair> params = new ArrayList<NameValuePair>();
+			params.add(new BasicNameValuePair("upload",sendObj.toString()));
+			post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
 			// 发送POST请求
 			HttpResponse httpResponse = httpClient.execute(post);
@@ -68,7 +73,7 @@ public class Upload {
 			
 			if(resCode != 200)
 			{
-				//Toast.makeText(app, "Server response error!" + "\nreponse code: "+resCode, Toast.LENGTH_SHORT).show();
+				//Toast.makeText(this, "Server response error!" + "\nreponse code: "+resCode, Toast.LENGTH_SHORT).show();
 				Log.i("Upload", "SUCCESS");
 			}
 			
@@ -76,8 +81,9 @@ public class Upload {
 			{
 					
 				        String rev = EntityUtils.toString(entity);          
-				        receiveObj = new JSONObject(rev);  			      
-				        return receiveObj;
+				        //receiveObj = new JSONObject(rev); 
+				        Log.i("UploadJSON", "return msg:"+rev);
+				        return null;
 			}
 			else {
 				return null;
@@ -91,6 +97,7 @@ public class Upload {
 		}
 	}
 	
+	
 	static public void Uploading(String uploadUrl, String fileName) {
 		String end = "\r\n";
 	    String twoHyphens = "--";
@@ -100,7 +107,8 @@ public class Upload {
 	    {
 	    	
 	    	//URL url = new URL(uploadUrl);
-	    	URL url = new URL("http://10.108.108.11/upload11.php");
+	    	//URL url = new URL("http://10.108.108.11/upload11.php");
+	    	URL url = new URL("http://10.108.105.190:8080/webInterface/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 	    	// 设置每次传输的流大小，可以有效防止手机因为内存不足崩溃
@@ -111,7 +119,7 @@ public class Upload {
 	    	// 允许输入输出流
 	    	httpURLConnection.setDoInput(true);
 	    	httpURLConnection.setDoOutput(true);
-	    	httpURLConnection.setUseCaches(true);
+	    	httpURLConnection.setUseCaches(false);
 	    	// 使用POST方法
 	    	httpURLConnection.setRequestMethod("POST");
 	    	//httpURLConnection.setRequestProperty("Content-type","Application/x-www-form-urlencoded");

@@ -42,6 +42,8 @@ import com.baidu.location.LocationClientOption;
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PhotoStats;
 import com.bupt.bnrc.thesenser.model.DataModel;
+import com.bupt.bnrc.thesenser.utils.Json;
+import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class Collection implements SensorEventListener {
 	
@@ -113,6 +115,10 @@ public class Collection implements SensorEventListener {
 	
 	//is SensorListener registered
 	private boolean sensorlistener_flag = true;
+	
+	//new things for upload or others
+	DataModel mData = null;
+	
 	//*******************************************************************************//
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
@@ -202,7 +208,7 @@ public class Collection implements SensorEventListener {
 		setValues();//register every sensors
 	}
 	
-	public void setValues() {
+	private void setValues() {
 		setLight();
 		setAccelerometer();
 		setMagneticField();
@@ -267,6 +273,10 @@ public class Collection implements SensorEventListener {
 		this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 		sensorManager.registerListener(this, this.sensor, SensorManager.SENSOR_DELAY_NORMAL);
 	}
+	private void setDataModel() {
+		Date tempDate = new Date();
+		mData = new DataModel(this.light, this.noise_test, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
+	}
 	
 	public void setPicName(String str) {
 		this.picName = str;
@@ -307,6 +317,10 @@ public class Collection implements SensorEventListener {
 	public float getLatitude() {
 		return this.latitude;
 	}
+	public DataModel getDataModel() {
+		setDataModel();
+		return mData;
+	}
 	
 	private void returnValues(float [] e ,int Type) {
 		//Log.i("SensorEvent","sensor.Type = "+Type);
@@ -340,6 +354,7 @@ public class Collection implements SensorEventListener {
 			this.app.unregisterReceiver(receiver);
 			this.sensorlistener_flag = false;
 		}
+		/*
 		else {
 			setLight();
 			setAccelerometer();
@@ -347,6 +362,7 @@ public class Collection implements SensorEventListener {
 			setOrientation();
 			this.sensorlistener_flag = true;
 		}
+		*/
 	}
 	
 	@Override
@@ -397,9 +413,29 @@ public class Collection implements SensorEventListener {
 	}
 	
 	public void save() {
-		Date tempDate = new Date();
-		DataModel model = new DataModel(this.light, this.noise_test, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
-		model.save(app);
+		Log.i("Collection", "save()");
+		if(this.sensorlistener_flag) {
+			setDataModel();
+			mData.save(app);
+		}
+		else {
+			Toast toast = Toast.makeText(app, "采集模块已停止工作", Toast.LENGTH_LONG);
+			toast.show();
+		}
+	}
+	public void upload() {
+		setDataModel();
+		Thread t = new Thread() {
+			public void run() {
+				try {
+					Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
+					Upload.Uploading("", Json.toJSON(mData));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		};
+		t.start();
 	}
 
 	

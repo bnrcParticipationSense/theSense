@@ -12,12 +12,28 @@ import android.view.View.OnClickListener;
 public class TestActivity extends BaseActivity implements OnClickListener {
 
 	Collection collect = null;
+	Thread t = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Logger.i("���寮�娴�璇�椤典富椤�");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_test);
 		collect = new Collection(this);
+		/*
+		t = new Thread() {
+			public void run() {
+				while(true) {
+					try {
+						sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					collect.save();
+				}
+			}
+		};
+		t.start();
+		*/
 		initViews();
 	}
 	
@@ -26,6 +42,7 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 		View collectBtn = findViewById(R.id.collectBtn);
 		View saveInfo = findViewById(R.id.saveInfo);
 		View exitBtn = findViewById(R.id.exitBtn);
+		View uploadBtn = findViewById(R.id.upload);
 		cameraBtn.setOnClickListener(this);
 		View dataBtn = findViewById(R.id.dataTestBtn);
 		View fileBtn = findViewById(R.id.fileTestBtn);
@@ -33,6 +50,7 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 		dataBtn.setOnClickListener(this);
 		collectBtn.setOnClickListener(this);
 		saveInfo.setOnClickListener(this);
+		uploadBtn.setOnClickListener(this);
 		exitBtn.setOnClickListener(this);
 	}
 	
@@ -49,6 +67,14 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 			Log.i("zzy", "collectBtn");
 			collect.stopListener();
 			//collect = new Collection(this);
+			/*
+			 * something WRONG with this part need to lock THREAD before wait() or stop()
+			try {
+				t.wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			*/
 			break;
 			
 		case R.id.fileTestBtn:
@@ -58,6 +84,11 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 		case R.id.saveInfo:
 			Log.i("TestActivity", "this.collect.save()");
 			this.collect.save();
+			break;
+			
+		case R.id.upload:
+			Log.i("TestActivity", "this.collect.upload()");
+			this.collect.upload();
 			break;
 			
 		case R.id.exitBtn:

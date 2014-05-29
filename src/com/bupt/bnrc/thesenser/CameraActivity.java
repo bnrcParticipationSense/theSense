@@ -3,6 +3,7 @@ package com.bupt.bnrc.thesenser;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,8 +50,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import android.media.ExifInterface;
+
+import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PhotoStats;
+import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class CameraActivity extends BaseActivity {
 
@@ -90,6 +94,7 @@ public class CameraActivity extends BaseActivity {
 
 	Collection collect = null;
 	PhotoStats photoStats = null;
+	DataModel dataModel = null;
 	String fileName;
 	private Activity app;
 	
@@ -214,6 +219,7 @@ public class CameraActivity extends BaseActivity {
 					{
 						// 按下快门瞬间会执行此处代码
 						collect.getLight();
+						dataModel = collect.getDataModel();
 						Camera.Parameters parameters = mcamera.getParameters();
 						photoStats = new PhotoStats(collect.getxDirect(), collect.getyDirect(), collect.getzDirect(), collect.getLongtitude(), 
 								collect.getLatitude(), 0, parameters.getFocalLength(), (float)0);
@@ -260,7 +266,10 @@ public class CameraActivity extends BaseActivity {
 			saveView = getLayoutInflater().inflate(R.layout.save, null);
 
 			photoInfoText = (TextView)saveView.findViewById(R.id.photo_name);
-			photoInfoText.setText("......");
+			photoInfoText.setText("相片名称");
+			
+			TextView textView = (TextView)saveView.findViewById(R.id.phone_name2);
+			textView.setText(fileName);
 			// 加载/layout/save.xml文件对应的布局资源
 			//View saveDialog = getLayoutInflater().inflate(R.layout.save,
 			//	null);
@@ -341,9 +350,33 @@ public class CameraActivity extends BaseActivity {
 							e.printStackTrace();
 						}
 						Log.i("CaptureImage", "uploading...");
+						//**************Exif设置*************
+						try {
+							ExifInterface exif = new ExifInterface(fileName);
+							exif.setAttribute("Light", ""+collect.getLight());
+							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDate().toString());
+							exif.setAttribute(ExifInterface.TAG_MODEL, "model");
+							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
+							exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
+							exif.setAttribute(ExifInterface.TAG_MAKE, ""+dataModel.toString());
+							//exif.setAttribute("Light", ""+collect.getLight());
+							exif.saveAttributes();
+							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+						//**************Exif设置***END*******
 						
 						Thread t = new Thread() {
-							
+							public void run() {
+								try {
+									Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
+									Upload.Uploading("", fileName);
+								} catch (Exception e) {
+									e.printStackTrace();
+								}
+							}
 						};
 						t.start();
 
@@ -388,6 +421,20 @@ public class CameraActivity extends BaseActivity {
 						}
 
 						//**************Exif设置*************
+						try {
+							ExifInterface exif = new ExifInterface(fileName);
+							exif.setAttribute("Light", ""+collect.getLight());
+							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDate().toString());
+							exif.setAttribute(ExifInterface.TAG_MODEL, "model");
+							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
+							exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
+							exif.setAttribute(ExifInterface.TAG_MAKE, "");
+							//exif.setAttribute("Light", ""+collect.getLight());
+							exif.saveAttributes();
+							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
 
 						//**************Exif设置***END*******
 
