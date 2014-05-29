@@ -292,6 +292,21 @@ public class Collection implements SensorEventListener {
 	public Date getDate() {
 		return this.date;
 	}
+	public float getxDirect() {
+		return this.orientation[0];
+	}
+	public float getyDirect() {
+		return this.orientation[1];
+	}
+	public float getzDirect() {
+		return this.orientation[2];
+	}
+	public float getLongtitude() {
+		return this.longitude;
+	}
+	public float getLatitude() {
+		return this.latitude;
+	}
 	
 	private void returnValues(float [] e ,int Type) {
 		//Log.i("SensorEvent","sensor.Type = "+Type);

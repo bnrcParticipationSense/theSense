@@ -87,6 +87,7 @@ public class CameraActivity extends BaseActivity {
 	boolean GPSState;
 
 	Collection collect = null;
+	PhotoStats photoStats = null;
 	private Activity app;
 	
 	@Override
@@ -210,6 +211,9 @@ public class CameraActivity extends BaseActivity {
 					{
 						// 按下快门瞬间会执行此处代码
 						collect.getLight();
+						Camera.Parameters parameters = mcamera.getParameters();
+						photoStats = new PhotoStats(collect.getxDirect(), collect.getyDirect(), collect.getzDirect(), collect.getLongtitude(), 
+								collect.getLatitude(), 0, parameters.getFocalLength(), (float)0);
 						Log.i("onShutter", "Hello ShutterCallback");
 					}
 				}, new PictureCallback()
@@ -354,7 +358,7 @@ public class CameraActivity extends BaseActivity {
 
 						//**************Exif设置***END*******
 
-						FileModel fileModel = new FileModel(fileName, collect.getDate());
+						FileModel fileModel = new FileModel(fileName, collect.getDate(), photoStats);
 						fileModel.save(app);
 
 						mcamera.startPreview();
