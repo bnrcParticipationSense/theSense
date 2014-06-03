@@ -42,6 +42,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		menu.findItem(R.id.action_take_photo).setVisible(false);
 	}
 	
+	
 	private void initViews(View parentView) {
 		View cameraBtn = parentView.findViewById(R.id.cameraBtn);
 		View collectBtn = parentView.findViewById(R.id.collectBtn);
