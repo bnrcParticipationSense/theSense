@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<!-- project -->
     <string name="app_name">theSenser</string>
     <string name="action_settings">Settings</string>
+    
+    <!-- main -->
+    <string-array name="main_list_array">
+        <item>采集</item>
+        <item>工具</item>
+        <item>任务</item>
+        <item>用户</item>
+        <item>测试</item>
+    </string-array>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    
+    <!-- test -->
     <string name="test_helloText">Hello bnrc! This is a test page.</string>
     <string name="test_cameraBtn">照相</string>
     <string name="test_dataTestBtn">数据测试</string>
@@ -14,7 +27,6 @@
     <string name="data_saveBtn">保存数据</string>
     <string name="data_lookOneBtn">查看一个数据</string>
     <string name="data_lookListBtn">查看多个数据</string>
-    
     
     <string name="file_lookOneBtn">查看一个文件</string>
     <string name="file_lookListBtn">查看多个文件</string>
