@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,8 @@ import android.view.View.OnClickListener;
 public class TestFragment extends Fragment implements OnClickListener {
 
 	Collection collect = null;
+	Thread collect_t = null;
+	boolean thread_flag = true;
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,6 +38,21 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View exitBtn = parentView.findViewById(R.id.exitBtn);
 		View dataBtn = parentView.findViewById(R.id.dataTestBtn);
 		View fileBtn = parentView.findViewById(R.id.fileTestBtn);
+		collect = new Collection(getActivity());
+		collect_t = new Thread() {
+			public void run() {
+				thread_flag = true;
+				while(thread_flag) {
+					try {
+						sleep(2000);
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+					collect.save();
+				}
+			}
+		};
+		collect_t.start();
 		
 		
 		cameraBtn.setOnClickListener(this);
@@ -43,6 +61,18 @@ public class TestFragment extends Fragment implements OnClickListener {
 		collectBtn.setOnClickListener(this);
 		saveInfo.setOnClickListener(this);
 		exitBtn.setOnClickListener(this);
+	}
+	
+	private synchronized void threadc() {
+		if(thread_flag) {
+				//collect_t.wait();
+			thread_flag = false;
+		}
+		else {
+			//thread_flag = true;
+			//collect_t.run();
+				//collect_t.notify();
+		}
 	}
 	
 	@Override
@@ -56,8 +86,9 @@ public class TestFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.collectBtn:
 			Log.i("zzy", "collectBtn");
-			collect.stopListener();
+			//collect.stopListener();
 			//collect = new Collection(this);
+			threadc();
 			break;
 			
 		case R.id.fileTestBtn:

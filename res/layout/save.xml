@@ -15,8 +15,8 @@
 	android:id="@+id/photo_name"
 	 />
 <!-- 定义一个文本框来让用户输入照片名 -->
-<EditText
-	android:id="@+id/phone_name"
+<TextView
+	android:id="@+id/phone_name2"
 	android:layout_width="fill_parent"
 	android:layout_height="wrap_content"/>	
 </LinearLayout>

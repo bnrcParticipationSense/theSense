@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/fileTestBtn"
-        android:text="停止数据采集模块"
+        android:text="停止/开始数据采集"
     />
    
     <Button android:id="@+id/saveInfo"

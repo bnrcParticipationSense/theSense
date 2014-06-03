@@ -59,7 +59,7 @@ public final class R {
         public static final int listFile_title=0x7f090008;
         public static final int main_drawer_layout=0x7f09000d;
         public static final int main_left_drawer=0x7f09000f;
-        public static final int phone_name=0x7f09001e;
+        public static final int phone_name2=0x7f09001e;
         public static final int photoBut=0x7f090002;
         public static final int photo_name=0x7f09001d;
         public static final int sView=0x7f090000;

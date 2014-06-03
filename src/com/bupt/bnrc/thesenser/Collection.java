@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Looper;
 //Connect
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo.State;
@@ -26,11 +27,11 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-//假如用到位置提醒功能，需要import该类
+//���濡���ㄥ�颁��缃������������斤�����瑕�import璇ョ被
 //import com.baidu.location.BDNotifyListener;
 //************//
 
-//如果使用地理围栏功能，需要import如下类
+//濡����浣跨�ㄥ�扮����存�������斤�����瑕�import濡�涓�绫�
 //import com.baidu.location.BDGeofence;
 //import com.baidu.location.BDLocationStatusCodes;
 //import com.baidu.location.GeofenceClient;
@@ -42,6 +43,8 @@ import com.baidu.location.LocationClientOption;
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PhotoStats;
 import com.bupt.bnrc.thesenser.model.DataModel;
+import com.bupt.bnrc.thesenser.utils.Json;
+import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class Collection implements SensorEventListener {
 	
@@ -90,7 +93,7 @@ public class Collection implements SensorEventListener {
 	private BatteryReceiver receiver = null;
 	private ConnectivityManager connectManager;
 	
-	//传感器
+	//浼�������
 	private float light;
 	
 	private float [] acceleration = new float[3];
@@ -99,20 +102,24 @@ public class Collection implements SensorEventListener {
 	private float [] orientation = new float[3];			//getOrientation();
 	private float [] sensor_orientation = new float[3];	//Sensor.TYPE_ORIENTATION
 	
-	//图片
+	//��剧��
 	private String picName;
 	private Date date;
 	
-	//电池&网络
+	//��垫��&缃�缁�
 	private int connectionState;
 	private int batteryState;
 	private int percent;
-	//位置
+	//浣�缃�
 	private float latitude;
 	private float longitude;
 	
 	//is SensorListener registered
 	private boolean sensorlistener_flag = true;
+	
+	//new things for upload or others
+	DataModel mData = null;
+	
 	//*******************************************************************************//
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
@@ -154,7 +161,7 @@ public class Collection implements SensorEventListener {
 	      Log.i("BD_LBS_SDK", sb.toString());
 	    }
 	public void onReceivePoi(BDLocation poiLocation) {
-	//将在下个版本中去除poi功能
+	//灏���ㄤ��涓�������涓���婚��poi������
 	         if (poiLocation == null){
 	                return ;
 	          }
@@ -197,12 +204,12 @@ public class Collection implements SensorEventListener {
 		
 		sensorManager = (SensorManager) this.app.getSystemService(android.content.Context.SENSOR_SERVICE);
 		connectManager = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
-		mLocationClient = new LocationClient(this.app.getApplicationContext());     //声明LocationClient类
+		mLocationClient = new LocationClient(this.app.getApplicationContext());     //澹版��LocationClient绫�
 	     
 		setValues();//register every sensors
 	}
 	
-	public void setValues() {
+	private void setValues() {
 		setLight();
 		setAccelerometer();
 		setMagneticField();
@@ -267,6 +274,10 @@ public class Collection implements SensorEventListener {
 		this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 		sensorManager.registerListener(this, this.sensor, SensorManager.SENSOR_DELAY_NORMAL);
 	}
+	private void setDataModel() {
+		Date tempDate = new Date();
+		mData = new DataModel(this.light, this.noise_test, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
+	}
 	
 	public void setPicName(String str) {
 		this.picName = str;
@@ -291,6 +302,25 @@ public class Collection implements SensorEventListener {
 	}
 	public Date getDate() {
 		return this.date;
+	}
+	public float getxDirect() {
+		return this.orientation[0];
+	}
+	public float getyDirect() {
+		return this.orientation[1];
+	}
+	public float getzDirect() {
+		return this.orientation[2];
+	}
+	public float getLongtitude() {
+		return this.longitude;
+	}
+	public float getLatitude() {
+		return this.latitude;
+	}
+	public DataModel getDataModel() {
+		setDataModel();
+		return mData;
 	}
 	
 	private void returnValues(float [] e ,int Type) {
@@ -325,6 +355,7 @@ public class Collection implements SensorEventListener {
 			this.app.unregisterReceiver(receiver);
 			this.sensorlistener_flag = false;
 		}
+		/*
 		else {
 			setLight();
 			setAccelerometer();
@@ -332,6 +363,7 @@ public class Collection implements SensorEventListener {
 			setOrientation();
 			this.sensorlistener_flag = true;
 		}
+		*/
 	}
 	
 	@Override
@@ -382,9 +414,31 @@ public class Collection implements SensorEventListener {
 	}
 	
 	public void save() {
-		Date tempDate = new Date();
-		DataModel model = new DataModel(this.light, this.noise_test, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
-		model.save(app);
+		Log.i("Collection", "save()");
+		if(this.sensorlistener_flag) {
+			setDataModel();
+			mData.save(app);
+		}
+		else {
+			Toast toast = Toast.makeText(app, "采集模块已停止工作", Toast.LENGTH_LONG);
+			toast.show();
+		}
+	}
+	public void upload() {
+		setDataModel();
+		Thread t = new Thread() {
+			public void run() {
+				Looper.prepare();
+				try {
+					Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
+					Upload.Uploading(app, "", Json.toJSON(mData));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				Looper.loop();
+			}
+		};
+		t.start();
 	}
 
 	
