@@ -2,6 +2,7 @@ package com.bupt.bnrc.thesenser;
 
 import com.bupt.bnrc.thesenser.utils.Logger;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -12,12 +13,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 
-public class FileActivity extends BaseActivity implements OnClickListener {
+public class FileActivity extends Activity implements OnClickListener {
 	private View listView = null;
 	private Dialog listDialog = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Logger.i("打开文件测试页");
+		Logger.i("鎵撳紑鏂囦欢娴嬭瘯椤�");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_file);
 		
@@ -44,11 +45,11 @@ public class FileActivity extends BaseActivity implements OnClickListener {
 	private void OnClickLookListBtn() {
 		if (listDialog == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("要查找的前n个数据");
+			builder.setTitle("瑕佹煡鎵剧殑鍓峮涓暟鎹�");
 			builder.setView(getListView());
 			builder.setCancelable(true);
-	        builder.setPositiveButton("确定", lookListFile());
-	        builder.setNegativeButton("取消", cancelListener());
+	        builder.setPositiveButton("纭畾", lookListFile());
+	        builder.setNegativeButton("鍙栨秷", cancelListener());
 	        listDialog = builder.create();
 		}
 		listDialog.show();
