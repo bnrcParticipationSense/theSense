@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.BatteryManager;
+import android.os.Looper;
 //Connect
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo.State;
@@ -427,12 +428,14 @@ public class Collection implements SensorEventListener {
 		setDataModel();
 		Thread t = new Thread() {
 			public void run() {
+				Looper.prepare();
 				try {
 					Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
-					Upload.Uploading("", Json.toJSON(mData));
+					Upload.Uploading(app, "", Json.toJSON(mData));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				Looper.loop();
 			}
 		};
 		t.start();

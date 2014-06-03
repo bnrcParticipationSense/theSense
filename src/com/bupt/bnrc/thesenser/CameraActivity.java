@@ -33,6 +33,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -370,12 +371,14 @@ public class CameraActivity extends BaseActivity {
 						
 						Thread t = new Thread() {
 							public void run() {
+								Looper.prepare();
 								try {
 									Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
-									Upload.Uploading("", fileName);
+									Upload.Uploading(app, "", fileName);
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
+								Looper.loop();
 							}
 						};
 						t.start();

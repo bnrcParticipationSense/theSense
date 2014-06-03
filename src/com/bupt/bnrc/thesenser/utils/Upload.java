@@ -44,11 +44,12 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
-public class Upload extends Activity {
+public class Upload {
 	
-	static public JSONObject Uploading(String uploadUrl, JSONObject sendObj) {
+	static public JSONObject Uploading(Activity app, String uploadUrl, JSONObject sendObj) {
 		//HttpPost post = new HttpPost(uploadUrl);
 		HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
+		//HttpPost post = new HttpPost("http://10.108.105.190:8080/webInterface/fileServlet");
 		JSONObject receiveObj;
 		
 		HttpClient httpClient;
@@ -73,8 +74,8 @@ public class Upload extends Activity {
 			
 			if(resCode != 200)
 			{
-				//Toast.makeText(this, "Server response error!" + "\nreponse code: "+resCode, Toast.LENGTH_SHORT).show();
-				Log.i("Upload", "SUCCESS");
+				Toast.makeText(app, "Server response error!" + "\nreponse code: "+resCode, Toast.LENGTH_SHORT).show();
+				Log.i("Upload", "error");
 			}
 			
 			if (entity != null)
@@ -98,7 +99,7 @@ public class Upload extends Activity {
 	}
 	
 	
-	static public void Uploading(String uploadUrl, String fileName) {
+	static public void Uploading(Activity app, String uploadUrl, String fileName) {
 		String end = "\r\n";
 	    String twoHyphens = "--";
 	    String boundary = UUID.randomUUID().toString();
@@ -107,8 +108,8 @@ public class Upload extends Activity {
 	    {
 	    	
 	    	//URL url = new URL(uploadUrl);
-	    	//URL url = new URL("http://10.108.108.11/upload11.php");
-	    	URL url = new URL("http://10.108.105.190:8080/webInterface/fileServlet");
+	    	URL url = new URL("http://10.108.108.11/upload11.php");
+	    	//URL url = new URL("http://10.108.105.190:8080/webInterface/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 	    	// 设置每次传输的流大小，可以有效防止手机因为内存不足崩溃
@@ -169,7 +170,7 @@ public class Upload extends Activity {
 	    	int res = httpURLConnection.getResponseCode();
 	    	if(res == 200)
 	    	{
-	    		//Toast.makeText(this, "SUCCESS", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
 	    		Log.i("Upload", "SUCCESS");
 	    	}
 	    	InputStream is = httpURLConnection.getInputStream();
