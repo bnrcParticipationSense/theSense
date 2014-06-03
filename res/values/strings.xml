@@ -2,9 +2,11 @@
 <resources>
 	<!-- project -->
     <string name="app_name">theSenser</string>
-    <string name="action_settings">Settings</string>
     
-    <!-- main -->
+    <!-- action bar -->
+    <string name="action_take_photo">照相</string>
+    
+    <!-- drawer -->
     <string-array name="main_list_array">
         <item>采集</item>
         <item>工具</item>
@@ -14,6 +16,7 @@
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    
     
     <!-- test -->
     <string name="test_helloText">Hello bnrc! This is a test page.</string>

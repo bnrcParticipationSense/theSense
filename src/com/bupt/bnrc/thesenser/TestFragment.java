@@ -2,13 +2,14 @@ package com.bupt.bnrc.thesenser;
 
 import com.bupt.bnrc.thesenser.utils.Logger;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -20,6 +21,12 @@ public class TestFragment extends Fragment implements OnClickListener {
 	boolean thread_flag = true;
 	
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		setHasOptionsMenu(true);
+		super.onCreate(savedInstanceState);
+	}
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -30,6 +37,14 @@ public class TestFragment extends Fragment implements OnClickListener {
 		getActivity().setTitle(title);
 		return testView;
 	}
+	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// TODO Auto-generated method stub
+		super.onCreateOptionsMenu(menu, inflater);
+		menu.findItem(R.id.action_take_photo).setVisible(false);
+	}
+	
 	
 	private void initViews(View parentView) {
 		View cameraBtn = parentView.findViewById(R.id.cameraBtn);

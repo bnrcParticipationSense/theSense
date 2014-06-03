@@ -1,27 +1,19 @@
 package com.bupt.bnrc.thesenser;
 
-import java.util.Locale;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.app.SearchManager;
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
@@ -31,6 +23,8 @@ public class MainActivity extends Activity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
 	private String[] mListTitles;
+	
+	private int mNowPosition;
 	
 	private static FragmentFactory fragmentFactory = FragmentFactory.getInstance();
     
@@ -44,12 +38,13 @@ public class MainActivity extends Activity {
     	initViews();
     	
     	if (savedInstanceState == null) {
-            selectItem(0);
+            selectItem(mNowPosition);
         }
     }
 
 	private void initDatas() {
 		// TODO Auto-generated method stub
+		mNowPosition = 0;
 		mTitle = mDrawerTitle = getTitle();
 		
 		mListTitles = getResources().getStringArray(R.array.main_list_array);
@@ -94,11 +89,21 @@ public class MainActivity extends Activity {
         
 	}
 	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+	
 	/* Called whenever we call invalidateOptionsMenu() */
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.action_take_photo).setVisible(!drawerOpen);
+        // update the action items again depends on the fragment
+        hideActionButton(menu);
         return super.onPrepareOptionsMenu(menu);
     }
 	
@@ -122,13 +127,26 @@ public class MainActivity extends Activity {
         fragment.setArguments(args);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-        
         // update selected item and title, then close the drawer
+        mNowPosition = position;
         mDrawerList.setItemChecked(position, true);
         setTitle(mListTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
 	}
 	
+	private void hideActionButton(Menu menu) {
+		// TODO Auto-generated method stub
+		switch (mNowPosition) {
+		case 0:
+			break;
+		case 4:
+			menu.findItem(R.id.action_take_photo).setVisible(false);
+			break;
+		default:
+			break;
+		}
+	}
+
 	private String getFragmentType(int position) {
 		String re = null;
 		switch (position) {
