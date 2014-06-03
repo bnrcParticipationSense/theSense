@@ -50,7 +50,7 @@ import android.media.ExifInterface;
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PhotoStats;
 
-public class CameraActivity extends BaseActivity {
+public class CameraActivity extends Activity {
 
 
 	private static final String ACTIVITY_TAG="CameraActivity";

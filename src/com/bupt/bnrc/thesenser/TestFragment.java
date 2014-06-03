@@ -1,34 +1,43 @@
 package com.bupt.bnrc.thesenser;
 
-import com.bupt.bnrc.thesenser.BaseActivity;
 import com.bupt.bnrc.thesenser.utils.Logger;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 
-public class TestActivity extends BaseActivity implements OnClickListener {
+public class TestFragment extends Fragment implements OnClickListener {
 
 	Collection collect = null;
+	
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		Logger.i("���寮�娴�璇�椤典富椤�");
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_test);
-		collect = new Collection(this);
-		initViews();
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View testView = inflater.inflate(R.layout.activity_test, container, false);
+		int i = getArguments().getInt(FragmentFactory.ARG_MAIN_INDEX);
+		String title = getResources().getStringArray(R.array.main_list_array)[i];
+		initViews(testView);
+		getActivity().setTitle(title);
+		return testView;
 	}
 	
-	private void initViews() {
-		View cameraBtn = findViewById(R.id.cameraBtn);
-		View collectBtn = findViewById(R.id.collectBtn);
-		View saveInfo = findViewById(R.id.saveInfo);
-		View exitBtn = findViewById(R.id.exitBtn);
+	private void initViews(View parentView) {
+		View cameraBtn = parentView.findViewById(R.id.cameraBtn);
+		View collectBtn = parentView.findViewById(R.id.collectBtn);
+		View saveInfo = parentView.findViewById(R.id.saveInfo);
+		View exitBtn = parentView.findViewById(R.id.exitBtn);
+		View dataBtn = parentView.findViewById(R.id.dataTestBtn);
+		View fileBtn = parentView.findViewById(R.id.fileTestBtn);
+		
+		
 		cameraBtn.setOnClickListener(this);
-		View dataBtn = findViewById(R.id.dataTestBtn);
-		View fileBtn = findViewById(R.id.fileTestBtn);
 		fileBtn.setOnClickListener(this);
 		dataBtn.setOnClickListener(this);
 		collectBtn.setOnClickListener(this);
@@ -66,19 +75,18 @@ public class TestActivity extends BaseActivity implements OnClickListener {
 	}
 
 	private void processFileBtnClick() {
-		// TODO Auto-generated method stub
-		Intent intent = new Intent(TestActivity.this, FileActivity.class);
+		Intent intent = new Intent(getActivity(), FileActivity.class);
 		startActivity(intent);
 	}
 
 	private void processDataBtnClick() {
-		Intent intent = new Intent(TestActivity.this, DataActivity.class);
+		Intent intent = new Intent(getActivity(), DataActivity.class);
 		startActivity(intent);
 	}
 
 	private void processCameraBtnClick() {
 		Logger.d("杩���ョ�告�烘��璇�椤�");
-		Intent intent = new Intent(TestActivity.this, CameraActivity.class);
+		Intent intent = new Intent(getActivity(), CameraActivity.class);
 		startActivity(intent);
 	}
 
