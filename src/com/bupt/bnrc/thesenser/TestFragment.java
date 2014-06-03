@@ -33,9 +33,11 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View collectBtn = parentView.findViewById(R.id.collectBtn);
 		View saveInfo = parentView.findViewById(R.id.saveInfo);
 		View exitBtn = parentView.findViewById(R.id.exitBtn);
-		cameraBtn.setOnClickListener(this);
 		View dataBtn = parentView.findViewById(R.id.dataTestBtn);
 		View fileBtn = parentView.findViewById(R.id.fileTestBtn);
+		
+		
+		cameraBtn.setOnClickListener(this);
 		fileBtn.setOnClickListener(this);
 		dataBtn.setOnClickListener(this);
 		collectBtn.setOnClickListener(this);

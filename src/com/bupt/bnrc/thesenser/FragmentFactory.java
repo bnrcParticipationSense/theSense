@@ -19,7 +19,7 @@ public class FragmentFactory {
 	public Fragment createFragment(String type) {
 		Fragment fragment = null;
 		if(type.equals("collect")) {
-			
+			fragment = new CollectFragment();
 		} else if(type.equals("test")) {
 			fragment = new TestFragment();
 		}

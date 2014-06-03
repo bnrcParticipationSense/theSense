@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
     	initViews();
     	
     	if (savedInstanceState == null) {
-            selectItem(4);
+            selectItem(0);
         }
     }
 

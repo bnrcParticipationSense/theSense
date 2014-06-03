@@ -27,8 +27,9 @@ public final class R {
     }
     public static final class drawable {
         public static final int capture=0x7f020000;
-        public static final int ic_drawer=0x7f020001;
-        public static final int ic_launcher=0x7f020002;
+        public static final int goodday=0x7f020001;
+        public static final int ic_drawer=0x7f020002;
+        public static final int ic_launcher=0x7f020003;
     }
     public static final class id {
         public static final int action_settings=0x7f090020;
@@ -73,12 +74,13 @@ public final class R {
         public static final int activity_main=0x7f030004;
         public static final int activity_test=0x7f030005;
         public static final int antivity_data=0x7f030006;
-        public static final int get_data_id=0x7f030007;
-        public static final int get_data_list=0x7f030008;
-        public static final int get_file_id=0x7f030009;
-        public static final int get_file_list=0x7f03000a;
-        public static final int main_drawer_list_item=0x7f03000b;
-        public static final int save=0x7f03000c;
+        public static final int fragment_collect=0x7f030007;
+        public static final int get_data_id=0x7f030008;
+        public static final int get_data_list=0x7f030009;
+        public static final int get_file_id=0x7f03000a;
+        public static final int get_file_list=0x7f03000b;
+        public static final int main_drawer_list_item=0x7f03000c;
+        public static final int save=0x7f03000d;
     }
     public static final class menu {
         public static final int test=0x7f080000;
