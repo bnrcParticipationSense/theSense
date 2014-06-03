@@ -9,7 +9,7 @@ package com.bupt.bnrc.thesenser;
 
 public final class R {
     public static final class array {
-        /**  main 
+        /**  drawer 
          */
         public static final int main_list_array=0x7f060000;
     }
@@ -28,11 +28,12 @@ public final class R {
     public static final class drawable {
         public static final int capture=0x7f020000;
         public static final int goodday=0x7f020001;
-        public static final int ic_drawer=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
+        public static final int ic_action_photo=0x7f020002;
+        public static final int ic_drawer=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f090020;
+        public static final int action_take_photo=0x7f090020;
         public static final int cameraBtn=0x7f090011;
         public static final int collectBtn=0x7f090014;
         public static final int content_frame=0x7f09000e;
@@ -83,10 +84,12 @@ public final class R {
         public static final int save=0x7f03000d;
     }
     public static final class menu {
-        public static final int test=0x7f080000;
+        public static final int main=0x7f080000;
     }
     public static final class string {
-        public static final int action_settings=0x7f050001;
+        /**  action bar 
+         */
+        public static final int action_take_photo=0x7f050001;
         /**  project 
          */
         public static final int app_name=0x7f050000;
