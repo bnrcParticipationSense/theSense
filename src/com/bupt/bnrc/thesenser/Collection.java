@@ -95,6 +95,7 @@ public class Collection implements SensorEventListener {
 	
 	//浼�������
 	private float light;
+	private float noise;
 	
 	private float [] acceleration = new float[3];
 	private float [] magnetic_field = new float[3];
@@ -439,6 +440,20 @@ public class Collection implements SensorEventListener {
 			}
 		};
 		t.start();
+	}
+	
+	public void showinfo(Activity a) {
+		String str =	"光线："+this.light+";\n"+
+						"噪音："+this.noise_test+";\n"+
+						"经度："+this.longitude+";\n"+
+						"纬度："+this.latitude+"\n"+
+						"x方向："+this.orientation[0]+";\n"+
+						"y方向："+this.orientation[1]+";\n"+
+						"z方向："+this.orientation[2]+";\n"+
+						"电量："+this.percent+";\n"+
+						"时间："+this.date+";";
+		Toast toast = Toast.makeText(a, str, Toast.LENGTH_LONG);
+		toast.show();
 	}
 
 	

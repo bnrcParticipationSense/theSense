@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/fileTestBtn"
-        android:text="停止/开始数据采集"
+        android:text="停止自动采集数据"
     />
    
     <Button android:id="@+id/saveInfo"
@@ -57,5 +57,13 @@
         android:layout_below="@id/saveInfo"
         android:text="退出"
     />
+
+    <Button
+        android:id="@+id/infoBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/exitBtn"
+        android:layout_centerHorizontal="true"
+        android:text="展示数据" />
 
 </RelativeLayout>

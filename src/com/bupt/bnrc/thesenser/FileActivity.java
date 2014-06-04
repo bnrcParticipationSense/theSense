@@ -18,7 +18,7 @@ public class FileActivity extends Activity implements OnClickListener {
 	private Dialog listDialog = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Logger.i("鎵撳紑鏂囦欢娴嬭瘯椤�");
+		Logger.i("打开文件测试页");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_file);
 		
@@ -45,11 +45,11 @@ public class FileActivity extends Activity implements OnClickListener {
 	private void OnClickLookListBtn() {
 		if (listDialog == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("瑕佹煡鎵剧殑鍓峮涓暟鎹�");
+			builder.setTitle("要查找的前n个数据");
 			builder.setView(getListView());
 			builder.setCancelable(true);
-	        builder.setPositiveButton("纭畾", lookListFile());
-	        builder.setNegativeButton("鍙栨秷", cancelListener());
+	        builder.setPositiveButton("确定", lookListFile());
+	        builder.setNegativeButton("取消", cancelListener());
 	        listDialog = builder.create();
 		}
 		listDialog.show();

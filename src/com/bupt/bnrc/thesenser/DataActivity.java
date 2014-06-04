@@ -21,7 +21,7 @@ public class DataActivity extends Activity implements OnClickListener {
 	private Dialog oneDialog = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Logger.i("鎵撳紑鏁版嵁娴嬭瘯椤�");
+		Logger.i("打开数据测试页");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.antivity_data);
 		
@@ -53,11 +53,11 @@ public class DataActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		if (listDialog == null) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
-			builder.setTitle("瑕佹煡鎵剧殑鍓峮涓暟鎹�");
+			builder.setTitle("要查找的前n个数据");
 			builder.setView(getListView());
 			builder.setCancelable(true);
-	        builder.setPositiveButton("纭畾", lookListData());
-	        builder.setNegativeButton("鍙栨秷", cancelListener());
+	        builder.setPositiveButton("确定", lookListData());
+	        builder.setNegativeButton("取消", cancelListener());
 	        listDialog = builder.create();
 		}
 		listDialog.show();
@@ -83,11 +83,11 @@ public class DataActivity extends Activity implements OnClickListener {
 	private void OnClickLookOneBtn() {
 		if(oneDialog == null) {
 			AlertDialog.Builder builder1 = new AlertDialog.Builder(this);
-			builder1.setTitle("瑕佹煡鎵剧殑id");
+			builder1.setTitle("要查找的id");
 			builder1.setView(getOneView());
 			builder1.setCancelable(true);
-	        builder1.setPositiveButton("纭畾", lookOneData());
-	        builder1.setNegativeButton("鍙栨秷", cancelListener());
+	        builder1.setPositiveButton("确定", lookOneData());
+	        builder1.setNegativeButton("取消", cancelListener());
 	        oneDialog = builder1.create();
 		}
 		oneDialog.show();
@@ -101,11 +101,11 @@ public class DataActivity extends Activity implements OnClickListener {
 		String message = transDataToMsg(data);
 		
 		if(message == null) {
-			message = "ID 涓嶅锛� 鏌ヤ笉鍒版暟鎹紒";
+			message = "ID 不对！ 查不到数据！";
 		}
-		// 瀵硅瘽妗�
+		// 对话框
 		AlertDialog.Builder builder = new AlertDialog.Builder(this)
-		.setTitle("鍙栧嚭鐨勬暟鎹�")
+		.setTitle("取出的数据")
 		.setMessage(message);
 		
 		builder.create().show();
@@ -133,16 +133,16 @@ public class DataActivity extends Activity implements OnClickListener {
 	private String transDataToMsg(DataModel data) {
 		String message = null;
 		if(data != null) {
-			message = "鍙栧埌鐨勬暟鎹槸:\n";
+			message = "取到的数据是:\n";
 			message += "ID:" + data.getId().toString() + "\n";
 			message += "CreateTime:" + data.getCreateTimeString() + "\n";
-			message += "鍏夌収寮哄害:" + data.getLightIntensity().toString() + "\n";
-			message += "鍣０寮哄害:" + data.getSoundIntensity().toString() + "\n";
-			message += "鐢垫睜鐘舵��:" + data.getBatteryState().toString() + "\n";
-			message += "鍏呯數鐘舵��:" + data.getChargeState().toString() + "\n";
-			message += "缃戠粶鐘舵��:" + data.getNetState().toString() + "\n";
-			message += "缁忓害: " + data.getLongitude().toString() + "\n";
-			message += "绾害锛�" + data.getLatitude().toString() + "\n";
+			message += "光照强度:" + data.getLightIntensity().toString() + "\n";
+			message += "噪声强度:" + data.getSoundIntensity().toString() + "\n";
+			message += "电池状态:" + data.getBatteryState().toString() + "\n";
+			message += "充电状态:" + data.getChargeState().toString() + "\n";
+			message += "网络状态:" + data.getNetState().toString() + "\n";
+			message += "经度: " + data.getLongitude().toString() + "\n";
+			message += "纬度：" + data.getLatitude().toString() + "\n";
 		}
 		return message;
 	}
@@ -165,25 +165,25 @@ public class DataActivity extends Activity implements OnClickListener {
 	
 	/*
 	private void OnClickSaveBtn() {
-		// 寰楀埌鏄庨潰涓婄殑鏁版嵁
+		// 得到明面上的数据
 		
 		String temp = ((EditText)findViewById(R.id.data_light)).getText().toString();
-		Float lightIntensity = Float.parseFloat(temp); //鍏夌収
+		Float lightIntensity = Float.parseFloat(temp); //光照
 		temp = ((EditText)findViewById(R.id.data_sound)).getText().toString();
-		Float soundIntensity = Float.parseFloat(temp); // 澹伴煶
+		Float soundIntensity = Float.parseFloat(temp); // 声音
 		temp = ((EditText)findViewById(R.id.data_charge)).getText().toString();
-		Integer chargeState = Integer.parseInt(temp); // 0锛氭湭鍏呯數锛� 1锛氬厖鐢�
+		Integer chargeState = Integer.parseInt(temp); // 0：未充电， 1：充电
 		temp = ((EditText)findViewById(R.id.data_battary)).getText().toString();
-		Integer batteryState = Integer.parseInt(temp); // 鐢甸噺鐨勭櫨鍒嗘瘮
+		Integer batteryState = Integer.parseInt(temp); // 电量的百分比
 		temp = ((EditText)findViewById(R.id.data_net)).getText().toString();
-		Integer netState = Integer.parseInt(temp); //0:鏃犵綉缁�    1:2G 2:3G 3:4G 4锛歸ifi
+		Integer netState = Integer.parseInt(temp); //0:无网络    1:2G 2:3G 3:4G 4：wifi
 		temp = ((EditText)findViewById(R.id.data_longitude)).getText().toString();
 		Float longitude = Float.parseFloat(temp);
 		temp = ((EditText)findViewById(R.id.data_latitude)).getText().toString();
 		Float latitude = Float.parseFloat(temp);
 		
 
-		Date createTime = new Date(); // 閲囬泦鏃堕棿
+		Date createTime = new Date(); // 采集时间
 		
 		DataModel data = new DataModel(lightIntensity, soundIntensity, createTime, chargeState, batteryState, netState, longitude, latitude);
 		

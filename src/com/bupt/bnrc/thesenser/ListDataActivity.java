@@ -22,7 +22,7 @@ public class ListDataActivity extends Activity implements OnClickListener {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		Logger.i("鎵撳紑鏁版嵁鍒楄〃椤�");
+		Logger.i("打开数据列表页");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_data);
 		
@@ -33,14 +33,14 @@ public class ListDataActivity extends Activity implements OnClickListener {
 
 	private void refreshState() {
 		// TODO Auto-generated method stub
-		String titleStr = "娌℃湁鎵惧埌鏁版嵁";
-		String detailsStr = "鏃犳暟鎹�";
+		String titleStr = "没有找到数据";
+		String detailsStr = "无数据";
 		
 		View preBtn = findViewById(R.id.listData_pre_btn);
 		View nextBtn = findViewById(R.id.listData_next_btn);
 		
 		if(index != null) {
-			titleStr = String.format("瑕佹煡鎵�%d涓暟鎹紝鍏辨壘鍒� %d 涓暟鎹�, 褰撳墠涓虹 %d 涓�", num, datas.size(), index+1);
+			titleStr = String.format("要查找%d个数据，共找到 %d 个数据, 当前为第 %d 个", num, datas.size(), index+1);
 			detailsStr = transDataToMsg(datas.get(index));
 			preBtn.setEnabled(index > 0);
 			nextBtn.setEnabled(index < datas.size() - 1);
@@ -86,16 +86,16 @@ public class ListDataActivity extends Activity implements OnClickListener {
 	private String transDataToMsg(DataModel data) {
 		String message = null;
 		if(data != null) {
-			message = "鍙栧埌鐨勬暟鎹槸:\n";
+			message = "取到的数据是:\n";
 			message += "ID:" + data.getId().toString() + "\n";
 			message += "CreateTime:" + data.getCreateTimeString() + "\n";
-			message += "鍏夌収寮哄害:" + data.getLightIntensity().toString() + "\n";
-			message += "鍣０寮哄害:" + data.getSoundIntensity().toString() + "\n";
-			message += "鐢垫睜鐘舵��:" + data.getBatteryState().toString() + "\n";
-			message += "鍏呯數鐘舵��:" + data.getChargeState().toString() + "\n";
-			message += "缃戠粶鐘舵��:" + data.getNetState().toString() + "\n";
-			message += "缁忓害: " + data.getLongitude().toString() + "\n";
-			message += "绾害锛�" + data.getLatitude().toString() + "\n";
+			message += "光照强度:" + data.getLightIntensity().toString() + "\n";
+			message += "噪声强度:" + data.getSoundIntensity().toString() + "\n";
+			message += "电池状态:" + data.getBatteryState().toString() + "\n";
+			message += "充电状态:" + data.getChargeState().toString() + "\n";
+			message += "网络状态:" + data.getNetState().toString() + "\n";
+			message += "经度: " + data.getLongitude().toString() + "\n";
+			message += "纬度：" + data.getLatitude().toString() + "\n";
 		}
 		return message;
 	}

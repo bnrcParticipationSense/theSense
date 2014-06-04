@@ -39,14 +39,14 @@ public class ListFileActivity extends Activity implements OnClickListener {
 	}
 
 	private void refreshState() {
-		String titleStr = "娌℃湁鎵惧埌鏂囦欢";
-		String detailsStr = "鏃犳枃浠�";
+		String titleStr = "没有找到文件";
+		String detailsStr = "无文件";
 		
 		View preBtn = findViewById(R.id.listFile_pre_btn);
 		View nextBtn = findViewById(R.id.listFile_next_btn);
 		
 		if(index != null) {
-			titleStr = String.format("瑕佹煡鎵�%d涓枃浠讹紝鍏辨壘鍒� %d 涓枃浠�, 褰撳墠涓虹 %d 涓�", num, files.size(), index+1);
+			titleStr = String.format("要查找%d个文件，共找到 %d 个文件, 当前为第 %d 个", num, files.size(), index+1);
 			if(files.get(index).getTag() == 0) {
 				picView.setVisibility(ImageView.VISIBLE);
 				FileInputStream fileStream = null;
@@ -57,11 +57,11 @@ public class ListFileActivity extends Activity implements OnClickListener {
 				}
 				
 				BitmapDrawable bitmapDrawable = (BitmapDrawable)picView.getDrawable();
-				// 濡傛灉鍥剧墖杩樻病鏈夋敹鍥烇紝鍏堟敹鍥�
+				// 如果图片还没有收回，先收回
 				if(bitmapDrawable != null && !bitmapDrawable.getBitmap().isRecycled()) {
 					bitmapDrawable.getBitmap().recycle();
 				}
-				// 鏀瑰彉鏄剧ず鐨勫浘鐗�
+				// 改变显示的图片
 				picView.setImageBitmap(BitmapFactory.decodeStream(fileStream));
 				
 			} else {
@@ -83,19 +83,19 @@ public class ListFileActivity extends Activity implements OnClickListener {
 	private String transFileToMsg(FileModel file) {
 		String message = null;
 		if(file != null) {
-			message = "鍙栧埌鐨勬暟鎹槸:\n";
+			message = "取到的数据是:\n";
 			message += "ID:" + file.getId().toString() + "\n";
-			message += "鍒涘缓鏃堕棿 :" + file.getCreateTimeString() + "\n";
-			message += "鏂囦欢璺緞锛�" + file.getFileName() + "\n";
+			message += "创建时间 :" + file.getCreateTimeString() + "\n";
+			message += "文件路径：" + file.getFileName() + "\n";
 			if(file.getPhotoStats() != null) {
-				message += "x鏂瑰悜:" + file.getPhotoStats().getXDirect().toString() + "\n";
-				message += "y鏂瑰悜:" + file.getPhotoStats().getYDirect().toString() + "\n";
-				message += "z鏂瑰悜:" + file.getPhotoStats().getZDirect().toString() + "\n";
-				message += "缁忓害:" + file.getPhotoStats().getLongitude().toString() + "\n";
-				message += "绾害:" + file.getPhotoStats().getLatitude().toString() + "\n";
-				message += "鏇濆厜搴�:" + file.getPhotoStats().getExposureValue().toString() + "\n";
-				message += "鐒﹁窛:" + file.getPhotoStats().getFocalDistance().toString() + "\n";
-				message += "鍏夊湀:" + file.getPhotoStats().getAperture().toString() + "\n";
+				message += "x方向:" + file.getPhotoStats().getXDirect().toString() + "\n";
+				message += "y方向:" + file.getPhotoStats().getYDirect().toString() + "\n";
+				message += "z方向:" + file.getPhotoStats().getZDirect().toString() + "\n";
+				message += "经度:" + file.getPhotoStats().getLongitude().toString() + "\n";
+				message += "纬度:" + file.getPhotoStats().getLatitude().toString() + "\n";
+				message += "曝光度:" + file.getPhotoStats().getExposureValue().toString() + "\n";
+				message += "焦距:" + file.getPhotoStats().getFocalDistance().toString() + "\n";
+				message += "光圈:" + file.getPhotoStats().getAperture().toString() + "\n";
 			}
 		}
 		return message;

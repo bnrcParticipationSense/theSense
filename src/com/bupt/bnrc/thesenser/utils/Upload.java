@@ -77,6 +77,11 @@ public class Upload {
 				Toast.makeText(app, "Server response error!" + "\nreponse code: "+resCode, Toast.LENGTH_SHORT).show();
 				Log.i("Upload", "error");
 			}
+			else
+			{
+				Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
+	    		Log.i("Upload", "SUCCESS");
+			}
 			
 			if (entity != null)
 			{

@@ -13,12 +13,15 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public class TestFragment extends Fragment implements OnClickListener {
 
 	Collection collect = null;
-	Thread collect_t = null;
+	static Thread collect_t = null;
 	boolean thread_flag = true;
+	static boolean thread_uniqueness = false;
+	int sleeptime = 2000;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,21 +56,52 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View exitBtn = parentView.findViewById(R.id.exitBtn);
 		View dataBtn = parentView.findViewById(R.id.dataTestBtn);
 		View fileBtn = parentView.findViewById(R.id.fileTestBtn);
+		View infoBtn = parentView.findViewById(R.id.infoBtn);
+		
 		collect = new Collection(getActivity());
-		collect_t = new Thread() {
-			public void run() {
-				thread_flag = true;
-				while(thread_flag) {
-					try {
-						sleep(2000);
-					} catch(InterruptedException e) {
-						e.printStackTrace();
+		
+		if(!TestFragment.thread_uniqueness) {
+			collect_t = new Thread() {
+				private boolean flag = false;
+				public void run() {
+					flag = true;
+					while(true) {
+						if(!thread_flag) {
+							thread_flag = true;
+							forWait();
+						}
+						try {
+							sleep(sleeptime);
+						} catch(InterruptedException e) {
+							e.printStackTrace();
+						}
+						collect.save();
 					}
-					collect.save();
 				}
-			}
-		};
-		collect_t.start();
+				public synchronized void forWait() {
+					if(flag) {
+						try{
+							wait();
+							flag = false;
+						}catch(InterruptedException e) {
+							e.printStackTrace();
+						}
+					}
+					else {
+						try{
+							flag = true;
+							notify();
+						}catch(Exception e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			};
+		
+			collect_t.start();
+			TestFragment.thread_uniqueness = true;
+		}
+			
 		
 		
 		cameraBtn.setOnClickListener(this);
@@ -76,18 +110,12 @@ public class TestFragment extends Fragment implements OnClickListener {
 		collectBtn.setOnClickListener(this);
 		saveInfo.setOnClickListener(this);
 		exitBtn.setOnClickListener(this);
+		infoBtn.setOnClickListener(this);
 	}
 	
-	private synchronized void threadc() {
-		if(thread_flag) {
-				//collect_t.wait();
-			thread_flag = false;
-		}
-		else {
-			//thread_flag = true;
-			//collect_t.run();
-				//collect_t.notify();
-		}
+	
+	private void showinfo() {
+		collect.showinfo(getActivity());
 	}
 	
 	@Override
@@ -103,7 +131,9 @@ public class TestFragment extends Fragment implements OnClickListener {
 			Log.i("zzy", "collectBtn");
 			//collect.stopListener();
 			//collect = new Collection(this);
-			threadc();
+			if(thread_flag) {
+				thread_flag = false;
+			}
 			break;
 			
 		case R.id.fileTestBtn:
@@ -113,6 +143,11 @@ public class TestFragment extends Fragment implements OnClickListener {
 		case R.id.saveInfo:
 			Log.i("TestActivity", "this.collect.save()");
 			this.collect.save();
+			break;
+			
+		case R.id.infoBtn:
+			Log.i("TestActivity", "infoBtn");
+			showinfo();
 			break;
 			
 		case R.id.exitBtn:
