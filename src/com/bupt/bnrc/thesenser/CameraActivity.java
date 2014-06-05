@@ -315,7 +315,7 @@ public class CameraActivity extends Activity {
 			
 			
 			
-				//使用对话框显示saveDialog组件
+				//使用对话框显示saveDialog组件，上传改为保存，保存改为取消
 				saveAlertBuilder = new AlertDialog.Builder(CameraActivity.this);
 				saveAlertBuilder.setView(saveView);
 				saveAlertBuilder.setPositiveButton("上传", new OnClickListener()
@@ -354,12 +354,19 @@ public class CameraActivity extends Activity {
 						//**************Exif设置*************
 						try {
 							ExifInterface exif = new ExifInterface(fileName);
-							exif.setAttribute("Light", ""+collect.getLight());
-							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDate().toString());
+							//*****************************************************************
+							String str = 	"\"username\":\"zzy\"," +
+											"\"Light\":"+collect.getLight()+"," +
+											"\"Noise\":"+collect.getNoise()+"," +
+											"\"BatteryState\":"+collect.getBatteryState()+","+
+											"\"ChargeState\":"+collect.getChargeState()+","+
+											"\"NetState\":"+collect.getNetState();
+							//*****************************************************************
+							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDateSring());
 							exif.setAttribute(ExifInterface.TAG_MODEL, "model");
 							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
 							exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
-							exif.setAttribute(ExifInterface.TAG_MAKE, ""+dataModel.toString());
+							exif.setAttribute(ExifInterface.TAG_MAKE, str);
 							//exif.setAttribute("Light", ""+collect.getLight());
 							exif.saveAttributes();
 							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));

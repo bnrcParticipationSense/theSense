@@ -54,44 +54,6 @@ import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class Collection implements SensorEventListener {
 	
-	//TEST*****************************
-	private float light_test = 1000;
-	private float noise_test = 36;
-	private float [] orientation_test = new float[] {1,2,3};
-	private String picName_test = "test.jpg";
-	private Date date_test = new Date();
-	private int connectionState_test = 1;
-	private int batteryState_test = 1;
-	private int percent_test = 85;
-	private float latitude_test = 123;
-	private float longitude_test = 321;
-	
-	private int exposureValue = 100;
-	private float focalDistance = 35;
-	private float aperture = 1/200;
-	
-	public int flog_test = 15;
-	
-	
-//	public void save() {
-//		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
-//				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
-//		fileModel.save(this.app);
-//	}
-//	public FileModel getFileModel() {
-//		FileModel fileModel = new FileModel(picName_test, date_test, orientation_test[0], orientation_test[1], orientation_test[2], 
-//				longitude_test, latitude_test, exposureValue, focalDistance, aperture);
-//		return fileModel;
-//	}
-//	public float getLight() {
-//		return this.light_test;
-//	}
-	public float[] getOrientation() {
-		return this.orientation_test;
-	}
-	//TEST*****************************
-
-	
 	private Activity app;
 	private SensorManager sensorManager;
 	private Sensor sensor;
@@ -99,7 +61,7 @@ public class Collection implements SensorEventListener {
 	private BatteryReceiver receiver = null;
 	private ConnectivityManager connectManager;
 	
-	//浼�������
+	//光线声音
 	private float light;
 	private float noise;
 	private boolean need_noise = true;
@@ -111,15 +73,15 @@ public class Collection implements SensorEventListener {
 	private float [] orientation = new float[3];			//getOrientation();
 	private float [] sensor_orientation = new float[3];	//Sensor.TYPE_ORIENTATION
 	
-	//��剧��
+	//照片
 	private String picName;
 	private Date date;
 	
-	//��垫��&缃�缁�
+	//状态
 	private int connectionState;
 	private int batteryState;
 	private int percent;
-	//浣�缃�
+	//位置
 	private float latitude;
 	private float longitude;
 	
@@ -170,7 +132,7 @@ public class Collection implements SensorEventListener {
 	      Log.i("BD_LBS_SDK", sb.toString());
 	    }
 	public void onReceivePoi(BDLocation poiLocation) {
-	//灏���ㄤ��涓�������涓���婚��poi������
+	//
 	         if (poiLocation == null){
 	                return ;
 	          }
@@ -213,7 +175,7 @@ public class Collection implements SensorEventListener {
 		
 		sensorManager = (SensorManager) this.app.getSystemService(android.content.Context.SENSOR_SERVICE);
 		connectManager = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
-		mLocationClient = new LocationClient(this.app.getApplicationContext());     //澹版��LocationClient绫�
+		mLocationClient = new LocationClient(this.app.getApplicationContext());     //
 	     
 		setValues();//register every sensors
 	}
@@ -328,8 +290,15 @@ public class Collection implements SensorEventListener {
 		Log.i("getLight() -> orientation", "z = "+this.sensor_orientation[2]);
 		return this.light;
 	}
+	public float getNoise() {
+		return for_noise.run();
+	}
 	public Date getDate() {
 		return this.date;
+	}
+	public String getDateSring() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return new String(sdf.format(date));
 	}
 	public float getxDirect() {
 		return this.orientation[0];
@@ -345,6 +314,15 @@ public class Collection implements SensorEventListener {
 	}
 	public float getLatitude() {
 		return this.latitude;
+	}
+	public int getBatteryState() {
+		return this.percent;
+	}
+	public int getChargeState() {
+		return this.batteryState;
+	}
+	public int getNetState() {
+		return this.connectionState;
 	}
 	public DataModel getDataModel() {
 		setDataModel();
@@ -521,8 +499,4 @@ public class Collection implements SensorEventListener {
     	int i = ar.getRecordingState();
     	Log.d("sp", String.valueOf(i));
     }
- 
-    
-
-	
 }
