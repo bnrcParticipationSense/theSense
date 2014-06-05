@@ -18,7 +18,9 @@
     <string name="drawer_close">Close navigation drawer</string>
     
     
-    <!-- test -->
+    <!-- collect fragment -->
+    
+    <!-- test fragment -->
     <string name="test_helloText">Hello bnrc! This is a test page.</string>
     <string name="test_cameraBtn">照相</string>
     <string name="test_dataTestBtn">数据测试</string>

@@ -2,10 +2,9 @@ package com.bupt.bnrc.thesenser;
 
 import com.bupt.bnrc.thesenser.utils.Logger;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Looper;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,7 +12,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.widget.Toast;
 
 public class TestFragment extends Fragment implements OnClickListener {
 

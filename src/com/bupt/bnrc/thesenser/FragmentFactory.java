@@ -1,6 +1,7 @@
 package com.bupt.bnrc.thesenser;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
+
 
 public class FragmentFactory {
 	public static final String ARG_MAIN_INDEX = "main_list_index";
@@ -19,7 +20,7 @@ public class FragmentFactory {
 	public Fragment createFragment(String type) {
 		Fragment fragment = null;
 		if(type.equals("collect")) {
-			fragment = new CollectFragment();
+			fragment = new CollectParentFragment();
 		} else if(type.equals("test")) {
 			fragment = new TestFragment();
 		}
