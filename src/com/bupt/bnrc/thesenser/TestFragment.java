@@ -57,6 +57,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View dataBtn = parentView.findViewById(R.id.dataTestBtn);
 		View fileBtn = parentView.findViewById(R.id.fileTestBtn);
 		View infoBtn = parentView.findViewById(R.id.infoBtn);
+		View uploadBtn = parentView.findViewById(R.id.uploadBtn);
 		
 		collect = new Collection(getActivity());
 		
@@ -111,6 +112,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		saveInfo.setOnClickListener(this);
 		exitBtn.setOnClickListener(this);
 		infoBtn.setOnClickListener(this);
+		uploadBtn.setOnClickListener(this);
 	}
 	
 	
@@ -148,6 +150,10 @@ public class TestFragment extends Fragment implements OnClickListener {
 		case R.id.infoBtn:
 			Log.i("TestActivity", "infoBtn");
 			showinfo();
+			break;
+		case R.id.uploadBtn:
+			Log.i("TestActivity", "this.collect.upload()");
+			this.collect.upload();
 			break;
 			
 		case R.id.exitBtn:

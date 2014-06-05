@@ -26,7 +26,7 @@ public class Json {
 			for(DataModel data : list) {
 				JSONObject dataJSON = new JSONObject();
 				
-				dataJSON.put("Time", data.getCreateTime());
+				dataJSON.put("Time", data.getCreateTimeString());
 				
 				dataJSON.put("Light", data.getLightIntensity());
 				dataJSON.put("Noise", data.getSoundIntensity());
@@ -46,7 +46,7 @@ public class Json {
 		}
 		return obj;
 	}
-	
+	/*
 	static public JSONObject toJSON(DataModel data) {
 		JSONObject obj = new JSONObject();
 		try {
@@ -69,7 +69,35 @@ public class Json {
 		}
 		return obj;
 	}
-	
+	*/
+	static public JSONObject toJSON(DataModel data) {
+		JSONObject obj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		try {
+			obj.put("username", "zzy");
+			
+				JSONObject dataJSON = new JSONObject();
+				
+				dataJSON.put("Time", data.getCreateTimeString());
+				
+				dataJSON.put("Light", data.getLightIntensity());
+				dataJSON.put("Noise", data.getSoundIntensity());
+				
+				dataJSON.put("BatteryState", data.getBatteryState());
+				dataJSON.put("ChargeState", data.getChargeState());
+				dataJSON.put("NetState", data.getNetState());
+				
+				dataJSON.put("Latitude", data.getLatitude());
+				dataJSON.put("Longitude", data.getLongitude());
+				
+				jsonArr.put(dataJSON);
+			
+			obj.put("data", jsonArr);
+		} catch(JSONException e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
 	static public JSONObject toJSON(FileModel file) {
 		JSONObject obj = new JSONObject();
 		try {

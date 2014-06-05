@@ -33,23 +33,23 @@ public final class R {
         public static final int ic_launcher=0x7f020004;
     }
     public static final class id {
-        public static final int action_take_photo=0x7f090021;
+        public static final int action_take_photo=0x7f090022;
         public static final int cameraBtn=0x7f090011;
         public static final int collectBtn=0x7f090014;
         public static final int content_frame=0x7f09000e;
         public static final int dataTestBtn=0x7f090012;
-        public static final int data_lookListBtn=0x7f090019;
-        public static final int data_lookOneBtn=0x7f090018;
+        public static final int data_lookListBtn=0x7f09001a;
+        public static final int data_lookOneBtn=0x7f090019;
         public static final int exitBtn=0x7f090016;
         public static final int fileTestBtn=0x7f090013;
         public static final int file_lookListBtn=0x7f090003;
-        public static final int get_id=0x7f09001a;
-        public static final int get_id_file=0x7f09001c;
-        public static final int get_list=0x7f09001b;
-        public static final int get_list_file=0x7f09001d;
+        public static final int get_id=0x7f09001b;
+        public static final int get_id_file=0x7f09001d;
+        public static final int get_list=0x7f09001c;
+        public static final int get_list_file=0x7f09001e;
         public static final int helloText=0x7f090010;
         public static final int info=0x7f090001;
-        public static final int infoBtn=0x7f090017;
+        public static final int infoBtn=0x7f090018;
         public static final int listData_details=0x7f090005;
         public static final int listData_next_btn=0x7f090007;
         public static final int listData_pre_btn=0x7f090006;
@@ -61,12 +61,13 @@ public final class R {
         public static final int listFile_title=0x7f090008;
         public static final int main_drawer_layout=0x7f09000d;
         public static final int main_left_drawer=0x7f09000f;
-        public static final int phone_name2=0x7f09001f;
+        public static final int phone_name2=0x7f090020;
         public static final int photoBut=0x7f090002;
-        public static final int photo_name=0x7f09001e;
+        public static final int photo_name=0x7f09001f;
         public static final int sView=0x7f090000;
         public static final int saveInfo=0x7f090015;
-        public static final int show=0x7f090020;
+        public static final int show=0x7f090021;
+        public static final int uploadBtn=0x7f090017;
     }
     public static final class layout {
         public static final int activity_camera=0x7f030000;

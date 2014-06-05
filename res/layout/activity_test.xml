@@ -59,11 +59,20 @@
     />
 
     <Button
+        android:id="@+id/uploadBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/infoBtn"
+        android:layout_alignBottom="@+id/infoBtn"
+        android:layout_toRightOf="@+id/infoBtn"
+        android:text="上传数据" />
+
+    <Button
         android:id="@+id/infoBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/exitBtn"
-        android:layout_centerHorizontal="true"
+        android:layout_alignRight="@+id/helloText"
         android:text="展示数据" />
 
 </RelativeLayout>
