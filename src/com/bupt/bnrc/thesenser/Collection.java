@@ -1,5 +1,6 @@
 package com.bupt.bnrc.thesenser;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -10,6 +11,11 @@ import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
+
+//noise
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
 
 //Battery
 import android.content.BroadcastReceiver;
@@ -96,6 +102,8 @@ public class Collection implements SensorEventListener {
 	//浼�������
 	private float light;
 	private float noise;
+	private boolean need_noise = true;
+	private RecordThread for_noise = null;
 	
 	private float [] acceleration = new float[3];
 	private float [] magnetic_field = new float[3];
@@ -215,6 +223,22 @@ public class Collection implements SensorEventListener {
 		setAccelerometer();
 		setMagneticField();
 		setOrientation();
+		//runForNoise();
+		Thread noise_t = new Thread() {
+			public void run(){
+				while(true){
+					if(need_noise)
+					{
+						runForNoise();
+						need_noise = false;
+					}
+				}
+				
+			}
+		};
+		//noise_t.start();
+		for_noise = new RecordThread();
+		noise = for_noise.run();
 		
 		calculateOrientation();
 		
@@ -277,7 +301,10 @@ public class Collection implements SensorEventListener {
 	}
 	private void setDataModel() {
 		Date tempDate = new Date();
-		mData = new DataModel(this.light, this.noise_test, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
+		//runForNoise();
+		//need_noise = true;
+		noise = for_noise.run();
+		mData = new DataModel(this.light, this.noise, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
 	}
 	
 	public void setPicName(String str) {
@@ -443,8 +470,10 @@ public class Collection implements SensorEventListener {
 	}
 	
 	public void showinfo(Activity a) {
+		//need_noise = true;
+		noise = for_noise.run();
 		String str =	"光线："+this.light+";\n"+
-						"噪音："+this.noise_test+";\n"+
+						"噪音："+this.noise+";\n"+
 						"经度："+this.longitude+";\n"+
 						"纬度："+this.latitude+"\n"+
 						"x方向："+this.orientation[0]+";\n"+
@@ -455,6 +484,45 @@ public class Collection implements SensorEventListener {
 		Toast toast = Toast.makeText(a, str, Toast.LENGTH_LONG);
 		toast.show();
 	}
+	
+	//*******************************************************************************//
+	private AudioRecord ar;
+    private int bs;
+    private static int SAMPLE_RATE_IN_HZ = 8000;
+ 
+    public void RecordThread() {
+    	bs = AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT);
+        ar = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE_IN_HZ, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT, bs);
+    }
+ 
+    public void runForNoise() {
+    	RecordThread();
+        ar.startRecording();
+    	 
+    	int v = ar.getState();
+    	int j = ar.getRecordingState();
+        byte[] buffer = new byte[bs];
+
+//        while(this.isRun) {
+            int r = ar.read(buffer, 0, bs);
+            int w = 0;
+            for (int i = 0; i < buffer.length; i++) {
+                w += buffer[i] * buffer[i];
+            }
+            Log.d("spll", String.valueOf(w / (float) r));
+            
+//        }
+        Log.d("spl", String.valueOf(v));
+		Log.d("sp", String.valueOf(j));
+		noise = w / (float) r;
+    }
+    public void stop() {
+    	ar.stop();
+    	int i = ar.getRecordingState();
+    	Log.d("sp", String.valueOf(i));
+    }
+ 
+    
 
 	
 }

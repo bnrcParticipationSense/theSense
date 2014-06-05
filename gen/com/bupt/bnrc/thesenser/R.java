@@ -137,25 +137,25 @@ containing a value of this type.
         public static final int tabs_pattern_diagonal=0x7f020008;
     }
     public static final class id {
-        public static final int action_take_photo=0x7f0a0023;
+        public static final int action_take_photo=0x7f0a0024;
         public static final int cameraBtn=0x7f0a0011;
         public static final int collectBtn=0x7f0a0014;
-        public static final int collect_pager=0x7f0a001b;
-        public static final int collect_tabs=0x7f0a001a;
+        public static final int collect_pager=0x7f0a001c;
+        public static final int collect_tabs=0x7f0a001b;
         public static final int content_frame=0x7f0a000e;
         public static final int dataTestBtn=0x7f0a0012;
-        public static final int data_lookListBtn=0x7f0a0019;
-        public static final int data_lookOneBtn=0x7f0a0018;
+        public static final int data_lookListBtn=0x7f0a001a;
+        public static final int data_lookOneBtn=0x7f0a0019;
         public static final int exitBtn=0x7f0a0016;
         public static final int fileTestBtn=0x7f0a0013;
         public static final int file_lookListBtn=0x7f0a0003;
-        public static final int get_id=0x7f0a001c;
-        public static final int get_id_file=0x7f0a001e;
-        public static final int get_list=0x7f0a001d;
-        public static final int get_list_file=0x7f0a001f;
+        public static final int get_id=0x7f0a001d;
+        public static final int get_id_file=0x7f0a001f;
+        public static final int get_list=0x7f0a001e;
+        public static final int get_list_file=0x7f0a0020;
         public static final int helloText=0x7f0a0010;
         public static final int info=0x7f0a0001;
-        public static final int infoBtn=0x7f0a0017;
+        public static final int infoBtn=0x7f0a0018;
         public static final int listData_details=0x7f0a0005;
         public static final int listData_next_btn=0x7f0a0007;
         public static final int listData_pre_btn=0x7f0a0006;
@@ -167,12 +167,13 @@ containing a value of this type.
         public static final int listFile_title=0x7f0a0008;
         public static final int main_drawer_layout=0x7f0a000d;
         public static final int main_left_drawer=0x7f0a000f;
-        public static final int phone_name2=0x7f0a0021;
+        public static final int phone_name2=0x7f0a0022;
         public static final int photoBut=0x7f0a0002;
-        public static final int photo_name=0x7f0a0020;
+        public static final int photo_name=0x7f0a0021;
         public static final int sView=0x7f0a0000;
         public static final int saveInfo=0x7f0a0015;
-        public static final int show=0x7f0a0022;
+        public static final int show=0x7f0a0023;
+        public static final int uploadBtn=0x7f0a0017;
     }
     public static final class layout {
         public static final int activity_camera=0x7f030000;
