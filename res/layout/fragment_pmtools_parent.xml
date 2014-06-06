@@ -6,15 +6,15 @@
     android:layout_height="match_parent" >
     
     <com.astuetz.PagerSlidingTabStrip
-        android:id="@+id/collect_tabs"
+        android:id="@+id/pmtools_tabs"
         android:layout_width="match_parent"
         android:layout_height="48dip"
         android:background="@drawable/background_tabs" />
     
     <android.support.v4.view.ViewPager
-        android:id="@+id/collect_pager"
+        android:id="@+id/pmtools_pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/collect_tabs" />
+        android:layout_below="@+id/pmtools_tabs" />
 
 </RelativeLayout>

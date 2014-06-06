@@ -9,7 +9,7 @@
     <!-- drawer -->
     <string-array name="main_list_array">
         <item>采集</item>
-        <item>工具</item>
+        <item>PM采集</item>
         <item>任务</item>
         <item>用户</item>
         <item>测试</item>

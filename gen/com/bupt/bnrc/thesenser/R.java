@@ -140,8 +140,6 @@ containing a value of this type.
         public static final int action_take_photo=0x7f0a0024;
         public static final int cameraBtn=0x7f0a0011;
         public static final int collectBtn=0x7f0a0014;
-        public static final int collect_pager=0x7f0a001c;
-        public static final int collect_tabs=0x7f0a001b;
         public static final int content_frame=0x7f0a000e;
         public static final int dataTestBtn=0x7f0a0012;
         public static final int data_lookListBtn=0x7f0a001a;
@@ -170,6 +168,8 @@ containing a value of this type.
         public static final int phone_name2=0x7f0a0022;
         public static final int photoBut=0x7f0a0002;
         public static final int photo_name=0x7f0a0021;
+        public static final int pmtools_pager=0x7f0a001c;
+        public static final int pmtools_tabs=0x7f0a001b;
         public static final int sView=0x7f0a0000;
         public static final int saveInfo=0x7f0a0015;
         public static final int show=0x7f0a0023;
@@ -183,15 +183,16 @@ containing a value of this type.
         public static final int activity_main=0x7f030004;
         public static final int activity_test=0x7f030005;
         public static final int antivity_data=0x7f030006;
-        public static final int fragment_collect_info=0x7f030007;
-        public static final int fragment_collect_parent=0x7f030008;
-        public static final int fragment_collect_scene=0x7f030009;
-        public static final int get_data_id=0x7f03000a;
-        public static final int get_data_list=0x7f03000b;
-        public static final int get_file_id=0x7f03000c;
-        public static final int get_file_list=0x7f03000d;
-        public static final int main_drawer_list_item=0x7f03000e;
-        public static final int save=0x7f03000f;
+        public static final int fragment_info_collect=0x7f030007;
+        public static final int fragment_pmtools_local=0x7f030008;
+        public static final int fragment_pmtools_network=0x7f030009;
+        public static final int fragment_pmtools_parent=0x7f03000a;
+        public static final int get_data_id=0x7f03000b;
+        public static final int get_data_list=0x7f03000c;
+        public static final int get_file_id=0x7f03000d;
+        public static final int get_file_list=0x7f03000e;
+        public static final int main_drawer_list_item=0x7f03000f;
+        public static final int save=0x7f030010;
     }
     public static final class menu {
         public static final int main=0x7f090000;

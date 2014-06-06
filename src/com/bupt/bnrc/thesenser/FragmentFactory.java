@@ -20,7 +20,9 @@ public class FragmentFactory {
 	public Fragment createFragment(String type) {
 		Fragment fragment = null;
 		if(type.equals("collect")) {
-			fragment = new CollectParentFragment();
+			fragment = new InfoCollectFragment();
+		} else if(type.equals("pmtools")){ 
+			fragment = new PMToolsParentFragment();
 		} else if(type.equals("test")) {
 			fragment = new TestFragment();
 		}

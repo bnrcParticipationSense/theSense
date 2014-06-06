@@ -9,11 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class CollectParentFragment extends Fragment {
+public class PMToolsParentFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_collect_parent, container, false);
+		View view = inflater.inflate(R.layout.fragment_pmtools_parent, container, false);
 		int i = getArguments().getInt(FragmentFactory.ARG_MAIN_INDEX);
 		String title = getResources().getStringArray(R.array.main_list_array)[i];
 		getActivity().setTitle(title);
@@ -24,8 +24,8 @@ public class CollectParentFragment extends Fragment {
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip)view.findViewById(R.id.collect_tabs);
-		ViewPager pager = (ViewPager)view.findViewById(R.id.collect_pager);
+		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip)view.findViewById(R.id.pmtools_tabs);
+		ViewPager pager = (ViewPager)view.findViewById(R.id.pmtools_pager);
 		CollectFragmentPagerAdapter adapter = new CollectFragmentPagerAdapter(getChildFragmentManager());
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);

@@ -17,10 +17,10 @@ public class CollectFragmentPagerAdapter extends FragmentPagerAdapter {
 		// TODO Auto-generated method stub
 		switch (position) {
 		case 0:
-			CollectInfoFragment infoFragment = new CollectInfoFragment();
+			PMToolsLocalFragment infoFragment = new PMToolsLocalFragment();
 			return infoFragment;
 		case 1:
-			CollectSceneFragment sceneFragment = new CollectSceneFragment();
+			PMToolsNetworkFragment sceneFragment = new PMToolsNetworkFragment();
 			return sceneFragment;
 		default:
 			return null;

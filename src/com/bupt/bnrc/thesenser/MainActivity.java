@@ -31,7 +31,6 @@ public class MainActivity extends FragmentActivity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-    	// TODO Auto-generated method stub
     	super.onCreate(savedInstanceState);
     	setContentView(R.layout.activity_main);
     	
@@ -44,7 +43,6 @@ public class MainActivity extends FragmentActivity {
     }
 
 	private void initDatas() {
-		// TODO Auto-generated method stub
 		mNowPosition = 0;
 		mTitle = mDrawerTitle = getTitle();
 		
@@ -52,7 +50,6 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void initViews() {
-		// TODO Auto-generated method stub
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.main_left_drawer);
 		
@@ -113,14 +110,12 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			// TODO Auto-generated method stub
 			selectItem(position);
 		}
 		
 	}
 
 	private void selectItem(int position) {
-		// TODO Auto-generated method stub
 		// update the main content by replacing fragments
 		Fragment fragment = fragmentFactory.createFragment(getFragmentType(position));
 		Bundle args = new Bundle();
@@ -139,7 +134,6 @@ public class MainActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		switch (mNowPosition) {
 		case 0:
-			break;
 		case 4:
 			menu.findItem(R.id.action_take_photo).setVisible(false);
 			break;
@@ -155,7 +149,7 @@ public class MainActivity extends FragmentActivity {
 			re = "collect";
 			break;
 		case 1:
-			re = "tools";
+			re = "pmtools";
 			break;
 		case 4:
 			re = "test";
