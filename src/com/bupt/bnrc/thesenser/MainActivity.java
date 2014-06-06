@@ -42,6 +42,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    
 	private void initDatas() {
 		mNowPosition = 0;
 		mTitle = mDrawerTitle = getTitle();
