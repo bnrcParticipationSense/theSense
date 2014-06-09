@@ -26,7 +26,7 @@ public class PMToolsParentFragment extends Fragment {
 		super.onViewCreated(view, savedInstanceState);
 		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip)view.findViewById(R.id.pmtools_tabs);
 		ViewPager pager = (ViewPager)view.findViewById(R.id.pmtools_pager);
-		CollectFragmentPagerAdapter adapter = new CollectFragmentPagerAdapter(getChildFragmentManager());
+		PMToolsFragmentPagerAdapter adapter = new PMToolsFragmentPagerAdapter(getChildFragmentManager());
 		pager.setAdapter(adapter);
 		tabs.setViewPager(pager);
 	}

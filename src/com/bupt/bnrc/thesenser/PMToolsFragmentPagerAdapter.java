@@ -4,11 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class CollectFragmentPagerAdapter extends FragmentPagerAdapter {
+public class PMToolsFragmentPagerAdapter extends FragmentPagerAdapter {
 	
 	private final String[] mTabTitles = {"信息界面", "实时景色"};
 
-	public CollectFragmentPagerAdapter(FragmentManager fm) {
+	public PMToolsFragmentPagerAdapter(FragmentManager fm) {
 		super(fm);
 	}
 
@@ -17,11 +17,11 @@ public class CollectFragmentPagerAdapter extends FragmentPagerAdapter {
 		// TODO Auto-generated method stub
 		switch (position) {
 		case 0:
-			PMToolsLocalFragment infoFragment = new PMToolsLocalFragment();
-			return infoFragment;
+			PMToolsLocalFragment localFragment = new PMToolsLocalFragment();
+			return localFragment;
 		case 1:
-			PMToolsNetworkFragment sceneFragment = new PMToolsNetworkFragment();
-			return sceneFragment;
+			PMToolsNetworkFragment networkFragment = new PMToolsNetworkFragment();
+			return networkFragment;
 		default:
 			return null;
 		}
