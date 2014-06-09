@@ -90,6 +90,7 @@ public class Collection implements SensorEventListener {
 	
 	//new things for upload or others
 	DataModel mData = null;
+	DataModel preData = null;
 	
 	//*******************************************************************************//
 	public LocationClient mLocationClient = null;
@@ -328,6 +329,16 @@ public class Collection implements SensorEventListener {
 		setDataModel();
 		return mData;
 	}
+	public DataModel getPreDataModel() {
+		if(this.preData != null) {
+			return this.preData;
+		}
+		else {
+			setDataModel();
+			this.preData = new DataModel(this.mData);
+			return this.preData;
+		}
+	}
 	
 	private void returnValues(float [] e ,int Type) {
 		//Log.i("SensorEvent","sensor.Type = "+Type);
@@ -424,6 +435,7 @@ public class Collection implements SensorEventListener {
 		if(this.sensorlistener_flag) {
 			setDataModel();
 			mData.save(app);
+			this.preData = new DataModel(this.mData);
 		}
 		else {
 			Toast toast = Toast.makeText(app, "采集模块已停止工作", Toast.LENGTH_LONG);
