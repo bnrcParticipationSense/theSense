@@ -262,7 +262,7 @@ public class Collection implements SensorEventListener {
 		this.sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
 		sensorManager.registerListener(this, this.sensor, SensorManager.SENSOR_DELAY_NORMAL);
 	}
-	private void setDataModel() {
+	public void setDataModel() {
 		Date tempDate = new Date();
 		//runForNoise();
 		//need_noise = true;
@@ -433,7 +433,7 @@ public class Collection implements SensorEventListener {
 	public void save() {
 		Log.i("Collection", "save()");
 		if(this.sensorlistener_flag) {
-			setDataModel();
+			//setDataModel();
 			mData.save(app);
 			this.preData = new DataModel(this.mData);
 		}
