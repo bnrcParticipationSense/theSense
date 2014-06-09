@@ -74,6 +74,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 						} catch(InterruptedException e) {
 							e.printStackTrace();
 						}
+						collect.setDataModel();
 						collect.save();
 					}
 				}
