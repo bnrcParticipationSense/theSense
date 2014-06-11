@@ -14,6 +14,7 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.pm.ActivityInfo;
@@ -34,6 +35,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
@@ -246,6 +248,7 @@ public class CameraActivity extends Activity {
 		}
 	};
 
+	Bitmap newbm = null;
 	PictureCallback myJpegCallback = new PictureCallback()
 	{
 		@Override
@@ -263,6 +266,17 @@ public class CameraActivity extends Activity {
 			// 根据拍照所得的数据创建位图
 			final Bitmap bm = BitmapFactory.decodeByteArray(data, 0,
 				data.length);
+			
+			//改变方向
+			
+			Matrix matrix = new Matrix();
+			matrix.postRotate(90);
+			try {
+				newbm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+			} catch (OutOfMemoryError e) {
+				e.printStackTrace();
+			}
+			
 			// 加载/layout/save.xml文件对应的布局资源
 			saveView = getLayoutInflater().inflate(R.layout.save, null);
 
@@ -279,7 +293,8 @@ public class CameraActivity extends Activity {
 			// 获取saveDialog对话框上的ImageView组件
 			ImageView show = (ImageView) saveView.findViewById(R.id.show);
 			// 显示刚刚拍得的照片
-			show.setImageBitmap(bm);
+			//show.setImageBitmap(bm);
+			show.setImageBitmap(newbm);
 			// 使用对话框显示saveDialog组件
 			/*
 			new AlertDialog.Builder(CaptureImage.this).setView(saveDialog)
@@ -342,7 +357,8 @@ public class CameraActivity extends Activity {
 						BufferedOutputStream bos;
 						try {
 							bos = new BufferedOutputStream(new FileOutputStream(file));
-							bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+							//bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+							newbm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 							bos.flush();
 							Log.i("CaptureImage","bos.flush()");
 							bos.close();
@@ -355,18 +371,29 @@ public class CameraActivity extends Activity {
 						try {
 							ExifInterface exif = new ExifInterface(fileName);
 							//*****************************************************************
+							TelephonyManager telephonyManager= (TelephonyManager) app.getSystemService(Context.TELEPHONY_SERVICE);
+							String imei=telephonyManager.getDeviceId();
 							String str = 	"\"username\":\"zzy\"," +
+											"\"Model\":"+imei+"," +
 											"\"Light\":"+collect.getLight()+"," +
 											"\"Noise\":"+collect.getNoise()+"," +
 											"\"BatteryState\":"+collect.getBatteryState()+","+
 											"\"ChargeState\":"+collect.getChargeState()+","+
-											"\"NetState\":"+collect.getNetState();
+											"\"NetState\":"+collect.getNetState()+","+
+											"\"Latitued\":"+collect.getLatitude()+","+
+											"\"Longitude\":"+collect.getLongtitude()+","+
+											"\"Orientation_X\":"+collect.getxDirect()+","+
+											"\"Orientation_Y\":"+collect.getyDirect()+","+
+											"\"Orientation_Z\":"+collect.getzDirect();
 							//*****************************************************************
 							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDateSring());
-							exif.setAttribute(ExifInterface.TAG_MODEL, "model");
+							exif.setAttribute(ExifInterface.TAG_MODEL, "\"PM2.5\":"+1024);
 							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
 							exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
 							exif.setAttribute(ExifInterface.TAG_MAKE, str);
+							exif.setAttribute(ExifInterface.TAG_ISO, "\"PM2.5\":"+1024);
+							exif.setAttribute(ExifInterface.TAG_APERTURE, "\"PM2.5\":"+1024);
+							exif.setAttribute(ExifInterface.TAG_FLASH, "\"PM2.5\":"+1024);
 							//exif.setAttribute("Light", ""+collect.getLight());
 							exif.saveAttributes();
 							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));
