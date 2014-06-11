@@ -277,6 +277,7 @@ public class Collection implements SensorEventListener {
 	public float getLight() {
 		//double longitude = testLocation.getLongitude();
 		Log.i("getLight() -> light = ", ""+this.light);
+		Log.i("getLight() -> noise = ", ""+this.noise);
 		Log.i("getLight() -> longitude = ", ""+longitude);
 		Log.i("getLight() -> latitude = ", ""+latitude);
 		Log.i("getLight() -> connect = ",""+this.connectionState);
