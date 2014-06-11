@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class PMToolsParentFragment extends Fragment {
+	private ViewPager mPager = null;
+	private PMToolsFragmentPagerAdapter mAdapter = null;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -25,9 +27,14 @@ public class PMToolsParentFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
 		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip)view.findViewById(R.id.pmtools_tabs);
-		ViewPager pager = (ViewPager)view.findViewById(R.id.pmtools_pager);
-		PMToolsFragmentPagerAdapter adapter = new PMToolsFragmentPagerAdapter(getChildFragmentManager());
-		pager.setAdapter(adapter);
-		tabs.setViewPager(pager);
+		mPager = (ViewPager)view.findViewById(R.id.pmtools_pager);
+		mAdapter = new PMToolsFragmentPagerAdapter(getChildFragmentManager());
+		mPager.setAdapter(mAdapter);
+		tabs.setViewPager(mPager);
+	}
+	
+	public void updateOnTakePhoto() {
+		PMToolsLocalFragment localFragment = (PMToolsLocalFragment)mAdapter.instantiateItem(mPager, 0);
+		localFragment.updateOnTakePhoto();
 	}
 }

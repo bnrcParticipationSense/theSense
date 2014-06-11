@@ -1,6 +1,7 @@
 package com.bupt.bnrc.thesenser;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -117,13 +118,15 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void selectItem(int position) {
+		// get tag
+		String tag = getTagFromPosition(position);
 		// update the main content by replacing fragments
 		Fragment fragment = fragmentFactory.createFragment(getFragmentType(position));
 		Bundle args = new Bundle();
         args.putInt(FragmentFactory.ARG_MAIN_INDEX, position);
         fragment.setArguments(args);
         FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment, tag).commit();
         // update selected item and title, then close the drawer
         mNowPosition = position;
         mDrawerList.setItemChecked(position, true);
@@ -131,6 +134,26 @@ public class MainActivity extends FragmentActivity {
         mDrawerLayout.closeDrawer(mDrawerList);
 	}
 	
+	private String getTagFromPosition(int position) {
+		// TODO Auto-generated method stub
+		String tag = null;
+		switch (position) {
+		case 0:
+			tag = "collect";
+			break;
+		case 1:
+			tag = "pmtools";
+			break;
+		case 4:
+			tag = "test";
+			break;
+		default:
+			break;
+		}
+		return tag;
+	}
+
+
 	private void hideActionButton(Menu menu) {
 		// TODO Auto-generated method stub
 		switch (mNowPosition) {
@@ -176,12 +199,26 @@ public class MainActivity extends FragmentActivity {
         }
         // Handle action buttons
         switch(item.getItemId()) {
+        case R.id.action_take_photo:
+        	takePhotoForPM();
+        	return true;
         default:
             return super.onOptionsItemSelected(item);
         }
     }
     
-    @Override
+    private void takePhotoForPM() {
+		// TODO take photo
+    	Intent intent = new Intent(this, CameraActivity.class);
+		startActivity(intent);
+    	// TODO refresh the fragment
+    	FragmentManager fragmentManager = getSupportFragmentManager();
+    	PMToolsParentFragment fragment = (PMToolsParentFragment)fragmentManager.findFragmentByTag("pmtools");
+    	fragment.updateOnTakePhoto();
+	}
+
+
+	@Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.

@@ -91,6 +91,21 @@ public class FileDAO extends DAOHelper {
 		return files;
 	}
 	
+
+	public FileModel findLastFile(Context context) {
+		// TODO Auto-generated method stub
+		FileModel file = null;
+		Cursor cursor = null;
+		try {
+			SQLiteDatabase db = getReadableDatabase();
+			cursor = db.query(FILE_TABLE_NAME, FILE_ALL_COLUMS, null, null, null, null, _ID + " desc", "1");
+			if(cursor.moveToFirst())
+				file = createFileFromCursorData(cursor);
+		} finally {
+			cursor.close();
+		}
+		return file;
+	}
 	
 	public List<FileModel> findFilesToBeModeled(Integer index, Context context) {
 		List<FileModel> files = new ArrayList<FileModel>();
@@ -127,6 +142,7 @@ public class FileDAO extends DAOHelper {
 		
 		return new FileModel(id, fileName, createTime, xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture, tag);
 	}
+
 	
 	
 }

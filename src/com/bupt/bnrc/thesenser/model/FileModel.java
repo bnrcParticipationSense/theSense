@@ -16,7 +16,7 @@ public class FileModel {
 	private String m_fileName = null;
 	private Date m_createTime = null;
 	private PhotoStats m_photoStats = null;
-	private Integer m_tag = null; // 用来表示文件类型 ：0为照片文件， 1为视频文件， 2为文本文件，>10为pm2.5训练集，序号相同为一组，3-10为保留
+	private Integer m_tag = null; // 鐢ㄦ潵琛ㄧず鏂囦欢绫诲瀷 锛�0涓虹収鐗囨枃浠讹紝 1涓鸿棰戞枃浠讹紝 2涓烘枃鏈枃浠讹紝>10涓簆m2.5璁粌闆嗭紝搴忓彿鐩稿悓涓轰竴缁勶紝3-10涓轰繚鐣�
 	
 	private static DAOFactory daoFactory = DAOFactory.getInstance();
 	
@@ -109,6 +109,18 @@ public class FileModel {
 			}
 		}
 		
+	}
+	
+	public static FileModel findLastFile(Context context) {
+		FileDAO dao = null;
+		try {
+			dao = daoFactory.getFileDAO(context);
+			return dao.findLastFile(context);
+		} finally {
+			if(dao != null) {
+				dao.close();
+			}
+		}
 	}
 	
 	public static List<FileModel> findFilesToBeModeled(Integer index, Context context) {
