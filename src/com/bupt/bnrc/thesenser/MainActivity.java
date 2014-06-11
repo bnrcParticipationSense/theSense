@@ -1,5 +1,7 @@
 package com.bupt.bnrc.thesenser;
 
+import com.bupt.bnrc.thesenser.utils.CommonDefinition;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -210,11 +212,9 @@ public class MainActivity extends FragmentActivity {
     private void takePhotoForPM() {
 		// TODO take photo
     	Intent intent = new Intent(this, CameraActivity.class);
-		startActivity(intent);
+    	startActivityForResult(intent, CommonDefinition.REQUESTCODE_CAMERA);
     	// TODO refresh the fragment
-    	FragmentManager fragmentManager = getSupportFragmentManager();
-    	PMToolsParentFragment fragment = (PMToolsParentFragment)fragmentManager.findFragmentByTag("pmtools");
-    	fragment.updateOnTakePhoto();
+    	
 	}
 
 
@@ -232,6 +232,20 @@ public class MainActivity extends FragmentActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		switch (requestCode) {
+		case CommonDefinition.REQUESTCODE_CAMERA:
+			FragmentManager fragmentManager = getSupportFragmentManager();
+	    	PMToolsParentFragment fragment = (PMToolsParentFragment)fragmentManager.findFragmentByTag("pmtools");
+	    	fragment.updateOnTakePhoto();
+			break;
+
+		default:
+			super.onActivityResult(requestCode, resultCode, data);
+			break;
+		}
+	}
 	
 }
