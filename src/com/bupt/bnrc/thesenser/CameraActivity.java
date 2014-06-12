@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -247,7 +248,7 @@ public class CameraActivity extends Activity {
 		}
 	};
 
-	Bitmap newbm = null;
+	Bitmap bm = null;
 	PictureCallback myJpegCallback = new PictureCallback()
 	{
 		@Override
@@ -263,18 +264,25 @@ public class CameraActivity extends Activity {
 					+".jpg";
 			
 			// 根据拍照所得的数据创建位图
-			final Bitmap bm = BitmapFactory.decodeByteArray(data, 0,
+			bm = BitmapFactory.decodeByteArray(data, 0,
 				data.length);
 			
 			//改变方向
-			
-			Matrix matrix = new Matrix();
-			matrix.postRotate(90);
-			try {
-				newbm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
-			} catch (OutOfMemoryError e) {
-				e.printStackTrace();
+			//*****************************************************************start
+			Configuration config = getResources().getConfiguration();
+			if(config.orientation == 1) {
+				Matrix matrix = new Matrix();
+				matrix.postRotate(90);
+				try {
+					bm = Bitmap.createBitmap(bm, 0, 0, bm.getWidth(), bm.getHeight(), matrix, true);
+				} catch (OutOfMemoryError e) {
+					e.printStackTrace();
+				}	
 			}
+			
+			//*****************************************************************end
+			
+			
 			
 			// 加载/layout/save.xml文件对应的布局资源
 			saveView = getLayoutInflater().inflate(R.layout.save, null);
@@ -292,8 +300,7 @@ public class CameraActivity extends Activity {
 			// 获取saveDialog对话框上的ImageView组件
 			ImageView show = (ImageView) saveView.findViewById(R.id.show);
 			// 显示刚刚拍得的照片
-			//show.setImageBitmap(bm);
-			show.setImageBitmap(newbm);
+			show.setImageBitmap(bm);
 			// 使用对话框显示saveDialog组件
 			/*
 			new AlertDialog.Builder(CaptureImage.this).setView(saveDialog)
@@ -357,7 +364,7 @@ public class CameraActivity extends Activity {
 						try {
 							bos = new BufferedOutputStream(new FileOutputStream(file));
 							//bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-							newbm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+							bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 							bos.flush();
 							Log.i("CaptureImage","bos.flush()");
 							bos.close();
@@ -369,7 +376,8 @@ public class CameraActivity extends Activity {
 						//**************Exif设置*************
 						try {
 							ExifInterface exif = new ExifInterface(fileName);
-							//*****************************************************************
+							
+							//*****************************************************************start
 							TelephonyManager telephonyManager= (TelephonyManager) app.getSystemService(Context.TELEPHONY_SERVICE);
 							String imei=telephonyManager.getDeviceId();
 							String str = 	"\"username\":\"zzy\"," +
@@ -384,7 +392,7 @@ public class CameraActivity extends Activity {
 											"\"Orientation_X\":"+collect.getxDirect()+","+
 											"\"Orientation_Y\":"+collect.getyDirect()+","+
 											"\"Orientation_Z\":"+collect.getzDirect();
-							//*****************************************************************
+							//*****************************************************************end
 							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDateSring());
 							exif.setAttribute(ExifInterface.TAG_MODEL, "\"PM2.5\":"+1024);
 							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
