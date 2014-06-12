@@ -3,6 +3,7 @@ package com.bupt.bnrc.thesenser.utils;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -27,6 +28,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
@@ -80,23 +82,29 @@ public class Upload {
 			else
 			{
 				Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
-	    		Log.i("Upload", "SUCCESS");
+				Log.i("Upload", "SUCCESS");
 			}
 			
 			if (entity != null)
 			{
 					
-				        String rev = EntityUtils.toString(entity);          
-				        //receiveObj = new JSONObject(rev); 
-				        Log.i("UploadJSON", "return msg:"+rev);
-				        return null;
+				String rev = EntityUtils.toString(entity);          
+				//receiveObj = new JSONObject(rev); 
+				Log.i("UploadJSON", "return msg:"+rev);
+				return null;
 			}
 			else {
 				return null;
 			}
 
 		}
-		catch (Exception e)
+		catch (ConnectTimeoutException e)
+		{
+			e.printStackTrace();
+			Log.i("UploadJSON", "time out");
+			return null;
+		}
+		catch (IOException e)
 		{
 			e.printStackTrace();
 			return null;
