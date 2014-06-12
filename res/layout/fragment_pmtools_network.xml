@@ -5,10 +5,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
     
-    <TextView 
-        android:text="pm工具网络照片"
+    <com.bupt.bnrc.thesenser.view.WaterFallsView 
+        android:id="@+id/pmtools_network_waterfalls_view"
         android:layout_width="match_parent"
-   		android:layout_height="match_parent"
-    	android:gravity="center" />
+        android:layout_height="match_parent">
+        
+        <LinearLayout 
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            
+            <LinearLayout 
+                android:id="@+id/first_column"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:id="@+id/second_column"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+            </LinearLayout>
+            
+            <LinearLayout 
+                android:id="@+id/third_column"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+            </LinearLayout>
+            
+        </LinearLayout>
+        
+    </com.bupt.bnrc.thesenser.view.WaterFallsView>
 
 </RelativeLayout>

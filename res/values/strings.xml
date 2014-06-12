@@ -20,6 +20,11 @@
     
     <!-- collect fragment -->
     
+    <!-- pmtools fragment -->
+    <!-- waterfalls view -->
+    <string name="image_url">Waterfalls image url tag</string>
+    <string name="border_top">Waterfalls border top tag</string>
+    <string name="border_bottom">Waterfalls border bottom tag</string>
     <!-- test fragment -->
     <string name="test_helloText">Hello bnrc! This is a test page.</string>
     <string name="test_cameraBtn">照相</string>
