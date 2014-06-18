@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -55,6 +56,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.media.ExifInterface;
 
+import com.bupt.bnrc.thesenser.Collection;
 import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PhotoStats;

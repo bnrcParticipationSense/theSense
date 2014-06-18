@@ -2,6 +2,7 @@ package com.bupt.bnrc.thesenser;
 
 import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
