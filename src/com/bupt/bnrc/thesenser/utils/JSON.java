@@ -6,12 +6,11 @@ import org.json.JSONException;
 
 import com.bupt.bnrc.thesenser.model.*;
 
-public class Json {
-	
+public class JSON {
 	static public JSONObject toJSON(String str) {
-		JSONObject obj = new JSONObject();
+		JSONObject obj = null;
 		try {
-			obj.put("msg",str);
+			obj = new JSONObject(str);
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}

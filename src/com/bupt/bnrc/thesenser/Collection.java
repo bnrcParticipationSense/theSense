@@ -49,7 +49,7 @@ import com.baidu.location.LocationClientOption;
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PhotoStats;
 import com.bupt.bnrc.thesenser.model.DataModel;
-import com.bupt.bnrc.thesenser.utils.Json;
+import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Upload;
 
 
@@ -91,8 +91,8 @@ public class Collection implements SensorEventListener {
 	private boolean sensorlistener_flag = true;
 	
 	//new things for upload or others
-	DataModel mData = null;
-	DataModel preData = null;
+	private DataModel mData = null;
+	private DataModel preData = null;
 	
 	//*******************************************************************************//
 	public LocationClient mLocationClient = null;
@@ -176,6 +176,14 @@ public class Collection implements SensorEventListener {
 			instance = new Collection(app);
 		}
 		return instance;
+	}
+	public static Collection getCollention() {
+		if(instance != null){
+			return instance;
+		}
+		//
+		System.exit(0);
+		return null;
 	}
 	/*
 	private Collection() {	
@@ -321,7 +329,7 @@ public class Collection implements SensorEventListener {
 		return this.light;
 	}
 	public float getNoise() {
-		return this.noise;
+		return this.for_noise.run();
 	}
 	public Date getDate() {
 		return this.date;
@@ -478,7 +486,7 @@ public class Collection implements SensorEventListener {
 				Looper.prepare();
 				try {
 					Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
-					Upload.Uploading(app, "", Json.toJSON(mData));
+					Upload.Uploading(app, "", JSON.toJSON(mData));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
