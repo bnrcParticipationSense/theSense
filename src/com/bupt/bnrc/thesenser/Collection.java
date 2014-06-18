@@ -170,7 +170,7 @@ public class Collection implements SensorEventListener {
 		toast.show();
 	}
 	//*******************************************************************************//
-	private static Collection instance;
+	private static Collection instance = null;
 	public static Collection getCollection(Activity app) {
 		if(instance == null){
 			instance = new Collection(app);

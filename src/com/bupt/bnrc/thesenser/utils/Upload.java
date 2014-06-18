@@ -205,23 +205,34 @@ public class Upload {
 	    	dos.flush();
 
 	    	/*
+	    	 * 获取返回内容
+	    	 */
+	    	InputStream inputStream = httpURLConnection.getInputStream();
+	    	InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+	    	BufferedReader reader = new BufferedReader(inputStreamReader);
+	    	String inputLine = null;
+	    	String result = "";
+	    	while((inputLine = reader.readLine()) != null) {
+	    		result += inputLine + "\n";
+	    	}
+	    	reader.close();
+	    	/*
 	    	 * 获取响应码
 	    	 */
 	    	int res = httpURLConnection.getResponseCode();
+	    	String s = httpURLConnection.getResponseMessage();
+	    	
 	    	if(res == 200)
 	    	{
 	    		Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
 	    		Log.i("Upload", "SUCCESS");
 	    	}
-	    	InputStream is = httpURLConnection.getInputStream();
-	    	InputStreamReader isr = new InputStreamReader(is, "utf-8");
-	    	BufferedReader br = new BufferedReader(isr);
-	    	String result = br.readLine();
-
-	    	//Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+	    	if(s != null){
+	    		Log.i("UploadJEPG",s);
+	    	}
+	    	
 	    	Log.i("Upload", result);
 	      	dos.close();
-	    	is.close();
 	      
 
 	    } catch (Exception e)
