@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -105,7 +107,7 @@ public class CameraActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		collect = new Collection(this);
+		collect = Collection.getCollection(this);
 		app = this;
 		// 设置全屏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -392,15 +394,32 @@ public class CameraActivity extends Activity {
 											"\"Orientation_X\":"+collect.getxDirect()+","+
 											"\"Orientation_Y\":"+collect.getyDirect()+","+
 											"\"Orientation_Z\":"+collect.getzDirect();
+							JSONObject obj = new JSONObject();
+							try {
+								obj.put("username", "zzy");
+								obj.put("Model", imei);
+									
+								//obj.put("Time", collect.getDateSring());
+									
+								obj.put("Latitude", collect.getLatitude());
+								obj.put("Longitude", collect.getLongtitude());
+								
+								obj.put("Orientation_X", collect.getxDirect());
+								obj.put("Orientation_Y", collect.getyDirect());
+								obj.put("Orientation_Z", collect.getzDirect());
+									
+							} catch(JSONException e) {
+								e.printStackTrace();
+							}
 							//*****************************************************************end
 							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDateSring());
-							exif.setAttribute(ExifInterface.TAG_MODEL, "\"PM2.5\":"+1024);
-							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
-							exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
-							exif.setAttribute(ExifInterface.TAG_MAKE, str);
-							exif.setAttribute(ExifInterface.TAG_ISO, "\"PM2.5\":"+1024);
-							exif.setAttribute(ExifInterface.TAG_APERTURE, "\"PM2.5\":"+1024);
-							exif.setAttribute(ExifInterface.TAG_FLASH, "\"PM2.5\":"+1024);
+							exif.setAttribute(ExifInterface.TAG_MODEL, "{\"PM2.5\":"+1024+"}");
+							//exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
+							//exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
+							exif.setAttribute(ExifInterface.TAG_MAKE, obj.toString());
+							//exif.setAttribute(ExifInterface.TAG_ISO, "\"PM2.5\":"+1024);
+							//exif.setAttribute(ExifInterface.TAG_APERTURE, "\"PM2.5\":"+1024);
+							//exif.setAttribute(ExifInterface.TAG_FLASH, "\"PM2.5\":"+1024);
 							//exif.setAttribute("Light", ""+collect.getLight());
 							exif.saveAttributes();
 							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));

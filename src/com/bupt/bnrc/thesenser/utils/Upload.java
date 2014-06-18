@@ -52,10 +52,13 @@ public class Upload {
 		//HttpPost post = new HttpPost(uploadUrl);
 		HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
 		//HttpPost post = new HttpPost("http://10.108.105.190:8080/webInterface/fileServlet");
-		JSONObject receiveObj;
+		JSONObject receiveObj = null;
 		
 		HttpClient httpClient;
 		HttpParams httpParameters;
+		
+		HttpResponse httpResponse;
+		HttpEntity entity;
 		
 		httpParameters = new BasicHttpParams();// Set the timeout in milliseconds until a connection is established.  
 	    HttpConnectionParams.setConnectionTimeout(httpParameters, 20000);// Set the default socket timeout (SO_TIMEOUT) // in milliseconds which is the timeout for waiting for data.  
@@ -69,8 +72,8 @@ public class Upload {
 			post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
 			// ∑¢ÀÕPOST«Î«Û
-			HttpResponse httpResponse = httpClient.execute(post);
-			HttpEntity entity = httpResponse.getEntity();
+			httpResponse = httpClient.execute(post);
+			entity = httpResponse.getEntity();
 			
 			int resCode = httpResponse.getStatusLine().getStatusCode();
 			
@@ -88,10 +91,14 @@ public class Upload {
 			if (entity != null)
 			{
 					
-				String rev = EntityUtils.toString(entity);          
-				//receiveObj = new JSONObject(rev); 
-				Log.i("UploadJSON", "return msg:"+rev);
-				return null;
+				String rev = EntityUtils.toString(entity);
+				try {
+					receiveObj = new JSONObject(rev); 
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				Log.i("UploadJSON", "return msg:"+receiveObj.toString());
+				return receiveObj;
 			}
 			else {
 				return null;
@@ -101,8 +108,28 @@ public class Upload {
 		catch (ConnectTimeoutException e)
 		{
 			e.printStackTrace();
+			Toast.makeText(app, "Time out", Toast.LENGTH_LONG).show();
 			Log.i("UploadJSON", "time out");
-			return null;
+			for(int i=0 ; i<3 ; i++) {
+				try{
+					httpResponse = httpClient.execute(post);
+					entity = httpResponse.getEntity();
+					
+					int resCode = httpResponse.getStatusLine().getStatusCode();
+					
+					if(entity != null) {
+						receiveObj = new JSONObject(EntityUtils.toString(entity));
+						break;
+					}
+					
+					if(resCode == 200) {
+						break;
+					}
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+			return receiveObj;
 		}
 		catch (IOException e)
 		{
@@ -203,9 +230,14 @@ public class Upload {
 	    }
 	}
 	
+	private JSONObject ReUpload(String uploadUrl, JSONObject sendObj) {
+		JSONObject receiveObj = null;
+		return receiveObj;
+	}
+	
 	//***********************With Out Activity**************************
 	static public JSONObject Uploading(String uploadUrl, JSONObject sendObj) {
-		//HttpPost post = new HttpPost(uploadUrl);
+		//HttpPost post = new HttpPost(uploadUrl);1
 		HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
 		//HttpPost post = new HttpPost("http://10.108.105.190:8080/webInterface/fileServlet");
 		JSONObject receiveObj;

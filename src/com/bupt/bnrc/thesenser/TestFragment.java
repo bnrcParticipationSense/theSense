@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.widget.Toast;
 
 public class TestFragment extends Fragment implements OnClickListener {
 
@@ -57,7 +58,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View infoBtn = parentView.findViewById(R.id.infoBtn);
 		View uploadBtn = parentView.findViewById(R.id.uploadBtn);
 		
-		collect = new Collection(getActivity());
+		collect = Collection.getCollection(getActivity());
 		
 		if(!TestFragment.thread_uniqueness) {
 			collect_t = new Thread() {
@@ -116,7 +117,18 @@ public class TestFragment extends Fragment implements OnClickListener {
 	
 	
 	private void showinfo() {
-		collect.showinfo(getActivity());
+		//collect.showinfo(getActivity());
+		String str =	"光线："+collect.getLight()+";\n"+
+				"噪音："+collect.getNoise()+";\n"+
+				"经度："+collect.getLongtitude()+";\n"+
+				"纬度："+collect.getLatitude()+"\n"+
+				"x方向："+collect.getxDirect()+";\n"+
+				"y方向："+collect.getyDirect()+";\n"+
+				"z方向："+collect.getzDirect()+";\n"+
+				"电量："+collect.getBatteryState()+";\n"+
+				"时间："+collect.getDateSring()+";";
+		Toast toast = Toast.makeText(getActivity(), str, Toast.LENGTH_LONG);
+		toast.show();
 	}
 	
 	@Override

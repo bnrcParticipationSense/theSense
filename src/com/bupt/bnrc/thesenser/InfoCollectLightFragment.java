@@ -8,6 +8,9 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import com.bupt.bnrc.thesenser.Collection;
+import com.bupt.bnrc.thesenser.R;
+
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.os.Bundle;
@@ -27,7 +30,7 @@ public class InfoCollectLightFragment extends Fragment {
 	private XYSeries mCurrentSeries; 
 	private XYSeriesRenderer mCurrentRenderer;
 	
-	private Collection collection = null; 
+	// private Collection collection = Collection.getCollection(getActivity()); 
 	
 	private TextView mLightView;
 	
@@ -46,11 +49,10 @@ public class InfoCollectLightFragment extends Fragment {
 	
 	private void initView(View view) {
 		// TODO Auto-generated method stub
-		collection = new Collection(getActivity());
 		mLightView = (TextView)view.findViewById(R.id.info_light_data);
 		// collection.setDataModel();
-		Float lightNum = collection.getLight();
-		mLightView.setText(lightNum.toString());
+		// Float lightNum = collection.getLight();
+		mLightView.setText("1");
 		
 	}
 	
@@ -124,7 +126,7 @@ public class InfoCollectLightFragment extends Fragment {
 
 	public void refreshDataView() {
 		// TODO Auto-generated method stub
-		Float lightNum = collection.getLight();
-		mLightView.setText(lightNum.toString());
+		// Float lightNum = collection.getLight();
+		// mLightView.setText(lightNum.toString());
 	}
 }

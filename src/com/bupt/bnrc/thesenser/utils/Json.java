@@ -81,7 +81,11 @@ public class Json {
 				dataJSON.put("Time", data.getCreateTimeString());
 				
 				dataJSON.put("Light", data.getLightIntensity());
-				dataJSON.put("Noise", data.getSoundIntensity());
+				try {
+					dataJSON.put("Noise", data.getSoundIntensity());
+				} catch(JSONException e) {
+					dataJSON.put("Noise", "NaN");
+				}
 				
 				dataJSON.put("BatteryState", data.getBatteryState());
 				dataJSON.put("ChargeState", data.getChargeState());
@@ -98,6 +102,7 @@ public class Json {
 		}
 		return obj;
 	}
+	
 	static public JSONObject toJSON(FileModel file) {
 		JSONObject obj = new JSONObject();
 		try {
@@ -107,5 +112,6 @@ public class Json {
 		}
 		return obj;
 	}
+	
 
 }

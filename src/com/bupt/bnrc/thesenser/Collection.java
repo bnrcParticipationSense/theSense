@@ -52,6 +52,8 @@ import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.utils.Json;
 import com.bupt.bnrc.thesenser.utils.Upload;
 
+
+
 public class Collection implements SensorEventListener {
 	
 	private Activity app;
@@ -168,18 +170,42 @@ public class Collection implements SensorEventListener {
 		toast.show();
 	}
 	//*******************************************************************************//
+	private static Collection instance;
+	public static Collection getCollection(Activity app) {
+		if(instance == null){
+			instance = new Collection(app);
+		}
+		return instance;
+	}
+	/*
+	private Collection() {	
+		Log.i("new Collection()", "new Collection @ Activity = "+this.app.getApplicationInfo().toString());
+		
+		//sensorManager = (SensorManager) this.app.getSystemService(android.content.Context.SENSOR_SERVICE);
+		//connectManager = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
+		//mLocationClient = new LocationClient(this.app.getApplicationContext());     //
+		//mLocationClient = new LocationClient(this.app);
+		sensorManager = (SensorManager) this.app.getSystemService(android.content.Context.SENSOR_SERVICE);
+		connectManager = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
+		mLocationClient = new LocationClient(this.app);
+	     
+		setValues();//register every sensors
+	}
+	*/
 	
-	public Collection(Activity app) {
+	private Collection(Activity app) {
 		this.app = app;
 		
 		Log.i("new Collection()", "new Collection @ Activity = "+this.app.getApplicationInfo().toString());
 		
 		sensorManager = (SensorManager) this.app.getSystemService(android.content.Context.SENSOR_SERVICE);
 		connectManager = (ConnectivityManager) this.app.getSystemService(Context.CONNECTIVITY_SERVICE);
-		mLocationClient = new LocationClient(this.app.getApplicationContext());     //
+		//mLocationClient = new LocationClient(this.app.getApplicationContext());     //
+		mLocationClient = new LocationClient(this.app);
 	     
 		setValues();//register every sensors
 	}
+	
 	
 	private void setValues() {
 		setLight();
@@ -187,6 +213,7 @@ public class Collection implements SensorEventListener {
 		setMagneticField();
 		setOrientation();
 		//runForNoise();
+		/*
 		Thread noise_t = new Thread() {
 			public void run(){
 				while(true){
@@ -199,6 +226,7 @@ public class Collection implements SensorEventListener {
 				
 			}
 		};
+		*/
 		//noise_t.start();
 		for_noise = new RecordThread();
 		noise = for_noise.run();
@@ -293,7 +321,7 @@ public class Collection implements SensorEventListener {
 		return this.light;
 	}
 	public float getNoise() {
-		return for_noise.run();
+		return this.noise;
 	}
 	public Date getDate() {
 		return this.date;
@@ -303,13 +331,13 @@ public class Collection implements SensorEventListener {
 		return new String(sdf.format(date));
 	}
 	public float getxDirect() {
-		return this.orientation[0];
+		return this.sensor_orientation[0];
 	}
 	public float getyDirect() {
-		return this.orientation[1];
+		return this.sensor_orientation[1];
 	}
 	public float getzDirect() {
-		return this.orientation[2];
+		return this.sensor_orientation[2];
 	}
 	public float getLongtitude() {
 		return this.longitude;
@@ -467,9 +495,9 @@ public class Collection implements SensorEventListener {
 						"噪音："+this.noise+";\n"+
 						"经度："+this.longitude+";\n"+
 						"纬度："+this.latitude+"\n"+
-						"x方向："+this.orientation[0]+";\n"+
-						"y方向："+this.orientation[1]+";\n"+
-						"z方向："+this.orientation[2]+";\n"+
+						"x方向："+this.sensor_orientation[0]+";\n"+
+						"y方向："+this.sensor_orientation[1]+";\n"+
+						"z方向："+this.sensor_orientation[2]+";\n"+
 						"电量："+this.percent+";\n"+
 						"时间："+this.date+";";
 		Toast toast = Toast.makeText(a, str, Toast.LENGTH_LONG);
