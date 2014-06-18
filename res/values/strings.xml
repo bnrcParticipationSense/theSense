@@ -5,6 +5,7 @@
     
     <!-- action bar -->
     <string name="action_take_photo">照相</string>
+    <string name="action_refresh">刷新</string>
     
     <!-- drawer -->
     <string-array name="main_list_array">
@@ -12,6 +13,7 @@
         <item>PM采集</item>
         <item>任务</item>
         <item>用户</item>
+        <item>设置</item>
         <item>测试</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>

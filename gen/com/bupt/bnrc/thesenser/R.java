@@ -129,17 +129,23 @@ containing a value of this type.
         public static final int background_tab=0x7f020000;
         public static final int background_tabs=0x7f020001;
         public static final int capture=0x7f020002;
-        public static final int empty_photo=0x7f020003;
-        public static final int goodday=0x7f020004;
-        public static final int ic_action_photo=0x7f020005;
-        public static final int ic_drawer=0x7f020006;
-        public static final int ic_launcher=0x7f020007;
-        public static final int tabs_pattern=0x7f020008;
-        public static final int tabs_pattern_diagonal=0x7f020009;
+        public static final int data_light=0x7f020003;
+        public static final int data_sound=0x7f020004;
+        public static final int empty_photo=0x7f020005;
+        public static final int goodday=0x7f020006;
+        public static final int ic_action_photo=0x7f020007;
+        public static final int ic_action_refresh=0x7f020008;
+        public static final int ic_drawer=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
+        public static final int light=0x7f02000b;
+        public static final int tabs_pattern=0x7f02000c;
+        public static final int tabs_pattern_diagonal=0x7f02000d;
     }
     public static final class id {
-        public static final int action_take_photo=0x7f0a002b;
+        public static final int action_refresh=0x7f0a0030;
+        public static final int action_take_photo=0x7f0a002f;
         public static final int cameraBtn=0x7f0a0012;
+        public static final int chart_layout=0x7f0a001d;
         public static final int collectBtn=0x7f0a0015;
         public static final int content_frame=0x7f0a000f;
         public static final int dataTestBtn=0x7f0a0013;
@@ -148,15 +154,17 @@ containing a value of this type.
         public static final int exitBtn=0x7f0a0017;
         public static final int fileTestBtn=0x7f0a0014;
         public static final int file_lookListBtn=0x7f0a0003;
-        public static final int first_column=0x7f0a001f;
-        public static final int get_id=0x7f0a0024;
-        public static final int get_id_file=0x7f0a0026;
-        public static final int get_list=0x7f0a0025;
-        public static final int get_list_file=0x7f0a0027;
+        public static final int first_column=0x7f0a0023;
+        public static final int get_id=0x7f0a0028;
+        public static final int get_id_file=0x7f0a002a;
+        public static final int get_list=0x7f0a0029;
+        public static final int get_list_file=0x7f0a002b;
         public static final int helloText=0x7f0a0011;
         public static final int info=0x7f0a0001;
         public static final int infoBtn=0x7f0a0019;
-        public static final int info_collect_id_show=0x7f0a001c;
+        public static final int info_collect_pager=0x7f0a001f;
+        public static final int info_collect_tabs=0x7f0a001e;
+        public static final int info_light_data=0x7f0a001c;
         public static final int listData_details=0x7f0a0006;
         public static final int listData_next_btn=0x7f0a0008;
         public static final int listData_pre_btn=0x7f0a0007;
@@ -168,18 +176,19 @@ containing a value of this type.
         public static final int listFile_title=0x7f0a0009;
         public static final int main_drawer_layout=0x7f0a000e;
         public static final int main_left_drawer=0x7f0a0010;
-        public static final int phone_name2=0x7f0a0029;
+        public static final int phone_name2=0x7f0a002d;
         public static final int photoBut=0x7f0a0002;
-        public static final int photo_name=0x7f0a0028;
-        public static final int pmtools_id_pic=0x7f0a001d;
-        public static final int pmtools_network_waterfalls_view=0x7f0a001e;
-        public static final int pmtools_pager=0x7f0a0023;
-        public static final int pmtools_tabs=0x7f0a0022;
+        public static final int photo_name=0x7f0a002c;
+        public static final int pmtools_id_pic=0x7f0a0020;
+        public static final int pmtools_id_pm_text=0x7f0a0021;
+        public static final int pmtools_network_waterfalls_view=0x7f0a0022;
+        public static final int pmtools_pager=0x7f0a0027;
+        public static final int pmtools_tabs=0x7f0a0026;
         public static final int sView=0x7f0a0000;
         public static final int saveInfo=0x7f0a0016;
-        public static final int second_column=0x7f0a0020;
-        public static final int show=0x7f0a002a;
-        public static final int third_column=0x7f0a0021;
+        public static final int second_column=0x7f0a0024;
+        public static final int show=0x7f0a002e;
+        public static final int third_column=0x7f0a0025;
         public static final int uploadBtn=0x7f0a0018;
         public static final int zoom_image_view=0x7f0a0004;
     }
@@ -192,49 +201,55 @@ containing a value of this type.
         public static final int activity_main=0x7f030005;
         public static final int activity_test=0x7f030006;
         public static final int antivity_data=0x7f030007;
-        public static final int fragment_info_collect=0x7f030008;
-        public static final int fragment_pmtools_local=0x7f030009;
-        public static final int fragment_pmtools_network=0x7f03000a;
-        public static final int fragment_pmtools_parent=0x7f03000b;
-        public static final int get_data_id=0x7f03000c;
-        public static final int get_data_list=0x7f03000d;
-        public static final int get_file_id=0x7f03000e;
-        public static final int get_file_list=0x7f03000f;
-        public static final int main_drawer_list_item=0x7f030010;
-        public static final int save=0x7f030011;
+        public static final int fragment_info_collect_light=0x7f030008;
+        public static final int fragment_info_collect_parent=0x7f030009;
+        public static final int fragment_info_collect_sound=0x7f03000a;
+        public static final int fragment_pmtools_local=0x7f03000b;
+        public static final int fragment_pmtools_network=0x7f03000c;
+        public static final int fragment_pmtools_parent=0x7f03000d;
+        public static final int fragment_settings=0x7f03000e;
+        public static final int fragment_task=0x7f03000f;
+        public static final int fragment_user=0x7f030010;
+        public static final int get_data_id=0x7f030011;
+        public static final int get_data_list=0x7f030012;
+        public static final int get_file_id=0x7f030013;
+        public static final int get_file_list=0x7f030014;
+        public static final int main_drawer_list_item=0x7f030015;
+        public static final int save=0x7f030016;
     }
     public static final class menu {
         public static final int main=0x7f090000;
     }
     public static final class string {
+        public static final int action_refresh=0x7f060002;
         /**  action bar 
          */
         public static final int action_take_photo=0x7f060001;
         /**  project 
          */
         public static final int app_name=0x7f060000;
-        public static final int border_bottom=0x7f060006;
-        public static final int border_top=0x7f060005;
-        public static final int camera_helloText=0x7f06000b;
-        public static final int data_lookListBtn=0x7f06000f;
-        public static final int data_lookOneBtn=0x7f06000e;
-        public static final int data_saveBtn=0x7f06000d;
-        public static final int drawer_close=0x7f060003;
-        public static final int drawer_open=0x7f060002;
-        public static final int file_lookListBtn=0x7f060011;
-        public static final int file_lookOneBtn=0x7f060010;
+        public static final int border_bottom=0x7f060007;
+        public static final int border_top=0x7f060006;
+        public static final int camera_helloText=0x7f06000c;
+        public static final int data_lookListBtn=0x7f060010;
+        public static final int data_lookOneBtn=0x7f06000f;
+        public static final int data_saveBtn=0x7f06000e;
+        public static final int drawer_close=0x7f060004;
+        public static final int drawer_open=0x7f060003;
+        public static final int file_lookListBtn=0x7f060012;
+        public static final int file_lookOneBtn=0x7f060011;
         /**  collect fragment 
  pmtools fragment 
  waterfalls view 
          */
-        public static final int image_url=0x7f060004;
-        public static final int photo_name=0x7f06000c;
-        public static final int test_cameraBtn=0x7f060008;
-        public static final int test_dataTestBtn=0x7f060009;
-        public static final int test_fileTestBtn=0x7f06000a;
+        public static final int image_url=0x7f060005;
+        public static final int photo_name=0x7f06000d;
+        public static final int test_cameraBtn=0x7f060009;
+        public static final int test_dataTestBtn=0x7f06000a;
+        public static final int test_fileTestBtn=0x7f06000b;
         /**  test fragment 
          */
-        public static final int test_helloText=0x7f060007;
+        public static final int test_helloText=0x7f060008;
     }
     public static final class style {
         /** 

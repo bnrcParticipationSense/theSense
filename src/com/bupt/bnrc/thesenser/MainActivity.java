@@ -2,7 +2,6 @@ package com.bupt.bnrc.thesenser;
 
 import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -104,6 +103,7 @@ public class MainActivity extends FragmentActivity {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.action_take_photo).setVisible(!drawerOpen);
+        menu.findItem(R.id.action_refresh).setVisible(!drawerOpen);
         // update the action items again depends on the fragment
         hideActionButton(menu);
         return super.onPrepareOptionsMenu(menu);
@@ -146,7 +146,16 @@ public class MainActivity extends FragmentActivity {
 		case 1:
 			tag = "pmtools";
 			break;
+		case 2:
+			tag = "tasks";
+			break;
+		case 3:
+			tag = "user";
+			break;
 		case 4:
+			tag = "settings";
+			break;
+		case 5:
 			tag = "test";
 			break;
 		default:
@@ -160,8 +169,20 @@ public class MainActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		switch (mNowPosition) {
 		case 0:
+			menu.findItem(R.id.action_take_photo).setVisible(false);
+			break;
+		case 1:
+			menu.findItem(R.id.action_refresh).setVisible(false);
+			break;
+		case 2:
+		case 3:
 		case 4:
 			menu.findItem(R.id.action_take_photo).setVisible(false);
+			menu.findItem(R.id.action_refresh).setVisible(false);
+			break;
+		case 5:
+			menu.findItem(R.id.action_take_photo).setVisible(false);
+			menu.findItem(R.id.action_refresh).setVisible(false);
 			break;
 		default:
 			break;
@@ -177,7 +198,16 @@ public class MainActivity extends FragmentActivity {
 		case 1:
 			re = "pmtools";
 			break;
+		case 2:
+			re = "tasks";
+			break;
+		case 3:
+			re = "user";
+			break;
 		case 4:
+			re = "settings";
+			break;
+		case 5:
 			re = "test";
 			break;
 		default:
@@ -204,12 +234,22 @@ public class MainActivity extends FragmentActivity {
         case R.id.action_take_photo:
         	takePhotoForPM();
         	return true;
+        case R.id.action_refresh:
+        	refreshDataForInfo();
         default:
             return super.onOptionsItemSelected(item);
         }
     }
     
-    private void takePhotoForPM() {
+    private void refreshDataForInfo() {
+		// TODO Auto-generated method stub
+    	FragmentManager fragmentManager = getSupportFragmentManager();
+    	InfoCollectParentFragment fragment = (InfoCollectParentFragment)fragmentManager.findFragmentByTag("collect");
+    	fragment.refreshDataView();
+	}
+
+
+	private void takePhotoForPM() {
 		// TODO take photo
     	Intent intent = new Intent(this, CameraActivity.class);
     	startActivityForResult(intent, CommonDefinition.REQUESTCODE_CAMERA);

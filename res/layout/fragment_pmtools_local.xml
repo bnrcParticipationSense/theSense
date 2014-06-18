@@ -11,5 +11,18 @@
         android:layout_height="match_parent"
         android:src="@drawable/goodday"
         android:scaleType="fitXY"/>
+    
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <TextView 
+            android:id="@+id/pmtools_id_pm_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="测试文字：\n85"
+            android:textSize="40sp"
+            android:background="#44FFFFFF"/>
+    </RelativeLayout>
 
 </FrameLayout>

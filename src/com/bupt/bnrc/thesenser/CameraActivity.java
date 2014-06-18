@@ -484,9 +484,9 @@ public class CameraActivity extends Activity {
 
 						FileModel fileModel = new FileModel(fileName, collect.getDate(), photoStats);
 						fileModel.save(app);
-
-						
-						mcamera.startPreview();
+						setResult(CommonDefinition.REQUESTCODE_CAMERA);
+						finish();
+						// mcamera.startPreview();
 					}
 				});
 
