@@ -33,7 +33,7 @@ public class InfoCollectFragment extends Fragment {
 	private void InitData() {
 		// TODO Auto-generated method stub
 		//mCollection = new Collection(getActivity());
-		mCollection = Collection.getCollection(getActivity());
+		//mCollection = Collection.getCollection(getActivity());
 		RefreshData();
 	}
 
