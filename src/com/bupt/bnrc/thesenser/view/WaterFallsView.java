@@ -160,7 +160,6 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 	 */
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		// TODO Auto-generated method stub
 		super.onLayout(changed, l, t, r, b);
 		if (changed && !loadOnce) {
 			scrollViewHeight = getHeight();
@@ -207,6 +206,7 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 				}
 				page++;
 			} else {
+				// TODO if there is no more pics
 				Toast.makeText(getContext(), "已没有更多图片", Toast.LENGTH_SHORT)
 						.show();
 			}
@@ -349,7 +349,6 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 					
 					@Override
 					public void onClick(View v) {
-						// TODO Auto-generated method stub
 						Intent intent = new Intent(getContext(), ImageDetailsActivity.class);
 						intent.putExtra("image_path", getImagePath(mImageUrl));  
 						getContext().startActivity(intent);

@@ -1,5 +1,7 @@
 package com.bupt.bnrc.thesenser.utils;
 
+import java.util.List;
+
 import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -8,14 +10,31 @@ import com.bupt.bnrc.thesenser.model.*;
 
 public class Json {
 	
-	static public JSONObject toJSON(String str) {
+	static public JSONObject toJSON(String msg) {
 		JSONObject obj = new JSONObject();
 		try {
-			obj.put("msg",str);
+			obj.put("msg",msg);
 		} catch(JSONException e) {
 			e.printStackTrace();
 		}
 		return obj;
+	}
+	
+	// webPhoto reequest
+	static public JSONObject toJSON(String msg, Integer num) {
+		JSONObject obj = new JSONObject();
+		try {
+			obj.put("request_type", msg);
+			obj.put("request_maxnum", num);
+		} catch(JSONException e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
+	// webPhoto response
+	static public List<WebPhotoModel> getWebPhotoListFromResponse(JSONObject json) {
+		
+		return null;
 	}
 	
 	static public JSONObject toJSON(DataModel [] list) {

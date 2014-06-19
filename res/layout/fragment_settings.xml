@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,16 +15,3 @@
 	    android:textOn="开"
 	    android:textOff="关"/>
 </LinearLayout>
- -->
-
- <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-     <PreferenceCategory
-         android:title="数据采集"
-         >
-         <CheckBoxPreference
-             android:summary="开启声音采集"
-             android:title="声音"
-             android:defaultValue="true"/>
-         
-     </PreferenceCategory>
- </PreferenceScreen>
