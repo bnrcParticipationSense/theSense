@@ -251,7 +251,7 @@ public class Upload {
 		//HttpPost post = new HttpPost(uploadUrl);1
 		HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
 		//HttpPost post = new HttpPost("http://10.108.105.190:8080/webInterface/fileServlet");
-		JSONObject receiveObj;
+		JSONObject receiveObj = null;
 		
 		HttpClient httpClient;
 		HttpParams httpParameters;
@@ -288,9 +288,13 @@ public class Upload {
 			{
 					
 				        String rev = EntityUtils.toString(entity);          
-				        //receiveObj = new JSONObject(rev); 
-				        Log.i("UploadJSON", "return msg:"+rev);
-				        return null;
+				        try {
+							receiveObj = new JSONObject(rev); 
+						} catch(Exception e) {
+							e.printStackTrace();
+						}
+						Log.i("UploadJSON", "return msg:"+receiveObj.toString());
+						return receiveObj;
 			}
 			else {
 				return null;
@@ -305,10 +309,11 @@ public class Upload {
 	}
 	
 	
-	static public void Uploading(String uploadUrl, String fileName) {
+	static public JSONObject Uploading(String uploadUrl, String fileName) {
 		String end = "\r\n";
 	    String twoHyphens = "--";
 	    String boundary = UUID.randomUUID().toString();
+	    JSONObject receiveObj = null;
 	    
 	    try
 	    {
@@ -379,21 +384,35 @@ public class Upload {
 	    		//Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
 	    		Log.i("Upload", "SUCCESS");
 	    	}
-	    	InputStream is = httpURLConnection.getInputStream();
-	    	InputStreamReader isr = new InputStreamReader(is, "utf-8");
-	    	BufferedReader br = new BufferedReader(isr);
-	    	String result = br.readLine();
-
-	    	//Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+	    	
+	    	/*
+	    	 * 获取返回内容
+	    	 */
+	    	InputStream inputStream = httpURLConnection.getInputStream();
+	    	InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+	    	BufferedReader reader = new BufferedReader(inputStreamReader);
+	    	String inputLine = null;
+	    	String result = "";
+	    	while((inputLine = reader.readLine()) != null) {
+	    		result += inputLine + "\n";
+	    	}
+	    	reader.close();
+	    	
 	    	Log.i("Upload", result);
+	    	try{
+	    		receiveObj = new JSONObject(result);
+	    	}catch(JSONException e) {
+	    		e.printStackTrace();
+	    	}
 	      	dos.close();
-	    	is.close();
-	      
+	      	
+	      	return receiveObj;
 
 	    } catch (Exception e)
 	    {
 	    	e.printStackTrace();
-	    }
+	    	return null;
+	    }    
 	}
 
 }
