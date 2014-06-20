@@ -1,5 +1,7 @@
 package com.bupt.bnrc.thesenser;
 
+import java.io.IOException;
+
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -7,63 +9,76 @@ import android.media.MediaRecorder;
 import android.util.Log;
 
 public class RecordThread {
-	private AudioRecord ar;
-    private int bs;
-    private static int SAMPLE_RATE_IN_HZ = 8000;
-    private boolean isRun = false;
  
-    public RecordThread() {
-//        super();
-    	bs = AudioRecord.getMinBufferSize(SAMPLE_RATE_IN_HZ,
-                AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT);
-        ar = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE_IN_HZ,
-                AudioFormat.CHANNEL_IN_MONO,
-                AudioFormat.ENCODING_PCM_16BIT, bs);
+    /*
+     * ********************************************************************************************************
+     */
+    private MediaRecorder mRecorder = null;
+    private String fileName = "/storage/sdcard0/SensorTest1/a.mp3";
+    
+    static private RecordThread instance = null;
+    static public RecordThread getRecordThread() {
+    	if(instance == null)
+    		instance = new RecordThread();
+    	return instance;
     }
- 
-    public float run() {
-//        super.run();
-        ar.startRecording();
-    	 
-    	int v = ar.getState();
-    	int j = ar.getRecordingState();
-                // ”√”⁄∂¡»°µƒ buffer
-        byte[] buffer = new byte[bs];
-        isRun = true;
-
-//        while(this.isRun) {
-            int r = ar.read(buffer, 0, bs);
-            int w = 0;
-                        // Ω´ buffer ƒ⁄»›»°≥ˆ£¨Ω¯––∆Ω∑Ω∫Õ‘ÀÀ„
-            for (int i = 0; i < buffer.length; i++) {
-                // ’‚¿Ô√ª”–◊ˆ‘ÀÀ„µƒ”≈ªØ£¨Œ™¡À∏¸º”«ÂŒ˙µƒ’π æ¥˙¬Î
-                w += buffer[i] * buffer[i];
-            }
-            
-            Log.d("spll", String.valueOf(w / (float) r));
-//        }
-        Log.d("spl", String.valueOf(v));
-		Log.d("sp", String.valueOf(j));
-		return w / (float) r;
+    private RecordThread() {
+    	start();
     }
-    public void stop() {
-    	ar.stop();
-    	int i = ar.getRecordingState();
-    	Log.d("sp", String.valueOf(i));
-    }
- 
-    public void pause() {
-                // ‘⁄µ˜”√±æœﬂ≥Ãµƒ Activity µƒ onPause ¿Ôµ˜”√£¨“‘±„ Activity ‘›Õ£ ± Õ∑≈¬ÛøÀ∑Á
-        isRun = false;
-    }
- 
+    
     public void start() {
-                // ‘⁄µ˜”√±æœﬂ≥Ãµƒ Activity µƒ onResume ¿Ôµ˜”√£¨“‘±„ Activity ª÷∏¥∫ÛºÃ–¯ªÒ»°¬ÛøÀ∑Á ‰»Î“Ù¡ø
-        if (!isRun) {
-//            super.start();
-        	isRun = true;
+        if (mRecorder == null) {
+            mRecorder = new MediaRecorder();
+            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mRecorder.setOutputFile(fileName);
+            try {
+				mRecorder.prepare();
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            mRecorder.start();
         }
+    }
+    
+    public void stop() {
+        if (mRecorder != null) {
+            mRecorder.stop();
+            mRecorder.release();
+            mRecorder = null;
+        }
+    }
+    
+    private int BASE = 1;
+    private double getAmplitude() {
+        if (mRecorder != null)
+        {
+        	int amp = mRecorder.getMaxAmplitude();
+        	Log.i("RecordThread", "getAmplitude = "+amp);
+            return  (amp/BASE);
+        }
+        else
+        {
+        	Log.i("RecordThread", "getAmplitude = null");
+            return 0;
+        }
+        
+    }
+    public int getValue() {
+    	int value = 0;
+    	//start();
+        double amp = getAmplitude();
+        //mEMA = EMA_FILTER * amp + (1.0 - EMA_FILTER) * mEMA;
+        if (amp > 1)
+			value = (int) (10 * Math.log10(amp));
+        //stop();
+        Log.i("RecordThread", "Value = "+value);
+        return value;
     }
 
 }

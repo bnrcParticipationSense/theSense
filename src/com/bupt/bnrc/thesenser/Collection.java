@@ -70,7 +70,6 @@ public class Collection implements SensorEventListener {
 	//光线声音
 	private float light;
 	private float noise;
-	private boolean need_noise = true;
 	private RecordThread for_noise = null;
 	
 	private float [] acceleration = new float[3];
@@ -78,6 +77,9 @@ public class Collection implements SensorEventListener {
 	
 	private float [] orientation = new float[3];			//getOrientation();
 	private float [] sensor_orientation = new float[3];	//Sensor.TYPE_ORIENTATION
+	
+	//声音
+	
 	
 	//照片
 	private String picName;
@@ -240,8 +242,38 @@ public class Collection implements SensorEventListener {
 		};
 		*/
 		//noise_t.start();
-		for_noise = new RecordThread();
-		noise = for_noise.run();
+		for_noise = RecordThread.getRecordThread();
+		//for_noise.start();
+		Thread noise_t = new Thread() {
+			public void run(){
+				while(true){
+					for_noise.start();
+					try {
+						sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					for_noise.getValue();
+					try {
+						sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					noise = for_noise.getValue();
+					for_noise.stop();
+					try {
+						sleep(5000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		noise_t.start();
+		//noise = for_noise.getValue();
 		
 		calculateOrientation();
 		
@@ -306,7 +338,7 @@ public class Collection implements SensorEventListener {
 		Date tempDate = new Date();
 		//runForNoise();
 		//need_noise = true;
-		noise = for_noise.run();
+		//noise = for_noise.getValue();
 		mData = new DataModel(this.light, this.noise, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
 	}
 	
@@ -333,7 +365,8 @@ public class Collection implements SensorEventListener {
 		return this.light;
 	}
 	public float getNoise() {
-		return this.for_noise.run();
+		//return this.for_noise.getValue();
+		return this.noise;
 	}
 	public Date getDate() {
 		return this.date;
@@ -524,7 +557,7 @@ public class Collection implements SensorEventListener {
 	
 	public void showinfo(Activity a) {
 		//need_noise = true;
-		noise = for_noise.run();
+		//noise = for_noise.getValue();
 		String str =	"光线："+this.light+";\n"+
 						"噪音："+this.noise+";\n"+
 						"经度："+this.longitude+";\n"+
@@ -570,8 +603,6 @@ public class Collection implements SensorEventListener {
 		noise = w / (float) r;
     }
     public void stop() {
-    	ar.stop();
-    	int i = ar.getRecordingState();
-    	Log.d("sp", String.valueOf(i));
+    	for_noise.stop();
     }
 }

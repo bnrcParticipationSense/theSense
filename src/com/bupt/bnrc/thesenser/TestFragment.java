@@ -154,6 +154,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 			if(thread_flag) {
 				thread_flag = false;
 			}
+			collect.stop();
 			break;
 			
 		case R.id.fileTestBtn:
