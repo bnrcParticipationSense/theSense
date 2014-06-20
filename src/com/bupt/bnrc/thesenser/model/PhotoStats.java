@@ -9,9 +9,11 @@ public class PhotoStats {
 	private Integer m_exposureValue = null;
 	private Float m_focalDistance = null;
 	private Float m_aperture = null;
+	private Integer m_width = null;
+	private Integer m_height = null;
 	
 	public PhotoStats(Float xDirect, Float yDirect, Float zDirect, Float longitude, 
-			Float latitude, Integer exposureValue, Float focalDistance, Float aperture) {
+			Float latitude, Integer exposureValue, Float focalDistance, Float aperture, Integer width, Integer height) {
 		this.m_xDirect = xDirect;
 		this.m_yDirect = yDirect;
 		this.m_zDirect = zDirect;
@@ -20,6 +22,8 @@ public class PhotoStats {
 		this.m_exposureValue = exposureValue;
 		this.m_focalDistance = focalDistance;
 		this.m_aperture = aperture;
+		this.m_width = width;
+		this.m_height = height;
 	}
 	public Float getXDirect() {
 		return m_xDirect;
@@ -51,6 +55,14 @@ public class PhotoStats {
 	
 	public Float getAperture() {
 		return m_aperture;
+	}
+	
+	public Integer getWidth() {
+		return this.m_width;
+	}
+	
+	public Integer getHeight() {
+		return this.m_height;
 	}
 
 }

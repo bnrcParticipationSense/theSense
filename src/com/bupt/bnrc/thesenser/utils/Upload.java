@@ -51,7 +51,7 @@ public class Upload {
 	static public JSONObject Uploading(Activity app, String uploadUrl, JSONObject sendObj) {
 		//HttpPost post = new HttpPost(uploadUrl);
 		HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
-		//HttpPost post = new HttpPost("http://10.108.105.190:8080/webInterface/fileServlet");
+		//HttpPost post = new HttpPost("http://10.108.107.92:8080/fileServlet");
 		JSONObject receiveObj = null;
 		
 		HttpClient httpClient;
@@ -149,7 +149,7 @@ public class Upload {
 	    	
 	    	//URL url = new URL(uploadUrl);
 	    	URL url = new URL("http://10.108.108.11/upload11.php");
-	    	//URL url = new URL("http://10.108.105.190:8080/webInterface/fileServlet");
+	    	//URL url = new URL("http://10.108.107.92:8080/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 	    	// 设置每次传输的流大小，可以有效防止手机因为内存不足崩溃

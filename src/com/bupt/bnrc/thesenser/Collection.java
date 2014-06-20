@@ -2,6 +2,10 @@ package com.bupt.bnrc.thesenser;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.util.Log;
@@ -479,16 +483,38 @@ public class Collection implements SensorEventListener {
 			toast.show();
 		}
 	}
+
+	private void doSomething(JSONObject obj){
+		String username;
+		try{
+			username = (String) obj.get("username");
+		}catch(JSONException e) {
+			e.printStackTrace();
+			username = "error";
+		}
+		Log.i("CameraActivity", "username = "+username);
+	}
 	public void upload() {
 		setDataModel();
 		Thread t = new Thread() {
 			public void run() {
+				
 				Looper.prepare();
+				JSONObject obj = null;
 				try {
 					Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
-					Upload.Uploading(app, "", JSON.toJSON(mData));
+					obj = Upload.Uploading(app, "", JSON.toJSON(mData));
 				} catch (Exception e) {
 					e.printStackTrace();
+				}
+				
+				if(obj != null){
+					doSomething(obj);
+				}
+				else{
+					/*
+					 * 干点啥。。。
+					 */
 				}
 				Looper.loop();
 			}

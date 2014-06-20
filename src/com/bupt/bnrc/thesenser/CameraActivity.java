@@ -229,8 +229,8 @@ public class CameraActivity extends Activity {
 						dataModel = collect.getDataModel();
 						Camera.Parameters parameters = mcamera.getParameters();
 						photoStats = new PhotoStats(collect.getxDirect(), collect.getyDirect(), collect.getzDirect(), collect.getLongtitude(), 
-								collect.getLatitude(), 0, parameters.getFocalLength(), (float)0);
-						Log.i("onShutter", "Hello ShutterCallback");
+								collect.getLatitude(), 0, parameters.getFocalLength(), (float)0, parameters.getPictureSize().width, parameters.getPictureSize().height);
+						Log.i("onShutter", "Hello ShutterCallback :"+parameters.getPictureSize().width+" : "+parameters.getPictureSize().height);
 					}
 				}, new PictureCallback()
 				{
