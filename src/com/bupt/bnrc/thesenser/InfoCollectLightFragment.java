@@ -51,7 +51,7 @@ public class InfoCollectLightFragment extends Fragment {
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		mDataCache = new DataCache();
+		mDataCache = DataCache.getInstance();
 		
 		mDataset = new XYMultipleSeriesDataset();
 		mRenderer = new XYMultipleSeriesRenderer();
