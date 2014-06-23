@@ -391,7 +391,7 @@ public class CameraActivity extends Activity {
 							//*****************************************************************start
 							TelephonyManager telephonyManager= (TelephonyManager) app.getSystemService(Context.TELEPHONY_SERVICE);
 							String imei=telephonyManager.getDeviceId();
-							String str = 	"\"username\":\"zzy\"," +
+							/*String str = 	"\"username\":\"zzy\"," +
 											"\"Model\":"+imei+"," +
 											"\"Light\":"+collect.getLight()+"," +
 											"\"Noise\":"+collect.getNoise()+"," +
@@ -403,6 +403,7 @@ public class CameraActivity extends Activity {
 											"\"Orientation_X\":"+collect.getxDirect()+","+
 											"\"Orientation_Y\":"+collect.getyDirect()+","+
 											"\"Orientation_Z\":"+collect.getzDirect();
+							*/
 							JSONObject obj = new JSONObject();
 							try {
 								obj.put("username", "zzy");
@@ -432,6 +433,7 @@ public class CameraActivity extends Activity {
 							//exif.setAttribute("Light", ""+collect.getLight());
 							exif.saveAttributes();
 							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));
+							Log.i("CameraActivity", "JSONObj = "+obj.toString());
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
