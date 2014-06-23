@@ -103,7 +103,7 @@ public class Collection implements SensorEventListener {
 	//*******************************************************************************//
 	public LocationClient mLocationClient = null;
 	public BDLocationListener myListener = new MyLocationListener();
-	
+
 	private BDLocation testLocation = new BDLocation();
 	
 	public class MyLocationListener implements BDLocationListener {
@@ -302,6 +302,7 @@ public class Collection implements SensorEventListener {
 		mLocationClient.registerLocationListener( myListener );
 		mLocationClient.start();
 		
+		
 		date = new Date();
 		
 		Toast toast = Toast.makeText(this.app, ""+date, Toast.LENGTH_LONG);
@@ -388,9 +389,13 @@ public class Collection implements SensorEventListener {
 		return this.sensor_orientation[2];
 	}
 	public float getLongtitude() {
+		//this.longitude = (float)testLocation.getLongitude();
+		mLocationClient.requestLocation();
 		return this.longitude;
 	}
 	public float getLatitude() {
+		//this.latitude = (float)testLocation.getLatitude();
+		mLocationClient.requestLocation();
 		return this.latitude;
 	}
 	public int getBatteryState() {
