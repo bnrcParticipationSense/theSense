@@ -613,7 +613,9 @@ public class Collection implements SensorEventListener {
 		Log.d("sp", String.valueOf(j));
 		noise = w / (float) r;
     }
+    /*
     public void stop() {
     	for_noise.stop();
     }
+    */
 }
