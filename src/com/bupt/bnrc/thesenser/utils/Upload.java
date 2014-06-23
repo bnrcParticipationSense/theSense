@@ -71,7 +71,7 @@ public class Upload {
 			params.add(new BasicNameValuePair("upload",sendObj.toString()));
 			post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
-			// ·¢ËÍPOSTÇëÇó
+			// ï¿½ï¿½ï¿½ï¿½POSTï¿½ï¿½ï¿½ï¿½
 			httpResponse = httpClient.execute(post);
 			entity = httpResponse.getEntity();
 			
@@ -152,16 +152,16 @@ public class Upload {
 	    	URL url = new URL("http://10.108.105.190:8080/uploadFile/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-	    	// ÉèÖÃÃ¿´Î´«ÊäµÄÁ÷´óÐ¡£¬¿ÉÒÔÓÐÐ§·ÀÖ¹ÊÖ»úÒòÎªÄÚ´æ²»×ã±ÀÀ£
-	    	// ´Ë·½·¨ÓÃÓÚÔÚÔ¤ÏÈ²»ÖªµÀÄÚÈÝ³¤¶ÈÊ±ÆôÓÃÃ»ÓÐ½øÐÐÄÚ²¿»º³åµÄ HTTP ÇëÇóÕýÎÄµÄÁ÷¡£
+	    	// ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½Ö¹ï¿½Ö»ï¿½ï¿½ï¿½Îªï¿½Ú´æ²»ï¿½ï¿½ï¿½ï¿½ï¿½
+	    	// ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½È²ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½
 	    	httpURLConnection.setReadTimeout(5 * 1000);
 	    	httpURLConnection.setConnectTimeout(5 * 1000);
 	    	//httpURLConnection.setChunkedStreamingMode(128 * 1024);// 128K
-	    	// ÔÊÐíÊäÈëÊä³öÁ÷
+	    	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	httpURLConnection.setDoInput(true);
 	    	httpURLConnection.setDoOutput(true);
 	    	httpURLConnection.setUseCaches(false);
-	    	// Ê¹ÓÃPOST·½·¨
+	    	// Ê¹ï¿½ï¿½POSTï¿½ï¿½ï¿½ï¿½
 	    	httpURLConnection.setRequestMethod("POST");
 	    	//httpURLConnection.setRequestProperty("Content-type","Application/x-www-form-urlencoded");
 	    	//httpURLConnection.connect();
@@ -179,7 +179,7 @@ public class Upload {
 	      
 
 	    	/*
-	    	 * °ÑÎÄ¼þ°ü×°ÉÏ´«
+	    	 * ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½×°ï¿½Ï´ï¿½
 	    	 */
 	    	//OutputStream outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
 	      
@@ -193,7 +193,7 @@ public class Upload {
 	    	FileInputStream fis = new FileInputStream(file);
 	    	byte[] buffer = new byte[8192*1024]; // 8k
 	    	int count = 0;
-	    	// ¶ÁÈ¡ÎÄ¼þ
+	    	// ï¿½ï¿½È¡ï¿½Ä¼ï¿½
 	    	while ((count = fis.read(buffer)) != -1)
 	    	{
 	    		dos.write(buffer, 0, count);
@@ -205,7 +205,7 @@ public class Upload {
 	    	dos.flush();
 
 	    	/*
-	    	 * »ñÈ¡·µ»ØÄÚÈÝ
+	    	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	 */
 	    	InputStream inputStream = httpURLConnection.getInputStream();
 	    	InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -217,7 +217,7 @@ public class Upload {
 	    	}
 	    	reader.close();
 	    	/*
-	    	 * »ñÈ¡ÏìÓ¦Âë
+	    	 * ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½
 	    	 */
 	    	int res = httpURLConnection.getResponseCode();
 	    	String s = httpURLConnection.getResponseMessage();
@@ -254,6 +254,9 @@ public class Upload {
 		HttpClient httpClient;
 		HttpParams httpParameters;
 		
+		HttpResponse httpResponse;
+		HttpEntity entity;
+		
 		httpParameters = new BasicHttpParams();// Set the timeout in milliseconds until a connection is established.  
 	    HttpConnectionParams.setConnectionTimeout(httpParameters, 20000);// Set the default socket timeout (SO_TIMEOUT) // in milliseconds which is the timeout for waiting for data.  
 	    HttpConnectionParams.setSoTimeout(httpParameters, 25000);  
@@ -265,41 +268,64 @@ public class Upload {
 			params.add(new BasicNameValuePair("upload",sendObj.toString()));
 			post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
-			// ·¢ËÍPOSTÇëÇó
-			HttpResponse httpResponse = httpClient.execute(post);
-			HttpEntity entity = httpResponse.getEntity();
+			// ï¿½ï¿½ï¿½ï¿½POSTï¿½ï¿½ï¿½ï¿½
+			httpResponse = httpClient.execute(post);
+			entity = httpResponse.getEntity();
 			
 			int resCode = httpResponse.getStatusLine().getStatusCode();
 			
 			if(resCode != 200)
 			{
-				//Toast.makeText(app, "Server response error!" + "\nreponse code: "+resCode, Toast.LENGTH_SHORT).show();
 				Log.i("Upload", "error");
 			}
 			else
 			{
-				//Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
-	    		Log.i("Upload", "SUCCESS");
+				Log.i("Upload", "SUCCESS");
 			}
 			
 			if (entity != null)
 			{
 					
-				        String rev = EntityUtils.toString(entity);          
-				        try {
-							receiveObj = new JSONObject(rev); 
-						} catch(Exception e) {
-							e.printStackTrace();
-						}
-						Log.i("UploadJSON", "return msg:"+receiveObj.toString());
-						return receiveObj;
+				String rev = EntityUtils.toString(entity);
+				try {
+					receiveObj = new JSONObject(rev); 
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+				Log.i("UploadJSON", "return msg:"+receiveObj.toString());
+				return receiveObj;
 			}
 			else {
 				return null;
 			}
 
 		}
-		catch (Exception e)
+		catch (ConnectTimeoutException e)
+		{
+			e.printStackTrace();
+			Log.i("UploadJSON", "time out");
+			for(int i=0 ; i<3 ; i++) {
+				try{
+					httpResponse = httpClient.execute(post);
+					entity = httpResponse.getEntity();
+					
+					int resCode = httpResponse.getStatusLine().getStatusCode();
+					
+					if(entity != null) {
+						receiveObj = new JSONObject(EntityUtils.toString(entity));
+						break;
+					}
+					
+					if(resCode == 200) {
+						break;
+					}
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+			return receiveObj;
+		}
+		catch (IOException e)
 		{
 			e.printStackTrace();
 			return null;
@@ -321,16 +347,16 @@ public class Upload {
 	    	//URL url = new URL("http://10.108.105.190:8080/webInterface/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-	    	// ÉèÖÃÃ¿´Î´«ÊäµÄÁ÷´óÐ¡£¬¿ÉÒÔÓÐÐ§·ÀÖ¹ÊÖ»úÒòÎªÄÚ´æ²»×ã±ÀÀ£
-	    	// ´Ë·½·¨ÓÃÓÚÔÚÔ¤ÏÈ²»ÖªµÀÄÚÈÝ³¤¶ÈÊ±ÆôÓÃÃ»ÓÐ½øÐÐÄÚ²¿»º³åµÄ HTTP ÇëÇóÕýÎÄµÄÁ÷¡£
+	    	// ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½Î´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½Ö¹ï¿½Ö»ï¿½ï¿½ï¿½Îªï¿½Ú´æ²»ï¿½ï¿½ï¿½ï¿½ï¿½
+	    	// ï¿½Ë·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¤ï¿½È²ï¿½Öªï¿½ï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ð½ï¿½ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ HTTP ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½
 	    	httpURLConnection.setReadTimeout(5 * 1000);
 	    	httpURLConnection.setConnectTimeout(5 * 1000);
 	    	//httpURLConnection.setChunkedStreamingMode(128 * 1024);// 128K
-	    	// ÔÊÐíÊäÈëÊä³öÁ÷
+	    	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	httpURLConnection.setDoInput(true);
 	    	httpURLConnection.setDoOutput(true);
 	    	httpURLConnection.setUseCaches(false);
-	    	// Ê¹ÓÃPOST·½·¨
+	    	// Ê¹ï¿½ï¿½POSTï¿½ï¿½ï¿½ï¿½
 	    	httpURLConnection.setRequestMethod("POST");
 	    	//httpURLConnection.setRequestProperty("Content-type","Application/x-www-form-urlencoded");
 	    	//httpURLConnection.connect();
@@ -348,7 +374,7 @@ public class Upload {
 	      
 
 	    	/*
-	    	 * °ÑÎÄ¼þ°ü×°ÉÏ´«
+	    	 * ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½×°ï¿½Ï´ï¿½
 	    	 */
 	    	//OutputStream outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
 	      
@@ -362,7 +388,7 @@ public class Upload {
 	    	FileInputStream fis = new FileInputStream(file);
 	    	byte[] buffer = new byte[8192*1024]; // 8k
 	    	int count = 0;
-	    	// ¶ÁÈ¡ÎÄ¼þ
+	    	// ï¿½ï¿½È¡ï¿½Ä¼ï¿½
 	    	while ((count = fis.read(buffer)) != -1)
 	    	{
 	    		dos.write(buffer, 0, count);
@@ -374,7 +400,7 @@ public class Upload {
 	    	dos.flush();
 
 	    	/*
-	    	 * »ñÈ¡ÏìÓ¦Âë
+	    	 * ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½
 	    	 */
 	    	int res = httpURLConnection.getResponseCode();
 	    	if(res == 200)
@@ -384,7 +410,7 @@ public class Upload {
 	    	}
 	    	
 	    	/*
-	    	 * »ñÈ¡·µ»ØÄÚÈÝ
+	    	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	    	 */
 	    	InputStream inputStream = httpURLConnection.getInputStream();
 	    	InputStreamReader inputStreamReader = new InputStreamReader(inputStream);

@@ -11,6 +11,12 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.pm4j.engine.ModelParams;
+import org.pm4j.process.PMTaskStatus;
+import org.pm4j.settings.PMSettings;
+import org.pm4j.task.ModelingTask;
+import org.pm4j.task.PMConfig;
+import org.pm4j.task.PredictingTask;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -38,6 +44,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -229,8 +236,8 @@ public class CameraActivity extends Activity {
 						dataModel = collect.getDataModel();
 						Camera.Parameters parameters = mcamera.getParameters();
 						photoStats = new PhotoStats(collect.getxDirect(), collect.getyDirect(), collect.getzDirect(), collect.getLongtitude(), 
-								collect.getLatitude(), 0, parameters.getFocalLength(), (float)0);
-						Log.i("onShutter", "Hello ShutterCallback");
+								collect.getLatitude(), 0, parameters.getFocalLength(), (float)0, parameters.getPictureSize().width, parameters.getPictureSize().height);
+						Log.i("onShutter", "Hello ShutterCallback :"+parameters.getPictureSize().width+" : "+parameters.getPictureSize().height);
 					}
 				}, new PictureCallback()
 				{
@@ -505,6 +512,63 @@ public class CameraActivity extends Activity {
 
 						FileModel fileModel = new FileModel(fileName, collect.getDate(), photoStats);
 						fileModel.save(app);
+						
+						// ###################  start PM ##################
+				    	
+						/*
+						// Synchronized way:
+						ModelingTask modelingTask = new ModelingTask(photoList, AppConfig.MODELPARAMS, false);
+						modelingTask.runSync();
+						*/
+			
+						// Asynchronized way:
+						Handler predictHandler = new Handler()
+				    	{
+				    		public void handleMessage(Message msg) 
+				    		{	//接收message对象  
+				    			PMTaskStatus revTaskStatus = (PMTaskStatus)msg.obj;
+				    			Log.i(ACTIVITY_TAG, LOG_PREFIX+" predictHandler: what = " + revTaskStatus.getInfo());
+				    			
+				    			switch (revTaskStatus.getStatusCode()) 
+				    			{   
+				    			case PMSettings.TASKRESULT_OK:
+				    				
+				    				// DO SOMETHING HERE TO UPDATE THE PROGRESS USING      int PMTaskStatus.getProgress()
+				    				
+				    				Toast.makeText(CameraActivity.this,
+					  				          "predicting ... " + revTaskStatus.getProgress() + "%" , Toast.LENGTH_SHORT).show();
+				    				break;
+				    			case PMSettings.TASKRESULT_FAILURE:
+				    				
+				    				// DO SOMETHING HERE TO HANDLE THE FAILURE
+				    				
+				    				Toast.makeText(CameraActivity.this,
+					  				          "predicting failure" , Toast.LENGTH_LONG).show();
+				    				break;
+				    			case PMSettings.TASKRESULT_INVALID:
+				    				
+				    				// DO SOMETHING HERE TO HANDLE THE INVALID DATA
+				    				
+				    				Toast.makeText(CameraActivity.this,
+				    						"predicting data invalid"  , Toast.LENGTH_LONG).show();
+				    				break;
+				    	
+				    			}
+				 		
+				    			if(revTaskStatus.isCompleted())
+			    				{
+			    					Toast.makeText(CameraActivity.this,
+			    						"estimated PM: " +  revTaskStatus.getPmValue(), Toast.LENGTH_LONG).show();
+			    				}
+				    			
+				    			super.handleMessage(msg);  
+				        	} 
+				    	};
+						PredictingTask predictingTask = new  PredictingTask(fileModel , predictHandler, false);
+						predictingTask.runAsync();
+						
+						// ###################  end PM ##################
+						
 						setResult(CommonDefinition.REQUESTCODE_CAMERA);
 						finish();
 						// mcamera.startPreview();

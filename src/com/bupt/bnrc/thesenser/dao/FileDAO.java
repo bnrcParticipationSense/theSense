@@ -139,8 +139,10 @@ public class FileDAO extends DAOHelper {
 		Float focalDistance = cursor.getFloat(9);
 		Float aperture = cursor.getFloat(10);
 		Integer tag = cursor.getInt(11);
+		Integer width = cursor.getInt(11);
+		Integer height = cursor.getInt(11);
 		
-		return new FileModel(id, fileName, createTime, xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture, tag);
+		return new FileModel(id, fileName, createTime, xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture, width, height, tag);
 	}
 
 	

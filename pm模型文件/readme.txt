@@ -1,0 +1,1 @@
+将matmodel.xml与model1.yml文件复制粘贴至手机SD卡中的/aqitest/model/目录下

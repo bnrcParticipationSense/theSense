@@ -50,11 +50,18 @@
         android:layout_below="@id/collectBtn"
         android:text="保存数据"
     />
+    
+    <Button android:id="@+id/sendmsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/saveInfo"
+        android:text="请求"
+    />
    
     <Button android:id="@+id/exitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/saveInfo"
+        android:layout_below="@id/sendmsg"
         android:text="退出"
     />
 
@@ -71,8 +78,8 @@
         android:id="@+id/infoBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/exitBtn"
-        android:layout_alignRight="@+id/helloText"
+        android:layout_above="@+id/sendmsg"
+        android:layout_toRightOf="@+id/saveInfo"
         android:text="展示数据" />
 
 </RelativeLayout>

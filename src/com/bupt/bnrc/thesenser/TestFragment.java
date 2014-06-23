@@ -1,9 +1,14 @@
 package com.bupt.bnrc.thesenser;
 
+import org.json.JSONObject;
+
+import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Logger;
+import com.bupt.bnrc.thesenser.utils.Upload;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,6 +62,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View fileBtn = parentView.findViewById(R.id.fileTestBtn);
 		View infoBtn = parentView.findViewById(R.id.infoBtn);
 		View uploadBtn = parentView.findViewById(R.id.uploadBtn);
+		View sendBtn = parentView.findViewById(R.id.sendmsg);
 		
 		collect = Collection.getCollection(getActivity());
 		
@@ -99,7 +105,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 				}
 			};
 		
-			collect_t.start();
+			//collect_t.start();
 			TestFragment.thread_uniqueness = true;
 		}
 			
@@ -113,6 +119,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		exitBtn.setOnClickListener(this);
 		infoBtn.setOnClickListener(this);
 		uploadBtn.setOnClickListener(this);
+		sendBtn.setOnClickListener(this);
 	}
 	
 	
@@ -147,6 +154,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 			if(thread_flag) {
 				thread_flag = false;
 			}
+			collect.stop();
 			break;
 			
 		case R.id.fileTestBtn:
@@ -166,6 +174,38 @@ public class TestFragment extends Fragment implements OnClickListener {
 			Log.i("TestActivity", "this.collect.upload()");
 			this.collect.upload();
 			break;
+			
+		case R.id.sendmsg:
+			Thread t = new Thread() {
+			    public void run() {
+							
+			        Looper.prepare();
+			        JSONObject obj = null;
+			        String str = "{\"request_type\":\"photo_list\",\"request_maxnum\": \"50\",\"begin_time\": \"2010-12-26 03:36:25\"}";
+			        try {
+			            obj = Upload.Uploading(getActivity(), "", JSON.toJSON(str));
+			        } catch (Exception e) {
+			            e.printStackTrace();
+			        }
+							
+			        if(obj != null){
+			            /*
+			            * 解析obj，干点啥。。。
+			            */
+			        	Toast.makeText(getActivity(), obj.toString(), Toast.LENGTH_LONG).show();
+			        }
+			        else{
+			            /*
+			            * 发送失败，干点啥。。。
+			            */
+			        	Toast.makeText(getActivity(), "obj == null", Toast.LENGTH_LONG).show();
+			        }
+			        Looper.loop();
+			    }
+			};
+			t.start();
+			break;
+
 			
 		case R.id.exitBtn:
 			System.exit(0);

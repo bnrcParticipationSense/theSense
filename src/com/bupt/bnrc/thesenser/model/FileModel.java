@@ -61,16 +61,16 @@ public class FileModel {
 	}
 	
 	public FileModel(String fileName, Date createTime, Float xDirect, Float yDirect, Float zDirect, 
-			Float longitude, Float latitude, Integer exposureValue, Float focalDistance, Float aperture, Integer tag) {
+			Float longitude, Float latitude, Integer exposureValue, Float focalDistance, Float aperture, Integer width, Integer height, Integer tag) {
 		this(fileName, createTime, tag);
-		this.m_photoStats = new PhotoStats(xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture);
+		this.m_photoStats = new PhotoStats(xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture, width, height);
 	}
 	
 	public FileModel(Long id, String fileName, Date createTime, Float xDirect, Float yDirect, Float zDirect, 
-			Float longitude, Float latitude, Integer exposureValue, Float focalDistance, Float aperture, Integer tag) {
+			Float longitude, Float latitude, Integer exposureValue, Float focalDistance, Float aperture, Integer width, Integer height, Integer tag) {
 		
 		this(fileName, createTime, tag);
-		this.m_photoStats = new PhotoStats(xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture);
+		this.m_photoStats = new PhotoStats(xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture, width, height);
 		this.m_id = id;
 	}
 
