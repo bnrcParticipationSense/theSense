@@ -1,5 +1,7 @@
 package com.bupt.bnrc.thesenser;
 
+import org.pm4j.task.PMConfig;
+
 import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 
 import android.app.Activity;
@@ -32,6 +34,12 @@ public class MainActivity extends FragmentActivity {
 	
 	private static FragmentFactory fragmentFactory = FragmentFactory.getInstance();
     
+	static{
+		PMConfig.init();
+	}
+	
+	
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
