@@ -220,6 +220,33 @@ public class Collection implements SensorEventListener {
 		setValues();//register every sensors
 	}
 	
+	private void setNoise(){
+		Thread noise_t = new Thread() {
+			public void run(){
+				for_noise.start();
+				for_noise.getValue();
+				try {
+					sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for_noise.getValue();
+				try {
+					sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				float tmp = for_noise.getValue();
+				Log.i("RecordThread", "Noise = "+tmp);
+				if(tmp > 0)
+					noise = tmp;
+				for_noise.stop();
+			}
+		};
+		noise_t.start();
+	}
 	
 	private void setValues() {
 		setLight();
@@ -244,35 +271,7 @@ public class Collection implements SensorEventListener {
 		//noise_t.start();
 		for_noise = RecordThread.getRecordThread();
 		//for_noise.start();
-		Thread noise_t = new Thread() {
-			public void run(){
-				while(true){
-					for_noise.start();
-					try {
-						sleep(5000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					for_noise.getValue();
-					try {
-						sleep(5000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					noise = for_noise.getValue();
-					for_noise.stop();
-					try {
-						sleep(5000);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		};
-		noise_t.start();
+		setNoise();
 		//noise = for_noise.getValue();
 		
 		calculateOrientation();
@@ -339,6 +338,7 @@ public class Collection implements SensorEventListener {
 		//runForNoise();
 		//need_noise = true;
 		//noise = for_noise.getValue();
+		setNoise();
 		mData = new DataModel(this.light, this.noise, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
 	}
 	
@@ -366,6 +366,7 @@ public class Collection implements SensorEventListener {
 	}
 	public float getNoise() {
 		//return this.for_noise.getValue();
+		setNoise();
 		return this.noise;
 	}
 	public Date getDate() {
