@@ -105,7 +105,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 				}
 			};
 		
-			//collect_t.start();
+			collect_t.start();
 			TestFragment.thread_uniqueness = true;
 		}
 			

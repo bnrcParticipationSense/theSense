@@ -59,12 +59,12 @@ public class RecordThread {
         if (mRecorder != null)
         {
         	int amp = mRecorder.getMaxAmplitude();
-        	Log.i("RecordThread", "getAmplitude = "+amp);
+        	//Log.i("RecordThread", "getAmplitude = "+amp);
             return  (amp/BASE);
         }
         else
         {
-        	Log.i("RecordThread", "getAmplitude = null");
+        	//Log.i("RecordThread", "getAmplitude = null");
             return 0;
         }
         
@@ -77,7 +77,7 @@ public class RecordThread {
         if (amp > 1)
 			value = (int) (10 * Math.log10(amp));
         //stop();
-        Log.i("RecordThread", "Value = "+value);
+        //Log.i("RecordThread", "Value = "+value);
         return value;
     }
 
