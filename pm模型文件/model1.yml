@@ -1,0 +1,12 @@
+%YAML:1.0
+mStepDiv: 8
+mBlockDiv: 4
+mMaxRsBlockRow: 31
+mMaxRsBlockCol: 4
+mBlockScale: 1.
+mRs: 9.7832095623016357e-01
+mMae: 1.0687258720397949e+01
+mCoefArray:
+   - -4.7767791748046875e+01
+   - -2.9614272460937500e+03
+coefSize: 2
