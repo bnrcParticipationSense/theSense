@@ -334,12 +334,12 @@ public class Collection implements SensorEventListener {
 		sensorManager.registerListener(this, this.sensor, SensorManager.SENSOR_DELAY_NORMAL);
 	}
 	public void setDataModel() {
-		Date tempDate = new Date();
+		date = new Date();
 		//runForNoise();
 		//need_noise = true;
 		//noise = for_noise.getValue();
 		setNoise();
-		mData = new DataModel(this.light, this.noise, tempDate, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
+		mData = new DataModel(this.light, this.noise, this.date, this.batteryState, this.percent, this.connectionState, this.longitude, this.latitude);
 	}
 	
 	public void setPicName(String str) {
@@ -370,10 +370,12 @@ public class Collection implements SensorEventListener {
 		return this.noise;
 	}
 	public Date getDate() {
+		date = new Date();
 		return this.date;
 	}
 	public String getDateSring() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		date = new Date();
 		return new String(sdf.format(date));
 	}
 	public float getxDirect() {
