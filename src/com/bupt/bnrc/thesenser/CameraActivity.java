@@ -350,7 +350,7 @@ public class CameraActivity extends Activity {
 				//使用对话框显示saveDialog组件，上传改为保存，保存改为取消
 				saveAlertBuilder = new AlertDialog.Builder(CameraActivity.this);
 				saveAlertBuilder.setView(saveView);
-				saveAlertBuilder.setPositiveButton("上传", new OnClickListener()
+				saveAlertBuilder.setPositiveButton("保存", new OnClickListener()
 				{
 
 					@Override
@@ -360,7 +360,7 @@ public class CameraActivity extends Activity {
 			            //更新界面  
 
 				        Button saveButton = saveAlertDialog.getButton(android.content.DialogInterface.BUTTON_POSITIVE);
-						saveButton.setText("上传中...");
+						saveButton.setText("保存中...");
 						saveButton.setTextColor(Color.BLUE);
 						saveButton.invalidate(); 
 
@@ -383,7 +383,7 @@ public class CameraActivity extends Activity {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						Log.i("CaptureImage", "uploading...");
+						
 						//**************Exif设置*************
 						try {
 							ExifInterface exif = new ExifInterface(fileName);
@@ -391,19 +391,7 @@ public class CameraActivity extends Activity {
 							//*****************************************************************start
 							TelephonyManager telephonyManager= (TelephonyManager) app.getSystemService(Context.TELEPHONY_SERVICE);
 							String imei=telephonyManager.getDeviceId();
-							/*String str = 	"\"username\":\"zzy\"," +
-											"\"Model\":"+imei+"," +
-											"\"Light\":"+collect.getLight()+"," +
-											"\"Noise\":"+collect.getNoise()+"," +
-											"\"BatteryState\":"+collect.getBatteryState()+","+
-											"\"ChargeState\":"+collect.getChargeState()+","+
-											"\"NetState\":"+collect.getNetState()+","+
-											"\"Latitued\":"+collect.getLatitude()+","+
-											"\"Longitude\":"+collect.getLongtitude()+","+
-											"\"Orientation_X\":"+collect.getxDirect()+","+
-											"\"Orientation_Y\":"+collect.getyDirect()+","+
-											"\"Orientation_Z\":"+collect.getzDirect();
-							*/
+							
 							JSONObject obj = new JSONObject();
 							try {
 								obj.put("username", "zzy");
@@ -439,7 +427,7 @@ public class CameraActivity extends Activity {
 						}
 
 						//**************Exif设置***END*******
-						
+						/*
 						Thread t = new Thread() {
 							public void run() {
 								Looper.prepare();
@@ -453,65 +441,8 @@ public class CameraActivity extends Activity {
 							}
 						};
 						t.start();
-
-						mcamera.startPreview(); //do this function later
-
+						*/
 						
-					}
-
-				});
-				saveAlertBuilder.setNegativeButton("保存", new OnClickListener()
-				{
-					public void onClick(DialogInterface dialog,
-							int which)
-					{
-						// name the img in term of date.
-
-
-						/*
-						String fileName = Environment.getExternalStorageDirectory().toString()
-								+File.separator
-								+"SensorTest1"
-								+File.separator
-								+"ST_"
-								+System.currentTimeMillis()
-								+".jpg";
-								*/
-						File file = new File(fileName);
-						if(!file.getParentFile().exists()){
-							file.getParentFile().mkdirs();
-						}
-						Log.i("CaptureImage","new bos!");
-						BufferedOutputStream bos;
-						try {
-							bos = new BufferedOutputStream(new FileOutputStream(file));
-							bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-							bos.flush();
-							Log.i("CaptureImage","bos.flush()");
-							bos.close();
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-
-						//**************Exif设置*************
-						try {
-							ExifInterface exif = new ExifInterface(fileName);
-							exif.setAttribute("Light", ""+collect.getLight());
-							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDate().toString());
-							exif.setAttribute(ExifInterface.TAG_MODEL, "model");
-							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
-							exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
-							exif.setAttribute(ExifInterface.TAG_MAKE, "");
-							//exif.setAttribute("Light", ""+collect.getLight());
-							exif.saveAttributes();
-							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-
-						//**************Exif设置***END*******
-
 						FileModel fileModel = new FileModel(fileName, collect.getDate(), photoStats);
 						fileModel.save(app);
 						
@@ -574,6 +505,139 @@ public class CameraActivity extends Activity {
 						setResult(CommonDefinition.REQUESTCODE_CAMERA);
 						finish();
 						// mcamera.startPreview();
+
+						// mcamera.startPreview(); //do this function later
+
+						
+					}
+
+				});
+				/*
+				saveAlertBuilder.setNegativeButton("保存", new OnClickListener()
+				{
+					public void onClick(DialogInterface dialog,
+							int which)
+					{
+						// name the img in term of date.
+
+
+						
+						String fileName = Environment.getExternalStorageDirectory().toString()
+								+File.separator
+								+"SensorTest1"
+								+File.separator
+								+"ST_"
+								+System.currentTimeMillis()
+								+".jpg";
+								
+						File file = new File(fileName);
+						if(!file.getParentFile().exists()){
+							file.getParentFile().mkdirs();
+						}
+						Log.i("CaptureImage","new bos!");
+						BufferedOutputStream bos;
+						try {
+							bos = new BufferedOutputStream(new FileOutputStream(file));
+							bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+							bos.flush();
+							Log.i("CaptureImage","bos.flush()");
+							bos.close();
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+
+						//**************Exif设置*************
+						try {
+							ExifInterface exif = new ExifInterface(fileName);
+							exif.setAttribute("Light", ""+collect.getLight());
+							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDate().toString());
+							exif.setAttribute(ExifInterface.TAG_MODEL, "model");
+							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
+							exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
+							exif.setAttribute(ExifInterface.TAG_MAKE, "");
+							//exif.setAttribute("Light", ""+collect.getLight());
+							exif.saveAttributes();
+							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+						//**************Exif设置***END*******
+
+						FileModel fileModel = new FileModel(fileName, collect.getDate(), photoStats);
+						fileModel.save(app);
+						
+						// ###################  start PM ##################
+				    	
+						
+						// Synchronized way:
+						ModelingTask modelingTask = new ModelingTask(photoList, AppConfig.MODELPARAMS, false);
+						modelingTask.runSync();
+						
+			
+						// Asynchronized way:
+						Handler predictHandler = new Handler()
+				    	{
+				    		public void handleMessage(Message msg) 
+				    		{	//接收message对象  
+				    			PMTaskStatus revTaskStatus = (PMTaskStatus)msg.obj;
+				    			Log.i(ACTIVITY_TAG, LOG_PREFIX+" predictHandler: what = " + revTaskStatus.getInfo());
+				    			
+				    			switch (revTaskStatus.getStatusCode()) 
+				    			{   
+				    			case PMSettings.TASKRESULT_OK:
+				    				
+				    				// DO SOMETHING HERE TO UPDATE THE PROGRESS USING      int PMTaskStatus.getProgress()
+				    				
+				    				Toast.makeText(CameraActivity.this,
+					  				          "predicting ... " + revTaskStatus.getProgress() + "%" , Toast.LENGTH_SHORT).show();
+				    				break;
+				    			case PMSettings.TASKRESULT_FAILURE:
+				    				
+				    				// DO SOMETHING HERE TO HANDLE THE FAILURE
+				    				
+				    				Toast.makeText(CameraActivity.this,
+					  				          "predicting failure" , Toast.LENGTH_LONG).show();
+				    				break;
+				    			case PMSettings.TASKRESULT_INVALID:
+				    				
+				    				// DO SOMETHING HERE TO HANDLE THE INVALID DATA
+				    				
+				    				Toast.makeText(CameraActivity.this,
+				    						"predicting data invalid"  , Toast.LENGTH_LONG).show();
+				    				break;
+				    	
+				    			}
+				 		
+				    			if(revTaskStatus.isCompleted())
+			    				{
+			    					Toast.makeText(CameraActivity.this,
+			    						"estimated PM: " +  revTaskStatus.getPmValue(), Toast.LENGTH_LONG).show();
+			    				}
+				    			
+				    			super.handleMessage(msg);  
+				        	} 
+				    	};
+						PredictingTask predictingTask = new  PredictingTask(fileModel , predictHandler, false);
+						predictingTask.runAsync();
+						
+						// ###################  end PM ##################
+						
+						setResult(CommonDefinition.REQUESTCODE_CAMERA);
+						finish();
+						// mcamera.startPreview();
+					}
+				});
+				*/
+				saveAlertBuilder.setNegativeButton("取消", new OnClickListener()
+				{
+					public void onClick(DialogInterface dialog,
+							int which)
+					{
+						// setResult(CommonDefinition.REQUESTCODE_CAMERA);
+						// finish();
+						mcamera.startPreview();
 					}
 				});
 
