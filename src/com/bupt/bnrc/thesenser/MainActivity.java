@@ -146,7 +146,6 @@ public class MainActivity extends FragmentActivity {
 	}
 	
 	private String getTagFromPosition(int position) {
-		// TODO Auto-generated method stub
 		String tag = null;
 		switch (position) {
 		case 0:
@@ -175,7 +174,6 @@ public class MainActivity extends FragmentActivity {
 
 
 	private void hideActionButton(Menu menu) {
-		// TODO Auto-generated method stub
 		switch (mNowPosition) {
 		case 0:
 			menu.findItem(R.id.action_take_photo).setVisible(false);
@@ -233,6 +231,7 @@ public class MainActivity extends FragmentActivity {
 	
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+    	// TODO
          // The action bar home/up action should open or close the drawer.
          // ActionBarDrawerToggle will take care of this.
         if (mDrawerToggle.onOptionsItemSelected(item)) {
@@ -241,7 +240,7 @@ public class MainActivity extends FragmentActivity {
         // Handle action buttons
         switch(item.getItemId()) {
         case R.id.action_take_photo:
-        	takePhotoForPM();
+        	takePhoto();
         	return true;
         case R.id.action_refresh:
         	refreshDataForInfo();
@@ -251,19 +250,23 @@ public class MainActivity extends FragmentActivity {
     }
     
     private void refreshDataForInfo() {
-		// TODO Auto-generated method stub
     	FragmentManager fragmentManager = getSupportFragmentManager();
     	InfoCollectParentFragment fragment = (InfoCollectParentFragment)fragmentManager.findFragmentByTag("collect");
     	fragment.refreshDataView();
 	}
 
 
-	private void takePhotoForPM() {
-		// TODO take photo
-    	Intent intent = new Intent(this, CameraActivity.class);
-    	startActivityForResult(intent, CommonDefinition.REQUESTCODE_CAMERA);
-    	// TODO refresh the fragment
-    	
+	private void takePhoto() {
+		// need to judge what page is now.
+		// test gridview
+		Intent intent = new Intent(this, PMToolsModelPickActivity.class);
+    	startActivity(intent);
+		//TODO
+		/*
+		FragmentManager fragmentManager = getSupportFragmentManager();
+    	PMToolsParentFragment fragment = (PMToolsParentFragment)fragmentManager.findFragmentByTag("pmtools");
+    	fragment.takePhoto();
+    	*/
 	}
 
 
@@ -280,21 +283,4 @@ public class MainActivity extends FragmentActivity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		switch (requestCode) {
-		case CommonDefinition.REQUESTCODE_CAMERA:
-			FragmentManager fragmentManager = getSupportFragmentManager();
-	    	PMToolsParentFragment fragment = (PMToolsParentFragment)fragmentManager.findFragmentByTag("pmtools");
-	    	fragment.updateOnTakePhoto();
-			break;
-
-		default:
-			super.onActivityResult(requestCode, resultCode, data);
-			break;
-		}
-	}
-	
 }

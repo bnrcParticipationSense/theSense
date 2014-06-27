@@ -7,7 +7,6 @@ public class DAOFactory {
 	
 	private Context globalContext = null;
     private boolean cacheDAOInstances = false;
-    private TestDAO cachedTestDAO = null;
     private FileDAO cachedFileDAO = null;
     private DataDAO cachedDataDAO = null;
 

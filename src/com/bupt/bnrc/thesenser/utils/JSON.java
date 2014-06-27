@@ -30,7 +30,7 @@ public class JSON {
 		try {
 			obj.put("request_type", "photo_list");
 			obj.put("request_maxnum", maxNum);
-			obj.put("begin_time", "2014-06-23 10:20:00");
+			obj.put("begin_time", "2014-06-23 00:10:00");
 		} catch (JSONException e) {
 			// TODO: handle exception
 			e.printStackTrace();
