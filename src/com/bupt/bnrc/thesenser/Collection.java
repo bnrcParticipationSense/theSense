@@ -138,7 +138,7 @@ public class Collection implements SensorEventListener {
 	      //logMsg(sb.toString());
 	      latitude =(float) location.getLatitude();
 	      longitude =(float) location.getLongitude();
-	      Log.i("BD_LBS_SDK", sb.toString());
+	      //Log.i("BD_LBS_SDK", sb.toString());
 	    }
 	public void onReceivePoi(BDLocation poiLocation) {
 	//
@@ -349,6 +349,7 @@ public class Collection implements SensorEventListener {
 	
 	public float getLight() {
 		//double longitude = testLocation.getLongitude();
+		/*
 		Log.i("getLight() -> light = ", ""+this.light);
 		Log.i("getLight() -> noise = ", ""+this.noise);
 		Log.i("getLight() -> longitude = ", ""+longitude);
@@ -363,6 +364,7 @@ public class Collection implements SensorEventListener {
 		Log.i("getLight() -> orientation", "x = "+this.sensor_orientation[0]);
 		Log.i("getLight() -> orientation", "y = "+this.sensor_orientation[1]);
 		Log.i("getLight() -> orientation", "z = "+this.sensor_orientation[2]);
+		*/
 		return this.light;
 	}
 	public float getNoise() {
@@ -515,7 +517,8 @@ public class Collection implements SensorEventListener {
 	public void save() {
 		Log.i("Collection", "save()");
 		if(this.sensorlistener_flag) {
-			//setDataModel();
+			if(mData == null)//
+				setDataModel();
 			mData.save(app);
 			this.preData = new DataModel(this.mData);
 		}
@@ -610,7 +613,9 @@ public class Collection implements SensorEventListener {
 		Log.d("sp", String.valueOf(j));
 		noise = w / (float) r;
     }
+    /*
     public void stop() {
     	for_noise.stop();
     }
+    */
 }

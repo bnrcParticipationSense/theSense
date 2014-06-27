@@ -61,8 +61,8 @@ public class Upload {
 		HttpEntity entity;
 		
 		httpParameters = new BasicHttpParams();// Set the timeout in milliseconds until a connection is established.  
-	    HttpConnectionParams.setConnectionTimeout(httpParameters, 20000);// Set the default socket timeout (SO_TIMEOUT) // in milliseconds which is the timeout for waiting for data.  
-	    HttpConnectionParams.setSoTimeout(httpParameters, 25000);  
+	    HttpConnectionParams.setConnectionTimeout(httpParameters, 1000);// Set the default socket timeout (SO_TIMEOUT) // in milliseconds which is the timeout for waiting for data.  
+	    HttpConnectionParams.setSoTimeout(httpParameters, 5000);  
 		httpClient = new DefaultHttpClient(httpParameters);
 		
 		try
@@ -76,11 +76,12 @@ public class Upload {
 			entity = httpResponse.getEntity();
 			
 			int resCode = httpResponse.getStatusLine().getStatusCode();
+			String resReason = httpResponse.getStatusLine().getReasonPhrase();
 			
 			if(resCode != 200)
 			{
 				Toast.makeText(app, "Server response error!" + "\nreponse code: "+resCode, Toast.LENGTH_SHORT).show();
-				Log.i("Upload", "error");
+				Log.i("Upload", "error:"+resReason);
 			}
 			else
 			{
@@ -342,8 +343,8 @@ public class Upload {
 	    try
 	    {
 	    	
-	    	//URL url = new URL(uploadUrl);
-	    	URL url = new URL("http://10.108.108.11/upload11.php");
+	    	URL url = new URL(uploadUrl);
+	    	//URL url = new URL("http://10.108.108.11/upload11.php");
 	    	//URL url = new URL("http://10.108.105.190:8080/webInterface/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
