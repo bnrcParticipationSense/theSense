@@ -21,9 +21,6 @@ public abstract class PMTask {
 	protected PreprocessingProcess preprocessingProcess;
 
 	public int taskStep;
-	
-
-
 
 	protected PMProcess pmProcess;
 	protected ModelParams modelParams;

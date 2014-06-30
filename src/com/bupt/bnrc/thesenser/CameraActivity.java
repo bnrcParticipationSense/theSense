@@ -566,7 +566,7 @@ public class CameraActivity extends Activity {
 				    			super.handleMessage(msg);  
 				        	} 
 				    	};
-						PredictingTask predictingTask = new  PredictingTask(fileModel , predictHandler, false);
+						PredictingTask predictingTask = new PredictingTask(fileModel , 1, predictHandler, false);
 						predictingTask.runAsync();
 						
 						// ###################  end PM ##################

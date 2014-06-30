@@ -28,6 +28,43 @@ public class PredictingTask extends PMTask{
 	private PhotoData photoData; 
 	
 	
+	
+	public PredictingTask(FileModel fileModel, int tagId, Handler taskHandler, boolean enablePreprocess)
+	{
+		this.taskHandler = taskHandler;
+		
+		this.photoData	 = new PhotoData(fileModel.getFileName(), fileModel.getCreateTime(), fileModel.getPhotoStats().getLatitude(), fileModel.getPhotoStats().getLongitude(), fileModel.getTag());
+		// to be modified here!
+		//photoData.setSize(PMConfig.defaultImgWidth, PMConfig.defaultImgHeight);
+		photoData.setSize(fileModel.getPhotoStats().getWidth(),fileModel.getPhotoStats().getHeight());
+
+		this.modelParams = PMConfig.getDefaultModelParams();
+		this.modelParams.setImgWidth(photoData.getWidth());
+		this.modelParams.setImgHeight(photoData.getHeight());
+		this.modelParams.setModelPath(PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
+		Log.i(TAG, "setModelPath: " + PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
+		// to-do set modelname by tag HERE
+		
+		createHandler();
+		
+		List<PhotoData> photoList = new ArrayList<PhotoData>();
+    	photoList.add(photoData);
+    	
+    	taskStep = PredictProcess.progressStep;
+		
+		if(enablePreprocess)
+		{
+			taskStep += PreprocessingProcess.progressStep;
+			this.preprocessingProcess = new PreprocessingProcess(photoList, handler, false);
+		}
+		else
+		{
+			this.preprocessingProcess = null;
+		}
+		
+	}
+	
+	/*
 	public PredictingTask(FileModel fileModel, Handler taskHandler, boolean enablePreprocess)
 	{
 		this.taskHandler = taskHandler;
@@ -60,7 +97,7 @@ public class PredictingTask extends PMTask{
 			this.preprocessingProcess = null;
 		}
 	}
-	
+	*/
 	
 	public PredictingTask(PhotoData photoDataArg, ModelParams modelParamsArg, Handler taskHandlerArg, boolean enablePreprocess)
 	{

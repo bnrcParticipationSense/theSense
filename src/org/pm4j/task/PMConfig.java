@@ -43,20 +43,23 @@ public class PMConfig {
 	public static final String 	PMHomeName 			= "aqitest";
 	public static final String 	defaultModelDirName = "model";
 	public static final String 	defaultTmpDirName 	= "tmp";
+	public static final String 	defaultModelDirPath = SDPath + "/" + PMHomeName + "/" + defaultModelDirName + "/";
+	public static final String 	defaultTmpDirPath 	= SDPath + "/" + PMHomeName + "/" + defaultTmpDirName + "/";
 	
-	public static final String 	defaultModelPath 	= SDPath + "/" + PMHomeName + "/" + defaultModelDirName + "/model1.yml";
-	public static final String 	defaultCrfModelPath = SDPath + "/" + PMHomeName + "/" + defaultModelDirName + "/matmodel.xml";
-	public static final String 	defaultTmpPath 		= SDPath + "/" + PMHomeName + "/" + defaultTmpDirName + "/";
+	public static final String  defaultModelBaseName= "model";
+	
+	public static final String 	defaultModelPath 	= defaultModelDirPath + "model1.yml";
+	public static final String 	defaultCrfModelPath = defaultModelDirPath + "matmodel.xml";
 	
 	
 	public static final int 	defaultImgWidth 	= 2048;
 	public static final int 	defaultImgHeight 	= 1152;
 	
-	
+	public static final int		minSelectedPhotoNum = 12;
 	
 	public static ModelParams getDefaultModelParams()
 	{
-		return new ModelParams(0, 0, defaultStepDiv, defaultBlockDiv, defaultBlockScale, defaultModelPath, defaultCrfModelPath, defaultTmpPath);
+		return new ModelParams(0, 0, defaultStepDiv, defaultBlockDiv, defaultBlockScale, defaultModelPath, defaultCrfModelPath, defaultTmpDirPath);
 	}
 	
 	

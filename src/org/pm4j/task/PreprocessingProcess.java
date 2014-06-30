@@ -106,7 +106,6 @@ public class PreprocessingProcess extends PMProcess {
 			{
 				PMData pmData = new PMData(1, new Date(), testPmArray[i], 0, 0);
 				photoData.get(i).setPmData(pmData);
-				
 			}
 		
 		} 
@@ -134,7 +133,7 @@ public class PreprocessingProcess extends PMProcess {
 			// ONLY FOR TEST
 			for(int i = 0; i < photoData.size(); i++)
 			{
-				WeatherData weatherData = new WeatherData("beijing", new Date(), 0,0,0,0,0, WeatherType.SUNNY);
+				WeatherData weatherData = new WeatherData("Beijing", new Date(), 0,0,0,0,0, WeatherType.SUNNY);
 				photoData.get(i).setWeatherData(weatherData);
 			}
 		
