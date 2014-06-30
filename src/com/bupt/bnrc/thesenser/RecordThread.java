@@ -1,5 +1,6 @@
 package com.bupt.bnrc.thesenser;
 
+import java.io.File;
 import java.io.IOException;
 
 import android.media.AudioFormat;
@@ -14,12 +15,18 @@ public class RecordThread {
      * ********************************************************************************************************
      */
     private MediaRecorder mRecorder = null;
-    private String fileName = "/storage/sdcard0/SensorTest1/a.mp3";
+    static private String fileName = "/storage/sdcard0/SensorTest1/a.mp3";
     
     static private RecordThread instance = null;
     static public RecordThread getRecordThread() {
     	if(instance == null)
+    	{
+    		File file = new File(fileName);
+			if(!file.getParentFile().exists()){
+				file.getParentFile().mkdirs();
+			}
     		instance = new RecordThread();
+    	}
     	return instance;
     }
     private RecordThread() {
