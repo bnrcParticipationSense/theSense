@@ -1,37 +1,42 @@
 package com.bupt.bnrc.thesenser;
 
+import java.io.File;
 import java.io.IOException;
 
 import android.media.MediaRecorder;
 
 public class RecordThread {
-
-	/*
-	 * ********************************************************************************************************
-	 */
-	private MediaRecorder mRecorder = null;
-	private String fileName = "/storage/sdcard0/SensorTest1/a.mp3";
-
-	static private RecordThread instance = null;
-
-	static public RecordThread getRecordThread() {
-		if (instance == null)
-			instance = new RecordThread();
-		return instance;
-	}
-
-	private RecordThread() {
-		start();
-	}
-
-	public void start() {
-		if (mRecorder == null) {
-			mRecorder = new MediaRecorder();
-			mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-			mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-			mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			mRecorder.setOutputFile(fileName);
-			try {
+ 
+    /*
+     * ********************************************************************************************************
+     */
+    private MediaRecorder mRecorder = null;
+    static private String fileName = "/storage/sdcard0/SensorTest1/a.mp3";
+    
+    static private RecordThread instance = null;
+    static public RecordThread getRecordThread() {
+    	if(instance == null)
+    	{
+    		File file = new File(fileName);
+			if(!file.getParentFile().exists()){
+				file.getParentFile().mkdirs();
+			}
+    		instance = new RecordThread();
+    	}
+    	return instance;
+    }
+    private RecordThread() {
+    	start();
+    }
+    
+    public void start() {
+        if (mRecorder == null) {
+            mRecorder = new MediaRecorder();
+            mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mRecorder.setOutputFile(fileName);
+            try {
 				mRecorder.prepare();
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
