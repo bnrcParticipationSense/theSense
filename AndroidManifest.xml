@@ -26,6 +26,10 @@
             android:label="@string/app_name"/>
         <activity android:name="com.bupt.bnrc.thesenser.PMToolsModelPickActivity"
             android:label="@string/app_name" />
+        <activity android:name="com.bupt.bnrc.thesenser.PMToolsModelDetailActivity"
+            android:label="@string/app_name" />
+        <activity android:name="com.bupt.bnrc.thesenser.PMToolsModelPredictAcitivity"
+            android:label="@string/app_name" />
         <activity android:name="com.bupt.bnrc.thesenser.CameraActivity"
             android:label="@string/app_name" />
         <activity android:name="com.bupt.bnrc.thesenser.DataActivity"

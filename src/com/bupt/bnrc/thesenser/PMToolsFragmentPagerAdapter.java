@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class PMToolsFragmentPagerAdapter extends FragmentPagerAdapter {
-	private final String[] mTabTitles = {"pm预测", "实时景色"};
+	private final String[] mTabTitles = { "pm预测", "实时景色" };
 
 	public PMToolsFragmentPagerAdapter(FragmentManager fm) {
 		super(fm);
@@ -24,7 +24,7 @@ public class PMToolsFragmentPagerAdapter extends FragmentPagerAdapter {
 		default:
 			return null;
 		}
-		
+
 	}
 
 	@Override
@@ -32,12 +32,11 @@ public class PMToolsFragmentPagerAdapter extends FragmentPagerAdapter {
 		// TODO Auto-generated method stub
 		return mTabTitles.length;
 	}
-	
+
 	@Override
 	public CharSequence getPageTitle(int position) {
 		// TODO Auto-generated method stub
 		return mTabTitles[position];
 	}
-
 
 }

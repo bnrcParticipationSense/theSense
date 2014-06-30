@@ -12,14 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.bupt.bnrc.thesenser.ImageDetailsActivity;
-import com.bupt.bnrc.thesenser.R;
-import com.bupt.bnrc.thesenser.model.WebPhotoModel;
-import com.bupt.bnrc.thesenser.utils.CommonDefinition;
-import com.bupt.bnrc.thesenser.utils.DataCache;
-import com.bupt.bnrc.thesenser.utils.ImageLoader;
-import com.bupt.bnrc.thesenser.utils.Logger;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -37,9 +29,15 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
+import com.bupt.bnrc.thesenser.ImageDetailsActivity;
+import com.bupt.bnrc.thesenser.R;
+import com.bupt.bnrc.thesenser.model.WebPhotoModel;
+import com.bupt.bnrc.thesenser.utils.DataCache;
+import com.bupt.bnrc.thesenser.utils.ImageLoader;
+import com.bupt.bnrc.thesenser.utils.Logger;
 
 public class WaterFallsView extends ScrollView implements OnTouchListener {
-	
+
 	private DataCache mDataCache = DataCache.getInstance();
 
 	/**
@@ -76,7 +74,7 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 	 * �Ƿ��Ѽ��ع�һ��layout������onLayout�еĳ�ʼ��ֻ�����һ��
 	 */
 	private boolean loadOnce;
-	
+
 	/**
 	 * ��ͼƬ���й���Ĺ�����
 	 */
@@ -132,7 +130,8 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 			// �����ǰ�Ĺ���λ�ú��ϴ���ͬ����ʾ��ֹͣ����
 			if (scrollY == lastScrollY) {
 				// ����������ײ������ҵ�ǰû���������ص�����ʱ����ʼ������һҳ��ͼƬ
-				if (scrollViewHeight + scrollY >= scrollLayout.getHeight() && taskCollection.isEmpty()) {
+				if (scrollViewHeight + scrollY >= scrollLayout.getHeight()
+						&& taskCollection.isEmpty()) {
 					waterFallsView.loadMoreImages();
 				}
 				waterFallsView.checkVisibility();
@@ -145,7 +144,7 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 			}
 		};
 	};
-	
+
 	/**
 	 * WaterFallsView�Ĺ��캯����
 	 * 
@@ -158,9 +157,10 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 		taskCollection = new HashSet<LoadImageTask>();
 		setOnTouchListener(this);
 	}
-	
+
 	/**
-	 * ����һЩ�ؼ��Եĳ�ʼ����������ȡWaterFallsView�ĸ߶ȣ��Լ��õ���һ�еĿ��ֵ���������￪ʼ���ص�һҳ��ͼƬ��
+	 * ����һЩ�ؼ��Եĳ�ʼ����������ȡWaterFallsView�ĸ߶ȣ��Լ��õ���һ�еĿ��ֵ���������￪ʼ���
+	 * ص�һҳ��ͼƬ��
 	 */
 	@Override
 	protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -176,8 +176,7 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 			// loadMoreImages();
 		}
 	}
-	 
-	
+
 	/**
 	 * �����û��Ĵ����¼�������û���ָ�뿪��Ļ��ʼ���й�����⡣
 	 */
@@ -190,7 +189,7 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * ��ʼ������һҳ��ͼƬ��ÿ��ͼƬ���Ὺ��һ���첽�߳�ȥ���ء�
 	 */
@@ -199,23 +198,16 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 			int startIndex = page * PAGE_SIZE;
 			int endIndex = page * PAGE_SIZE + PAGE_SIZE;
 			/*
-			if (startIndex < CommonDefinition.TEMP_IMAGE_URL.length) {
-				Toast.makeText(getContext(), "���ڼ���...", Toast.LENGTH_SHORT)
-						.show();
-				if (endIndex > CommonDefinition.TEMP_IMAGE_URL.length) {
-					endIndex = CommonDefinition.TEMP_IMAGE_URL.length;
-				}
-				for (int i = startIndex; i < endIndex; i++) {
-					LoadImageTask task = new LoadImageTask();
-					taskCollection.add(task);
-					task.execute(CommonDefinition.TEMP_IMAGE_URL[i]);
-				}
-				page++;
-			} else {
-				Toast.makeText(getContext(), "��û�и���ͼƬ", Toast.LENGTH_SHORT)
-						.show();
-			}
-			*/
+			 * if (startIndex < CommonDefinition.TEMP_IMAGE_URL.length) {
+			 * Toast.makeText(getContext(), "���ڼ���...", Toast.LENGTH_SHORT)
+			 * .show(); if (endIndex > CommonDefinition.TEMP_IMAGE_URL.length) {
+			 * endIndex = CommonDefinition.TEMP_IMAGE_URL.length; } for (int i =
+			 * startIndex; i < endIndex; i++) { LoadImageTask task = new
+			 * LoadImageTask(); taskCollection.add(task);
+			 * task.execute(CommonDefinition.TEMP_IMAGE_URL[i]); } page++; }
+			 * else { Toast.makeText(getContext(), "��û�и���ͼƬ",
+			 * Toast.LENGTH_SHORT) .show(); }
+			 */
 			if (startIndex < mDataCache.getPhotoListLength()) {
 				Toast.makeText(getContext(), "正在加载...", Toast.LENGTH_SHORT)
 						.show();
@@ -234,12 +226,14 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 						.show();
 			}
 		} else {
-			Toast.makeText(getContext(), "δ����SD��", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getContext(), "δ����SD��", Toast.LENGTH_SHORT)
+					.show();
 		}
 	}
 
 	/**
-	 * ����imageViewList�е�ÿ��ͼƬ����ͼƬ�Ŀɼ��Խ��м�飬���ͼƬ�Ѿ��뿪��Ļ�ɼ���Χ����ͼƬ�滻��һ�ſ�ͼ��
+	 * ����imageViewList�е�ÿ��ͼƬ����ͼƬ�Ŀɼ��Խ��м�飬���ͼƬ�Ѿ��뿪��Ļ�ɼ���Χ����ͼƬ�滻��һ�
+	 * ſ�ͼ��
 	 */
 	public void checkVisibility() {
 		for (int i = 0; i < imageViewList.size(); i++) {
@@ -249,8 +243,10 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 					.getTag(R.string.border_bottom);
 			if (borderBottom > getScrollY()
 					&& borderTop < getScrollY() + scrollViewHeight) {
-				int imageIndex = (Integer) imageView.getTag(R.string.image_index);
-				Bitmap bitmap = imageLoader.getBitmapFromMemoryCache(mDataCache.getPhoto(imageIndex).getPackUrl());
+				int imageIndex = (Integer) imageView
+						.getTag(R.string.image_index);
+				Bitmap bitmap = imageLoader.getBitmapFromMemoryCache(mDataCache
+						.getPhoto(imageIndex).getPackUrl());
 				if (bitmap != null) {
 					imageView.setImageBitmap(bitmap);
 				} else {
@@ -262,7 +258,7 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 			}
 		}
 	}
-	
+
 	/**
 	 * �ж��ֻ��Ƿ���SD����
 	 * 
@@ -272,7 +268,7 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 		return Environment.MEDIA_MOUNTED.equals(Environment
 				.getExternalStorageState());
 	}
-	
+
 	/**
 	 * �첽����ͼƬ������
 	 * 
@@ -315,16 +311,17 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 			WebPhotoModel photo = DataCache.getInstance().getPhoto(mIndex);
 			// TODO
 			/*
-			Bitmap imageBitmap = imageLoader.getBitmapFromMemoryCache(photo.getSrcUrl());
-			if (imageBitmap == null) {
-				imageBitmap = loadImage(photo.getSrcUrl());
-			}
-			*/
-			Bitmap imageBitmap = imageLoader.getBitmapFromMemoryCache(photo.getPackUrl());
+			 * Bitmap imageBitmap =
+			 * imageLoader.getBitmapFromMemoryCache(photo.getSrcUrl()); if
+			 * (imageBitmap == null) { imageBitmap =
+			 * loadImage(photo.getSrcUrl()); }
+			 */
+			Bitmap imageBitmap = imageLoader.getBitmapFromMemoryCache(photo
+					.getPackUrl());
 			if (imageBitmap == null) {
 				imageBitmap = loadImage(photo.getPackUrl());
 			}
-			
+
 			return imageBitmap;
 		}
 
@@ -339,7 +336,8 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 		}
 
 		/**
-		 * ���ݴ����URL����ͼƬ���м��ء��������ͼƬ�Ѿ�������SD���У���ֱ�Ӵ�SD�����ȡ������ʹ����������ء�
+		 * ���ݴ����URL����ͼƬ���м��ء��������ͼƬ�Ѿ�������SD���У���ֱ�Ӵ�SD�����ȡ�����
+		 * �ʹ����������ء�
 		 * 
 		 * @param imageUrl
 		 *            ͼƬ��URL��ַ
@@ -349,11 +347,11 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 			// TODO
 			File imageFile = new File(getImagePath(imageUrl));
 			// downloadImage(imageUrl);
-			
+
 			if (!imageFile.exists()) {
 				downloadImage(imageUrl);
 			}
-			
+
 			if (imageUrl != null) {
 				Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(
 						imageFile.getPath(), columnWidth);
@@ -376,7 +374,8 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 		 *            ͼƬ�ĸ߶�
 		 */
 		private void addImage(Bitmap bitmap, int imageWidth, int imageHeight) {
-			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(imageWidth, imageHeight);
+			LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+					imageWidth, imageHeight);
 			if (mImageView != null) {
 				mImageView.setImageBitmap(bitmap);
 			} else {
@@ -386,17 +385,18 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 				imageView.setScaleType(ScaleType.FIT_XY);
 				imageView.setPadding(5, 5, 5, 5);
 				imageView.setTag(R.string.image_index, mIndex);
-				
+
 				imageView.setOnClickListener(new OnClickListener() {
-					
+
 					@Override
 					public void onClick(View v) {
-						Intent intent = new Intent(getContext(), ImageDetailsActivity.class);
-						intent.putExtra("image_index", mIndex);  
+						Intent intent = new Intent(getContext(),
+								ImageDetailsActivity.class);
+						intent.putExtra("image_index", mIndex);
 						getContext().startActivity(intent);
 					}
 				});
-				
+
 				findColumnToAdd(imageView, imageHeight).addView(imageView);
 				imageViewList.add(imageView);
 			}
@@ -409,7 +409,8 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 		 * @param imageHeight
 		 * @return Ӧ�����ͼƬ��һ��
 		 */
-		private LinearLayout findColumnToAdd(ImageView imageView, int imageHeight) {
+		private LinearLayout findColumnToAdd(ImageView imageView,
+				int imageHeight) {
 			if (firstColumnHeight <= secondColumnHeight) {
 				if (firstColumnHeight <= thirdColumnHeight) {
 					imageView.setTag(R.string.border_top, firstColumnHeight);
@@ -502,8 +503,14 @@ public class WaterFallsView extends ScrollView implements OnTouchListener {
 		private String getImagePath(String imageUrl) {
 			int lastSlashIndex = imageUrl.lastIndexOf("/");
 			String imageName = imageUrl.substring(lastSlashIndex + 1);
-			//String imageDir = Environment.getExternalStorageDirectory().getPath() + "/PhotoWallFalls/";
-			String imageDir = Environment.getExternalStorageDirectory().toString() + File.separator + "PhotoWallFalls" + File.separator;
+			// String imageDir =
+			// Environment.getExternalStorageDirectory().getPath() +
+			// "/PhotoWallFalls/";
+			String imageDir = Environment.getExternalStorageDirectory()
+					.toString()
+					+ File.separator
+					+ "PhotoWallFalls"
+					+ File.separator;
 			File file = new File(imageDir);
 			if (!file.exists()) {
 				file.mkdirs();

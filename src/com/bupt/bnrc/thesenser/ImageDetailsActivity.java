@@ -8,50 +8,49 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.bupt.bnrc.thesenser.model.WebPhotoModel;
-import com.bupt.bnrc.thesenser.utils.DataCache;
-import com.bupt.bnrc.thesenser.utils.ImageLoader;
-import com.bupt.bnrc.thesenser.view.ZoomImageView;
-
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Trace;
 import android.view.Window;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+
+import com.bupt.bnrc.thesenser.model.WebPhotoModel;
+import com.bupt.bnrc.thesenser.utils.DataCache;
+import com.bupt.bnrc.thesenser.utils.ImageLoader;
+import com.bupt.bnrc.thesenser.view.ZoomImageView;
 
 public class ImageDetailsActivity extends Activity {
 	private ZoomImageView mZoomImageView;
 	private WebPhotoModel mPhoto;
 	private ImageLoader imageLoader;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_image_details);
-		mZoomImageView = (ZoomImageView)findViewById(R.id.zoom_image_view);
-		Integer imageIndex = getIntent().getIntExtra("image_index", 0); 
+		mZoomImageView = (ZoomImageView) findViewById(R.id.zoom_image_view);
+		Integer imageIndex = getIntent().getIntExtra("image_index", 0);
 		mPhoto = DataCache.getInstance().getPhoto(imageIndex);
 		imageLoader = ImageLoader.getInstance();
-		//TODO
-		Bitmap bitmap = BitmapFactory.decodeFile(getImagePath(mPhoto.getPackUrl())); 
-		// Bitmap bitmap = BitmapFactory.decodeFile(getImagePath(mPhoto.getSrcUrl()));
+		// TODO
+		Bitmap bitmap = BitmapFactory.decodeFile(getImagePath(mPhoto
+				.getPackUrl()));
+		// Bitmap bitmap =
+		// BitmapFactory.decodeFile(getImagePath(mPhoto.getSrcUrl()));
 		mZoomImageView.setImageBitmap(bitmap);
-		
-		
+
 		LoadSrcImageTask task = new LoadSrcImageTask();
 		task.execute(mPhoto.getSrcUrl());
 	}
-	
+
 	private String getImagePath(String imageUrl) {
 		int lastSlashIndex = imageUrl.lastIndexOf("/");
 		String imageName = imageUrl.substring(lastSlashIndex + 1);
-		String imageDir = Environment.getExternalStorageDirectory()
-				.getPath() + "/PhotoWallFalls/";
+		String imageDir = Environment.getExternalStorageDirectory().getPath()
+				+ "/PhotoWallFalls/";
 		File file = new File(imageDir);
 		if (!file.exists()) {
 			file.mkdirs();
@@ -59,10 +58,10 @@ public class ImageDetailsActivity extends Activity {
 		String imagePath = imageDir + imageName;
 		return imagePath;
 	}
-	
+
 	class LoadSrcImageTask extends AsyncTask<String, Integer, Bitmap> {
 		private String mImageUrl;
-		
+
 		public LoadSrcImageTask() {
 		}
 
@@ -74,19 +73,21 @@ public class ImageDetailsActivity extends Activity {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			Bitmap imageBitmap = imageLoader.getBitmapFromMemoryCache(mImageUrl);
+			Bitmap imageBitmap = imageLoader
+					.getBitmapFromMemoryCache(mImageUrl);
 			if (imageBitmap == null) {
 				imageBitmap = loadImage(mImageUrl);
 			}
 			return imageBitmap;
 		}
+
 		@Override
 		protected void onPostExecute(Bitmap bitmap) {
 			if (bitmap != null) {
 				mZoomImageView.setImageBitmap(bitmap);
 			}
 		}
-		
+
 		private Bitmap loadImage(String imageUrl) {
 			File imageFile = new File(getImagePath(imageUrl));
 			if (!imageFile.exists()) {
@@ -101,7 +102,7 @@ public class ImageDetailsActivity extends Activity {
 			}
 			return null;
 		}
-		
+
 		private void downloadImage(String imageUrl) {
 			HttpURLConnection con = null;
 			FileOutputStream fos = null;
@@ -143,9 +144,9 @@ public class ImageDetailsActivity extends Activity {
 				}
 			}
 			if (imageFile != null) {
-				//Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(
-				//		imageFile.getPath(), columnWidth);
-				Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getPath());  
+				// Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(
+				// imageFile.getPath(), columnWidth);
+				Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getPath());
 				if (bitmap != null) {
 					imageLoader.addBitmapToMemoryCache(imageUrl, bitmap);
 				}
