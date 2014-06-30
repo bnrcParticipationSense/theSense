@@ -59,6 +59,8 @@ public class FileDAO extends DAOHelper {
 			values.put(FILE_EXPOSURE_VALUE, file.getPhotoStats().getExposureValue());
 			values.put(FILE_FOCAL_DISTANCE, file.getPhotoStats().getFocalDistance());
 			values.put(FILE_APERTURE, file.getPhotoStats().getAperture());
+			values.put(FILE_WIDTH, file.getPhotoStats().getWidth());
+			values.put(FILE_HEIGHT, file.getPhotoStats().getHeight());
 		}
 		values.put(FILE_TAG, file.getTag());
 		return values;
@@ -126,6 +128,22 @@ public class FileDAO extends DAOHelper {
 		return files;
 	}
 	
+	public FileModel findOneFileFromTag(Integer tag, Context context) {
+		FileModel file = null;
+		Cursor cursor = null;
+		try {
+			SQLiteDatabase db = getReadableDatabase();
+			cursor = db.query(FILE_TABLE_NAME, FILE_ALL_COLUMS, FILE_TAG + "= ?", new String[]{tag.toString()},
+					null, null, null, "1");
+			if(cursor.moveToFirst()) {
+				file = createFileFromCursorData(cursor);
+			}
+		} finally {
+			cursor.close();
+		}
+		return file;
+	}
+	
 	private FileModel createFileFromCursorData(Cursor cursor) {
 		Long id = cursor.getLong(0);
 		String fileName = cursor.getString(1);
@@ -138,9 +156,9 @@ public class FileDAO extends DAOHelper {
 		Integer exposureValue = cursor.getInt(8);
 		Float focalDistance = cursor.getFloat(9);
 		Float aperture = cursor.getFloat(10);
-		Integer tag = cursor.getInt(11);
 		Integer width = cursor.getInt(11);
-		Integer height = cursor.getInt(11);
+		Integer height = cursor.getInt(12);
+		Integer tag = cursor.getInt(13);
 		
 		return new FileModel(id, fileName, createTime, xDirect, yDirect, zDirect, longitude, latitude, exposureValue, focalDistance, aperture, width, height, tag);
 	}

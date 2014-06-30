@@ -103,7 +103,6 @@ public class DataDAO extends DAOHelper {
 	}
 
 	private ContentValues createContentValues(DataModel data) {
-		// TODO Auto-generated method stub
 		ContentValues values = new ContentValues();
 		values.put(DATA_LIGHT_INTENSITY, data.getLightIntensity());
 		values.put(DATA_SOUND_INTENSITY, data.getSoundIntensity());

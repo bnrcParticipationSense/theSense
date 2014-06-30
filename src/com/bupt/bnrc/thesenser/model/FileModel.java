@@ -79,7 +79,7 @@ public class FileModel {
 		this.m_fileName = file.getFileName();
 		this.m_createTime = file.getCreateTime();
 		this.m_photoStats = file.getPhotoStats();
-		this.m_tag = file.m_tag;
+		this.m_tag = file.getTag();
 	}
 	
 	public FileModel save(Context context) {
@@ -128,6 +128,18 @@ public class FileModel {
 		try {
 			dao = daoFactory.getFileDAO(context);
 			return dao.findFilesToBeModeled(index, context);
+		} finally {
+			if(dao != null) {
+				dao.close();
+			}
+		}
+	}
+	
+	public static FileModel findOneFileFromTag(Integer tag, Context context) {
+		FileDAO dao = null;
+		try {
+			dao = daoFactory.getFileDAO(context);
+			return dao.findOneFileFromTag(tag, context);
 		} finally {
 			if(dao != null) {
 				dao.close();
