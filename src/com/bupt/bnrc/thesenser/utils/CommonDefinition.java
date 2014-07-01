@@ -1,6 +1,8 @@
 package com.bupt.bnrc.thesenser.utils;
 
 public class CommonDefinition {
+	// Collection
+	public final static boolean AUTO_COLLECTION = false;
 	// database
 	public final static boolean DATABASE_SDCARD_SAVE = true;
 	

@@ -33,6 +33,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.bupt.bnrc.thesenser.model.DataModel;
+import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Upload;
 //���濡���ㄥ�颁��缃������������斤�����瑕�import璇ョ被
@@ -49,6 +50,7 @@ import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class Collection implements SensorEventListener {
 
+	boolean auto_collect = false;
 	private Activity app;
 	private SensorManager sensorManager;
 	private Sensor sensor;
@@ -684,7 +686,10 @@ public class Collection implements SensorEventListener {
 			}
 		};
 		
-		collect_t.start();
+		if(CommonDefinition.AUTO_COLLECTION)
+		{
+			collect_t.start();
+		}
 	}
     public void stop() {
     	app.stopService(intent);
