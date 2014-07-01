@@ -105,7 +105,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 				}
 			};
 		
-			collect_t.start();
+			//collect_t.start();
 			TestFragment.thread_uniqueness = true;
 		}
 			
@@ -151,10 +151,10 @@ public class TestFragment extends Fragment implements OnClickListener {
 			Log.i("zzy", "collectBtn");
 			//collect.stopListener();
 			//collect = new Collection(this);
-			if(thread_flag) {
-				thread_flag = false;
-			}
-			//collect.stop();
+			//if(thread_flag) {
+			//	thread_flag = false;
+			//}
+			collect.stop();
 			break;
 			
 		case R.id.fileTestBtn:

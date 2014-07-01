@@ -71,7 +71,7 @@ public class Upload {
 			params.add(new BasicNameValuePair("upload",sendObj.toString()));
 			post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
-			// ����POST����
+			// �����ゆ�烽����ゆ��POST�����ゆ�烽����ゆ��
 			httpResponse = httpClient.execute(post);
 			entity = httpResponse.getEntity();
 			
@@ -80,6 +80,14 @@ public class Upload {
 			
 			if(resCode != 200)
 			{
+				receiveObj = new JSONObject();
+				try {
+					receiveObj.put("StatusCode", resCode);
+					receiveObj.put("ReasonPhrase", resReason);
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				Toast.makeText(app, "Server response error!" + "\nreponse code: "+resCode, Toast.LENGTH_SHORT).show();
 				Log.i("Upload", "error:"+resReason);
 			}
@@ -99,6 +107,9 @@ public class Upload {
 					e.printStackTrace();
 				}
 				Log.i("UploadJSON", "return msg:"+receiveObj.toString());
+				return receiveObj;
+			}
+			else if(receiveObj != null){
 				return receiveObj;
 			}
 			else {
@@ -153,16 +164,16 @@ public class Upload {
 	    	URL url = new URL("http://10.108.105.190:8080/uploadFile/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-	    	// ����ÿ�δ��������С��������Ч��ֹ�ֻ���Ϊ�ڴ治�����
-	    	// �˷���������Ԥ�Ȳ�֪�����ݳ���ʱ����û�н����ڲ������ HTTP �������ĵ�����
+	    	// �����ゆ�烽����ゆ�锋�����杞胯揪��烽����ゆ�烽����ゆ�烽����ゆ�烽����������烽����ゆ�烽����ゆ�烽����ゆ�烽���������烽��琛���告�峰�������ゆ�烽��杞匡拷������瀛�涓������ゆ�烽����ゆ�烽��锟�
+	    	// �����垮�ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽�����楗鸿�ф�风�ラ����ゆ�烽����ゆ�烽����风�规�烽����ゆ�锋�堕����ゆ�烽����ゆ�锋病��������ゆ�烽����ゆ�烽�����璇ф�烽����ゆ�烽����ゆ�烽��锟� HTTP �����ゆ�烽����ゆ�烽����ゆ�烽��渚ョ����烽����ゆ�烽����ゆ��
 	    	httpURLConnection.setReadTimeout(5 * 1000);
 	    	httpURLConnection.setConnectTimeout(5 * 1000);
 	    	//httpURLConnection.setChunkedStreamingMode(128 * 1024);// 128K
-	    	// �������������
+	    	// �����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽��锟�
 	    	httpURLConnection.setDoInput(true);
 	    	httpURLConnection.setDoOutput(true);
 	    	httpURLConnection.setUseCaches(false);
-	    	// ʹ��POST����
+	    	// 浣块����ゆ��POST�����ゆ�烽����ゆ��
 	    	httpURLConnection.setRequestMethod("POST");
 	    	//httpURLConnection.setRequestProperty("Content-type","Application/x-www-form-urlencoded");
 	    	//httpURLConnection.connect();
@@ -180,7 +191,7 @@ public class Upload {
 	      
 
 	    	/*
-	    	 * ���ļ���װ�ϴ�
+	    	 * �����ゆ�烽��渚ョ》��烽����ゆ�疯�����杈�杈炬��
 	    	 */
 	    	//OutputStream outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
 	      
@@ -194,7 +205,7 @@ public class Upload {
 	    	FileInputStream fis = new FileInputStream(file);
 	    	byte[] buffer = new byte[8192*1024]; // 8k
 	    	int count = 0;
-	    	// ��ȡ�ļ�
+	    	// �����ゆ�峰�����渚ョ》���
 	    	while ((count = fis.read(buffer)) != -1)
 	    	{
 	    		dos.write(buffer, 0, count);
@@ -206,7 +217,7 @@ public class Upload {
 	    	dos.flush();
 
 	    	/*
-	    	 * ��ȡ��������
+	    	 * �����ゆ�峰�������ゆ�烽����ゆ�烽����ゆ�烽����ゆ��
 	    	 */
 	    	InputStream inputStream = httpURLConnection.getInputStream();
 	    	InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -218,7 +229,7 @@ public class Upload {
 	    	}
 	    	reader.close();
 	    	/*
-	    	 * ��ȡ��Ӧ��
+	    	 * �����ゆ�峰�������ゆ�峰�������ゆ��
 	    	 */
 	    	int res = httpURLConnection.getResponseCode();
 	    	String s = httpURLConnection.getResponseMessage();
@@ -269,15 +280,24 @@ public class Upload {
 			params.add(new BasicNameValuePair("upload",sendObj.toString()));
 			post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
-			// ����POST����
+			// �����ゆ�烽����ゆ��POST�����ゆ�烽����ゆ��
 			httpResponse = httpClient.execute(post);
 			entity = httpResponse.getEntity();
 			
 			int resCode = httpResponse.getStatusLine().getStatusCode();
+			String resReason = httpResponse.getStatusLine().getReasonPhrase();
 			
 			if(resCode != 200)
 			{
 				Log.i("Upload", "error");
+				receiveObj = new JSONObject();
+				try{
+					receiveObj.put("StatusCode", resCode);
+					receiveObj.put("ReasonPhrase", resReason);
+				}catch(JSONException e) {
+					e.printStackTrace();
+				}
+				return receiveObj;
 			}
 			else
 			{
@@ -295,10 +315,8 @@ public class Upload {
 				}
 				Log.i("UploadJSON", "return msg:"+receiveObj.toString());
 				return receiveObj;
-			}
-			else {
+			} else
 				return null;
-			}
 
 		}
 		catch (ConnectTimeoutException e)
@@ -348,16 +366,16 @@ public class Upload {
 	    	//URL url = new URL("http://10.108.105.190:8080/webInterface/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-	    	// ����ÿ�δ��������С��������Ч��ֹ�ֻ���Ϊ�ڴ治�����
-	    	// �˷���������Ԥ�Ȳ�֪�����ݳ���ʱ����û�н����ڲ������ HTTP �������ĵ�����
+	    	// �����ゆ�烽����ゆ�锋�����杞胯揪��烽����ゆ�烽����ゆ�烽����ゆ�烽����������烽����ゆ�烽����ゆ�烽����ゆ�烽���������烽��琛���告�峰�������ゆ�烽��杞匡拷������瀛�涓������ゆ�烽����ゆ�烽��锟�
+	    	// �����垮�ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽�����楗鸿�ф�风�ラ����ゆ�烽����ゆ�烽����风�规�烽����ゆ�锋�堕����ゆ�烽����ゆ�锋病��������ゆ�烽����ゆ�烽�����璇ф�烽����ゆ�烽����ゆ�烽��锟� HTTP �����ゆ�烽����ゆ�烽����ゆ�烽��渚ョ����烽����ゆ�烽����ゆ��
 	    	httpURLConnection.setReadTimeout(5 * 1000);
 	    	httpURLConnection.setConnectTimeout(5 * 1000);
 	    	//httpURLConnection.setChunkedStreamingMode(128 * 1024);// 128K
-	    	// �������������
+	    	// �����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽��锟�
 	    	httpURLConnection.setDoInput(true);
 	    	httpURLConnection.setDoOutput(true);
 	    	httpURLConnection.setUseCaches(false);
-	    	// ʹ��POST����
+	    	// 浣块����ゆ��POST�����ゆ�烽����ゆ��
 	    	httpURLConnection.setRequestMethod("POST");
 	    	//httpURLConnection.setRequestProperty("Content-type","Application/x-www-form-urlencoded");
 	    	//httpURLConnection.connect();
@@ -375,7 +393,7 @@ public class Upload {
 	      
 
 	    	/*
-	    	 * ���ļ���װ�ϴ�
+	    	 * �����ゆ�烽��渚ョ》��烽����ゆ�疯�����杈�杈炬��
 	    	 */
 	    	//OutputStream outputStream = new DataOutputStream(httpURLConnection.getOutputStream());
 	      
@@ -389,7 +407,7 @@ public class Upload {
 	    	FileInputStream fis = new FileInputStream(file);
 	    	byte[] buffer = new byte[8192*1024]; // 8k
 	    	int count = 0;
-	    	// ��ȡ�ļ�
+	    	// �����ゆ�峰�����渚ョ》���
 	    	while ((count = fis.read(buffer)) != -1)
 	    	{
 	    		dos.write(buffer, 0, count);
@@ -401,7 +419,7 @@ public class Upload {
 	    	dos.flush();
 
 	    	/*
-	    	 * ��ȡ��Ӧ��
+	    	 * �����ゆ�峰�������ゆ�峰�������ゆ��
 	    	 */
 	    	int res = httpURLConnection.getResponseCode();
 	    	if(res == 200)
@@ -411,7 +429,7 @@ public class Upload {
 	    	}
 	    	
 	    	/*
-	    	 * ��ȡ��������
+	    	 * �����ゆ�峰�������ゆ�烽����ゆ�烽����ゆ�烽����ゆ��
 	    	 */
 	    	InputStream inputStream = httpURLConnection.getInputStream();
 	    	InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
