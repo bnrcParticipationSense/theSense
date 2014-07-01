@@ -84,7 +84,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 							e.printStackTrace();
 						}
 						collect.setDataModel();
-						collect.save();
+						// TODO collect.save();
 					}
 				}
 
@@ -222,7 +222,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 
 	private void processCameraBtnClick() {
 		Logger.d("杩���ョ�告�烘��璇�椤�");
-		Intent intent = new Intent(getActivity(), CameraActivity.class);
+		Intent intent = new Intent(getActivity(), CameraUploadAcitivity.class);
 		startActivity(intent);
 	}
 

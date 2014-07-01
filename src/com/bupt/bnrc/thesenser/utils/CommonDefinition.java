@@ -1,6 +1,9 @@
 package com.bupt.bnrc.thesenser.utils;
 
 public class CommonDefinition {
+	// database
+	public final static boolean DATABASE_SDCARD_SAVE = true;
+	
 	// activity request code
 	public final static int REQUESTCODE_CAMERA = 0;
 	public final static int REQUESTCODE_PMPREDICT = 1;

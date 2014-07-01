@@ -435,8 +435,11 @@ public class CameraActivity extends Activity {
 					fileModel.save(app);
 
 					// TODO
-					mPredictTools.startPredict(fileModel);
-
+					/*
+					if (mModelType == CommonDefinition.VALUE_CAMERA_MODEL_TYPE_PREDICT) {
+						mPredictTools.startPredict(fileModel);
+					}
+					*/
 					setResult(CommonDefinition.RESULTCODE_CAMERA_OK);
 					finish();
 					// mcamera.startPreview();

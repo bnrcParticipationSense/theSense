@@ -32,6 +32,8 @@
             android:label="@string/app_name" />
         <activity android:name="com.bupt.bnrc.thesenser.CameraActivity"
             android:label="@string/app_name" />
+        <activity android:name="com.bupt.bnrc.thesenser.CameraUploadAcitivity"
+            android:label="@string/app_name" />
         <activity android:name="com.bupt.bnrc.thesenser.DataActivity"
             android:label="@string/app_name" />
         <activity android:name="com.bupt.bnrc.thesenser.ListDataActivity"

@@ -122,6 +122,18 @@ public class FileModel {
 		}
 
 	}
+	
+	public static FileModel findFileById(Long id, Context context) {
+		FileDAO dao = null;
+		try {
+			dao = daoFactory.getFileDAO(context);
+			return dao.findFileById(id, context);
+		} finally {
+			if (dao != null) {
+				dao.close();
+			}
+		}
+	}
 
 	public static FileModel findLastFile(Context context) {
 		FileDAO dao = null;
