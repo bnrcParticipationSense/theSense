@@ -319,7 +319,7 @@ public class PreprocessingProcess extends PMProcess {
 				{
 					JSONArray pmArray = (JSONArray) jsonObj
 							.get("response_weahters");
-					String city = (String) jsonObj.get("city");
+					String city = (String) jsonObj.get("response_city");
 					for (int i = 0; i < photoData.size(); i++) 
 					{
 						PhotoData photo = photoData.get(i);
