@@ -53,7 +53,7 @@ public class PMToolsModelPickActivity extends Activity {
 				} else {
 					Integer modelTag = mModelTagList.get(position).getTag();
 					// TODO 已经有的model
-					setExistModel(modelTag);
+					predictModel(modelTag);
 				}
 			}
 		});
@@ -82,10 +82,10 @@ public class PMToolsModelPickActivity extends Activity {
 		 */
 	}
 
-	protected void setExistModel(Integer modelTag) {
+	protected void predictModel(Integer modelTag) {
 		Intent intent = new Intent(this, CameraActivity.class);
-		intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE,
-				CommonDefinition.VALUE_CAMERA_MODEL_TYPE_SET);
+		// intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE, CommonDefinition.VALUE_CAMERA_MODEL_TYPE_SET);
+		intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE, CommonDefinition.VALUE_CAMERA_MODEL_TYPE_PREDICT);
 		intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TAG, modelTag);
 		startActivityForResult(intent, CommonDefinition.REQUESTCODE_CAMERA);
 	}

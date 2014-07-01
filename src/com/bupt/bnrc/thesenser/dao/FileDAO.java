@@ -154,6 +154,22 @@ public class FileDAO extends DAOHelper {
 		return file;
 	}
 
+	public FileModel findFileById(Long id, Context context) {
+		FileModel file = null;
+		Cursor cursor = null;
+		try {
+			SQLiteDatabase db = getReadableDatabase();
+			cursor = db.query(FILE_TABLE_NAME, FILE_ALL_COLUMS, _ID + "= ?", 
+					new String[] { id.toString() }, null, null, null, "1");
+			if(cursor.moveToFirst()) {
+				file = createFileFromCursorData(cursor);
+			}
+		} finally {
+			cursor.close();
+		}
+		return null;
+	}
+	
 	private FileModel createFileFromCursorData(Cursor cursor) {
 		Long id = cursor.getLong(0);
 		String fileName = cursor.getString(1);
@@ -174,5 +190,6 @@ public class FileDAO extends DAOHelper {
 				zDirect, longitude, latitude, exposureValue, focalDistance,
 				aperture, width, height, tag);
 	}
+
 
 }

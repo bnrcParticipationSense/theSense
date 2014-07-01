@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -36,19 +37,42 @@ public class MainActivity extends FragmentActivity {
 	static {
 		PMConfig.init();
 	}
-
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
-		initDatas();
-		initViews();
-
-		if (savedInstanceState == null) {
-			selectItem(mNowPosition);
-		}
-	}
+	
+	
+	
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    	super.onCreate(savedInstanceState);
+    	setContentView(R.layout.activity_main);
+    	
+    	initDatas();
+    	initViews();
+    	
+    	if (savedInstanceState == null) {
+            selectItem(mNowPosition);
+        }
+    	Collection.getCollection(this);
+    	final Intent intent = new Intent();
+    	intent.setAction("com.bupt.bnrc.thesenser.collection.forCollection");
+    	//intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    	//intent.addCategory(Intent.CATEGORY_HOME);
+		startService(intent);
+    }
+    
+    protected void onPause() {
+    	super.onPause();
+    	Log.i("Collection Activity", "onPause()");
+    }
+    
+    protected void onStop() {
+    	super.onStop();
+    	Log.i("Collection Activity", "onStop()");
+    }
+    
+    protected void onDestroy() {
+    	super.onDestroy();
+    	Log.i("Collection Activity", "onDestroy()");
+    }
 
 	private void initDatas() {
 		mNowPosition = 0;

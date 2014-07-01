@@ -83,8 +83,8 @@ public class TestFragment extends Fragment implements OnClickListener {
 						} catch (InterruptedException e) {
 							e.printStackTrace();
 						}
-						collect.setDataModel();
-						collect.save();
+						// collect.setDataModel();
+						// TODO collect.save();
 					}
 				}
 
@@ -106,8 +106,8 @@ public class TestFragment extends Fragment implements OnClickListener {
 					}
 				}
 			};
-
-			collect_t.start();
+		
+			//collect_t.start();
 			TestFragment.thread_uniqueness = true;
 		}
 
@@ -146,12 +146,12 @@ public class TestFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.collectBtn:
 			Log.i("zzy", "collectBtn");
-			// collect.stopListener();
-			// collect = new Collection(this);
-			if (thread_flag) {
-				thread_flag = false;
-			}
-			// collect.stop();
+			//collect.stopListener();
+			//collect = new Collection(this);
+			//if(thread_flag) {
+			//	thread_flag = false;
+			//}
+			collect.stop();
 			break;
 
 		case R.id.fileTestBtn:
@@ -222,7 +222,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 
 	private void processCameraBtnClick() {
 		Logger.d("杩���ョ�告�烘��璇�椤�");
-		Intent intent = new Intent(getActivity(), CameraActivity.class);
+		Intent intent = new Intent(getActivity(), CameraUploadAcitivity.class);
 		startActivity(intent);
 	}
 

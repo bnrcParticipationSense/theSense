@@ -1,6 +1,9 @@
 package com.bupt.bnrc.thesenser.dao;
 
+import com.bupt.bnrc.thesenser.utils.CommonDefinition;
+
 import android.content.Context;
+import android.provider.Settings.Global;
 
 public class DAOFactory {
 	private static DAOFactory instance = null;
@@ -55,10 +58,14 @@ public class DAOFactory {
 	}
 
 	private Context getProperDAOContext(Context context) {
-		if (globalContext != null) {
-			return globalContext;
+		if(CommonDefinition.DATABASE_SDCARD_SAVE) {
+			return new DatabaseContext(context);
 		} else {
-			return context;
+			if (globalContext != null) {
+				return globalContext;
+			} else {
+				return context;
+			}
 		}
 	}
 }

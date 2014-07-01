@@ -33,6 +33,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.bupt.bnrc.thesenser.model.DataModel;
+import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Upload;
 //���濡���ㄥ�颁��缃������������斤�����瑕�import璇ョ被
@@ -49,6 +50,7 @@ import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class Collection implements SensorEventListener {
 
+	boolean auto_collect = false;
 	private Activity app;
 	private SensorManager sensorManager;
 	private Sensor sensor;
@@ -163,8 +165,8 @@ public class Collection implements SensorEventListener {
 		Toast toast = Toast.makeText(this.app, str, Toast.LENGTH_LONG);
 		toast.show();
 	}
-
-	// *******************************************************************************//
+	//*******************************************************************************//
+	static Thread collect_t = null;
 	private static Collection instance = null;
 
 	public static Collection getCollection(Activity app) {
@@ -173,9 +175,9 @@ public class Collection implements SensorEventListener {
 		}
 		return instance;
 	}
-
-	public static Collection getCollention() {
-		if (instance != null) {
+	
+	public static Collection getCollection() {
+		if(instance != null){
 			return instance;
 		}
 		//
@@ -215,8 +217,9 @@ public class Collection implements SensorEventListener {
 		// mLocationClient = new
 		// LocationClient(this.app.getApplicationContext()); //
 		mLocationClient = new LocationClient(this.app);
-
-		setValues();// register every sensors
+	     
+		setValues();//register every sensors
+		//collect();
 	}
 
 	private void setNoise() {
@@ -372,8 +375,8 @@ public class Collection implements SensorEventListener {
 	}
 
 	public float getNoise() {
-		// return this.for_noise.getValue();
-		setNoise();
+		//return this.for_noise.getValue();
+		//setNoise();
 		return this.noise;
 	}
 
@@ -623,8 +626,72 @@ public class Collection implements SensorEventListener {
 		Log.d("spl", String.valueOf(v));
 		Log.d("sp", String.valueOf(j));
 		noise = w / (float) r;
+    }
+    /*
+    public void stop() {
+    	for_noise.stop();
+    }
+    */
+    public Activity getActivity(){
+    	return app;
+    }
+    boolean thread_flag = true;
+    int sleeptime = 2000;
+    final Intent intent = new Intent();
+    private void collect() {
+    	Log.i("Collection", "collect()");
+    	//intent.setAction("com.bupt.bnrc.thesenser.collection.forCollection");
+    	//intent.addCategory(Intent.CATEGORY_HOME);
+    	//intent.setFlags(Intent.FLAG_FROM_BACKGROUND);
+		//app.startService(intent);
+    }
+    
+    public void collect_new() {
+    	
+		collect_t = new Thread() {
+			private boolean flag = false;
+			public void run() {
+				flag = true;				
+				while(true) {
+					if(!thread_flag) {
+						thread_flag = true;
+						forWait();
+					}
+					try {
+						sleep(sleeptime);
+					} catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+					instance.setDataModel();
+					instance.save();
+				}
+			}
+			public synchronized void forWait() {
+				if(flag) {
+					try{
+						wait();
+						flag = false;
+					}catch(InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				else {
+					try{
+						flag = true;
+						notify();
+					}catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		
+		if(CommonDefinition.AUTO_COLLECTION)
+		{
+			collect_t.start();
+		}
 	}
-	/*
-	 * public void stop() { for_noise.stop(); }
-	 */
+    public void stop() {
+    	app.stopService(intent);
+    }
 }
