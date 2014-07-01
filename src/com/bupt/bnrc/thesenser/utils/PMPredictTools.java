@@ -73,7 +73,7 @@ public class PMPredictTools implements PMPredictSubject {
 				super.handleMessage(msg);
 			}
 		};
-		PredictingTask predictingTask = new PredictingTask(fileModel, fileModel.getTag(), predictHandler, false);
+		PredictingTask predictingTask = new PredictingTask(fileModel, predictHandler, false);
 		predictingTask.runAsync();
 		mState = CommonDefinition.PMPREDICT_STATE_START;
 		notifyObservers();

@@ -23,8 +23,10 @@ public class PredictingTask extends PMTask {
 	
 	
 	
-	public PredictingTask(FileModel fileModel, int tagId, Handler taskHandler, boolean enablePreprocess)
+	public PredictingTask(FileModel fileModel, Handler taskHandler, boolean enablePreprocess)
 	{
+		
+		int tagId = fileModel.getTag();
 		this.taskHandler = taskHandler;
 		
 		this.photoData	 = new PhotoData(fileModel.getFileName(), fileModel.getCreateTime(), fileModel.getPhotoStats().getLatitude(), fileModel.getPhotoStats().getLongitude(), fileModel.getTag());
