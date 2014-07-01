@@ -373,6 +373,94 @@ public class CameraActivity extends Activity {
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
+						
+						
+/*
+
+						//**************Exif设置*************
+						try {
+							ExifInterface exif = new ExifInterface(fileName);
+							exif.setAttribute("Light", ""+collect.getLight());
+							exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDate().toString());
+							exif.setAttribute(ExifInterface.TAG_MODEL, "model");
+							exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
+							exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
+							exif.setAttribute(ExifInterface.TAG_MAKE, "");
+							//exif.setAttribute("Light", ""+collect.getLight());
+							exif.saveAttributes();
+							Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+
+						//**************Exif设置***END*******
+
+						FileModel fileModel = new FileModel(fileName, collect.getDate(), photoStats);
+						fileModel.save(app);
+						
+						// ###################  start PM ##################
+				    	
+						
+						// Synchronized way:
+						//ModelingTask modelingTask = new ModelingTask(photoList, AppConfig.MODELPARAMS, false);
+						//modelingTask.runSync();
+					
+			
+						// Asynchronized way:
+						Handler predictHandler = new Handler()
+				    	{
+				    		public void handleMessage(Message msg) 
+				    		{	//接收message对象  
+				    			PMTaskStatus revTaskStatus = (PMTaskStatus)msg.obj;
+				    			Log.i(ACTIVITY_TAG, LOG_PREFIX+" predictHandler: what = " + revTaskStatus.getInfo());
+				    			
+				    			switch (revTaskStatus.getStatusCode()) 
+				    			{   
+				    			case PMSettings.TASKRESULT_OK:
+				    				
+				    				// DO SOMETHING HERE TO UPDATE THE PROGRESS USING      int PMTaskStatus.getProgress()
+				    				
+				    				Toast.makeText(CameraActivity.this,
+					  				          "predicting ... " + revTaskStatus.getProgress() + "%" , Toast.LENGTH_SHORT).show();
+				    				break;
+				    			case PMSettings.TASKRESULT_FAILURE:
+				    				
+				    				// DO SOMETHING HERE TO HANDLE THE FAILURE
+				    				
+				    				Toast.makeText(CameraActivity.this,
+					  				          "predicting failure" , Toast.LENGTH_LONG).show();
+				    				break;
+				    			case PMSettings.TASKRESULT_INVALID:
+				    				
+				    				// DO SOMETHING HERE TO HANDLE THE INVALID DATA
+				    				
+				    				Toast.makeText(CameraActivity.this,
+				    						"predicting data invalid"  , Toast.LENGTH_LONG).show();
+				    				break;
+				    	
+				    			}
+				 		
+				    			if(revTaskStatus.isCompleted())
+			    				{
+			    					Toast.makeText(CameraActivity.this,
+			    						"estimated PM: " +  revTaskStatus.getPmValue(), Toast.LENGTH_LONG).show();
+			    				}
+				    			
+				    			super.handleMessage(msg);  
+				        	} 
+				    	};
+						PredictingTask predictingTask = new PredictingTask(fileModel , 1, predictHandler, false);
+						predictingTask.runAsync();
+						
+						// ###################  end PM ##################
+						
+						setResult(CommonDefinition.REQUESTCODE_CAMERA);
+						finish();
+						// mcamera.startPreview();
+*/
+						
+						
+						
 						// *****************************************************************end
 						exif.setAttribute(ExifInterface.TAG_DATETIME,
 								collect.getDateSring());
@@ -397,6 +485,7 @@ public class CameraActivity extends Activity {
 						Log.i("CameraActivity", "JSONObj = " + obj.toString());
 					} catch (IOException e) {
 						e.printStackTrace();
+
 					}
 
 					// **************Exif设置***END*******

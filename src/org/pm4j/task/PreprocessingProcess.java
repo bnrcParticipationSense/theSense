@@ -121,9 +121,11 @@ public class PreprocessingProcess extends PMProcess {
 			 */
 
 			// ONLY FOR TEST
-			for (int i = 0; i < photoData.size(); i++) {
-				WeatherData weatherData = new WeatherData("beijing",
-						new Date(), 0, 0, 0, 0, 0, WeatherType.SUNNY);
+
+			for(int i = 0; i < photoData.size(); i++)
+			{
+				WeatherData weatherData = new WeatherData("Beijing", new Date(), 0,0,0,0,0, WeatherType.SUNNY);
+
 				photoData.get(i).setWeatherData(weatherData);
 			}
 

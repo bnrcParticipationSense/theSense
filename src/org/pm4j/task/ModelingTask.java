@@ -9,6 +9,7 @@ import org.pm4j.process.ModelProcess;
 import org.pm4j.process.PMProcess;
 
 import android.os.Handler;
+import android.util.Log;
 
 import com.bupt.bnrc.thesenser.model.FileModel;
 
@@ -38,10 +39,16 @@ public class ModelingTask extends PMTask {
 
 			this.photoData.add(data);
 		}
-
+	
+		int tagId = photoData.get(0).getTagId();
+		
 		this.modelParams = PMConfig.getDefaultModelParams();
 		this.modelParams.setImgWidth(photoData.get(0).getWidth());
 		this.modelParams.setImgHeight(photoData.get(0).getHeight());
+
+		this.modelParams.setModelPath(PMConfig.defaultModelPath + PMConfig.defaultModelBaseName + photoData.get(tagId) + ".yml");
+		Log.i(TAG, "setModelPath: " + PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
+		
 
 		createHandler();
 
