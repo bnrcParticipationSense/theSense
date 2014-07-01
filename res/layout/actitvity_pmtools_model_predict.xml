@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <ListView android:id="@+id/pmtools_model_predict_listView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    
+    <RelativeLayout 
+        android:id="@+id/pmtools_model_predict_none_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        
+        <TextView 
+            android:id="@+id/pmtools_model_predict_none_textview"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+			android:layout_centerHorizontal="true"
+            android:layout_marginTop="90dp"
+            android:text="模型数量大于10才能进行预测，目前没有可以进行建模的模型。点击下面按钮进入建模"/>
+        
+        <Button 
+            android:id="@+id/pmtools_model_predict_none_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="模型建立"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/pmtools_model_predict_none_textview"/>
+        
+    </RelativeLayout>
+
+</LinearLayout>

@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class InfoCollectFragmentPagerAdapter extends FragmentPagerAdapter {
-	private final String[] mTabTitles = {"光照", "声音"};
-	
+	private final String[] mTabTitles = { "光照", "声音" };
+
 	public InfoCollectFragmentPagerAdapter(FragmentManager fm) {
 		super(fm);
 	}

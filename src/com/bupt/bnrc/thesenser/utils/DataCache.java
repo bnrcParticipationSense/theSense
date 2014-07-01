@@ -7,30 +7,29 @@ import org.json.JSONObject;
 
 import com.bupt.bnrc.thesenser.model.WebPhotoModel;
 
-
 public class DataCache {
 	private static DataCache instance = null;
 	// Light
 	List<Float> mLightList;
 	// photoList
 	List<WebPhotoModel> mPhotoList;
-	
+
 	public static DataCache getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new DataCache();
 		}
 		return instance;
 	}
-	
+
 	private DataCache() {
 		// TODO Auto-generated constructor stub
 		mLightList = new ArrayList<Float>();
 	}
-	
+
 	// Light
 	public int addLightData(Float num) {
 		int size = mLightList.size();
-		if(size < 19) {
+		if (size < 19) {
 			mLightList.add(num);
 			return size + 1;
 		} else {
@@ -39,7 +38,7 @@ public class DataCache {
 			return 1;
 		}
 	}
-	
+
 	// photoList
 	public void setPhotoListFromJson(JSONObject obj) {
 		mPhotoList = JSON.getPhotoListFromJson(obj);
@@ -48,16 +47,16 @@ public class DataCache {
 	public void setPhotoListFromJsonTemp(JSONObject obj) {
 		mPhotoList = JSON.getPhotoListFromJsonTemp(obj);
 	}
-	
+
 	public int getPhotoListLength() {
 		return mPhotoList.size();
 	}
-	
+
 	public WebPhotoModel getPhoto(int index) {
-		if(index < 0 || index >= mPhotoList.size()) {
+		if (index < 0 || index >= mPhotoList.size()) {
 			return null;
 		}
 		return mPhotoList.get(index);
 	}
-	
+
 }

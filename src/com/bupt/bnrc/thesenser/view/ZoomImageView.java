@@ -11,122 +11,123 @@ import android.view.View;
 public class ZoomImageView extends View {
 
 	/**
-	 * ³õÊ¼»¯×´Ì¬³£Á¿
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static final int STATUS_INIT = 1;
 
 	/**
-	 * Í¼Æ¬·Å´ó×´Ì¬³£Á¿
+	 * Í¼Æ¬ï¿½Å´ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static final int STATUS_ZOOM_OUT = 2;
 
 	/**
-	 * Í¼Æ¬ËõÐ¡×´Ì¬³£Á¿
+	 * Í¼Æ¬ï¿½ï¿½Ð¡×´Ì¬ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static final int STATUS_ZOOM_IN = 3;
 
 	/**
-	 * Í¼Æ¬ÍÏ¶¯×´Ì¬³£Á¿
+	 * Í¼Æ¬ï¿½Ï¶ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½
 	 */
 	public static final int STATUS_MOVE = 4;
 
 	/**
-	 * ÓÃÓÚ¶ÔÍ¼Æ¬½øÐÐÒÆ¶¯ºÍËõ·Å±ä»»µÄ¾ØÕó
+	 * ï¿½ï¿½ï¿½Ú¶ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å±ä»»ï¿½Ä¾ï¿½ï¿½ï¿½
 	 */
 	private Matrix matrix = new Matrix();
 
 	/**
-	 * ´ýÕ¹Ê¾µÄBitmap¶ÔÏó
+	 * ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½Bitmapï¿½ï¿½ï¿½ï¿½
 	 */
 	private Bitmap sourceBitmap;
 
 	/**
-	 * ¼ÇÂ¼µ±Ç°²Ù×÷µÄ×´Ì¬£¬¿ÉÑ¡ÖµÎªSTATUS_INIT¡¢STATUS_ZOOM_OUT¡¢STATUS_ZOOM_INºÍSTATUS_MOVE
+	 * ï¿½ï¿½Â¼ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½Ñ¡ÖµÎªSTATUS_INITï¿½ï¿½STATUS_ZOOM_OUTï¿½ï¿½STATUS_ZOOM_INï¿½ï¿½
+	 * STATUS_MOVE
 	 */
 	private int currentStatus;
 
 	/**
-	 * ZoomImageView¿Ø¼þµÄ¿í¶È
+	 * ZoomImageViewï¿½Ø¼ï¿½ï¿½Ä¿ï¿½ï¿½
 	 */
 	private int width;
 
 	/**
-	 * ZoomImageView¿Ø¼þµÄ¸ß¶È
+	 * ZoomImageViewï¿½Ø¼ï¿½ï¿½Ä¸ß¶ï¿½
 	 */
 	private int height;
 
 	/**
-	 * ¼ÇÂ¼Á½Ö¸Í¬Ê±·ÅÔÚÆÁÄ»ÉÏÊ±£¬ÖÐÐÄµãµÄºá×ø±êÖµ
+	 * ï¿½ï¿½Â¼ï¿½ï¿½Ö¸Í¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	 */
 	private float centerPointX;
 
 	/**
-	 * ¼ÇÂ¼Á½Ö¸Í¬Ê±·ÅÔÚÆÁÄ»ÉÏÊ±£¬ÖÐÐÄµãµÄ×Ý×ø±êÖµ
+	 * ï¿½ï¿½Â¼ï¿½ï¿½Ö¸Í¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
 	 */
 	private float centerPointY;
 
 	/**
-	 * ¼ÇÂ¼µ±Ç°Í¼Æ¬µÄ¿í¶È£¬Í¼Æ¬±»Ëõ·ÅÊ±£¬Õâ¸öÖµ»áÒ»Æð±ä¶¯
+	 * ï¿½ï¿½Â¼ï¿½ï¿½Ç°Í¼Æ¬ï¿½Ä¿ï¿½È£ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ò»ï¿½ï¿½ä¶¯
 	 */
 	private float currentBitmapWidth;
 
 	/**
-	 * ¼ÇÂ¼µ±Ç°Í¼Æ¬µÄ¸ß¶È£¬Í¼Æ¬±»Ëõ·ÅÊ±£¬Õâ¸öÖµ»áÒ»Æð±ä¶¯
+	 * ï¿½ï¿½Â¼ï¿½ï¿½Ç°Í¼Æ¬ï¿½Ä¸ß¶È£ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½Ò»ï¿½ï¿½ä¶¯
 	 */
 	private float currentBitmapHeight;
 
 	/**
-	 * ¼ÇÂ¼ÉÏ´ÎÊÖÖ¸ÒÆ¶¯Ê±µÄºá×ø±ê
+	 * ï¿½ï¿½Â¼ï¿½Ï´ï¿½ï¿½ï¿½Ö¸ï¿½Æ¶ï¿½Ê±ï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private float lastXMove = -1;
 
 	/**
-	 * ¼ÇÂ¼ÉÏ´ÎÊÖÖ¸ÒÆ¶¯Ê±µÄ×Ý×ø±ê
+	 * ï¿½ï¿½Â¼ï¿½Ï´ï¿½ï¿½ï¿½Ö¸ï¿½Æ¶ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private float lastYMove = -1;
 
 	/**
-	 * ¼ÇÂ¼ÊÖÖ¸ÔÚºá×ø±ê·½ÏòÉÏµÄÒÆ¶¯¾àÀë
+	 * ï¿½ï¿½Â¼ï¿½ï¿½Ö¸ï¿½Úºï¿½ï¿½ï¿½ï¿½ê·½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private float movedDistanceX;
 
 	/**
-	 * ¼ÇÂ¼ÊÖÖ¸ÔÚ×Ý×ø±ê·½ÏòÉÏµÄÒÆ¶¯¾àÀë
+	 * ï¿½ï¿½Â¼ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê·½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private float movedDistanceY;
 
 	/**
-	 * ¼ÇÂ¼Í¼Æ¬ÔÚ¾ØÕóÉÏµÄºáÏòÆ«ÒÆÖµ
+	 * ï¿½ï¿½Â¼Í¼Æ¬ï¿½Ú¾ï¿½ï¿½ï¿½ï¿½ÏµÄºï¿½ï¿½ï¿½Æ«ï¿½ï¿½Öµ
 	 */
 	private float totalTranslateX;
 
 	/**
-	 * ¼ÇÂ¼Í¼Æ¬ÔÚ¾ØÕóÉÏµÄ×ÝÏòÆ«ÒÆÖµ
+	 * ï¿½ï¿½Â¼Í¼Æ¬ï¿½Ú¾ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½Öµ
 	 */
 	private float totalTranslateY;
 
 	/**
-	 * ¼ÇÂ¼Í¼Æ¬ÔÚ¾ØÕóÉÏµÄ×ÜËõ·Å±ÈÀý
+	 * ï¿½ï¿½Â¼Í¼Æ¬ï¿½Ú¾ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½
 	 */
 	private float totalRatio;
 
 	/**
-	 * ¼ÇÂ¼ÊÖÖ¸ÒÆ¶¯µÄ¾àÀëËùÔì³ÉµÄËõ·Å±ÈÀý
+	 * ï¿½ï¿½Â¼ï¿½ï¿½Ö¸ï¿½Æ¶ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Éµï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½
 	 */
 	private float scaledRatio;
 
 	/**
-	 * ¼ÇÂ¼Í¼Æ¬³õÊ¼»¯Ê±µÄËõ·Å±ÈÀý
+	 * ï¿½ï¿½Â¼Í¼Æ¬ï¿½ï¿½Ê¼ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½
 	 */
 	private float initRatio;
 
 	/**
-	 * ¼ÇÂ¼ÉÏ´ÎÁ½Ö¸Ö®¼äµÄ¾àÀë
+	 * ï¿½ï¿½Â¼ï¿½Ï´ï¿½ï¿½ï¿½Ö¸Ö®ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
 	 */
 	private double lastFingerDis;
 
 	/**
-	 * ZoomImageView¹¹Ôìº¯Êý£¬½«µ±Ç°²Ù×÷×´Ì¬ÉèÎªSTATUS_INIT¡£
+	 * ZoomImageViewï¿½ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ÎªSTATUS_INITï¿½ï¿½
 	 * 
 	 * @param context
 	 * @param attrs
@@ -137,10 +138,10 @@ public class ZoomImageView extends View {
 	}
 
 	/**
-	 * ½«´ýÕ¹Ê¾µÄÍ¼Æ¬ÉèÖÃ½øÀ´¡£
+	 * ï¿½ï¿½ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param bitmap
-	 *            ´ýÕ¹Ê¾µÄBitmap¶ÔÏó
+	 *            ï¿½ï¿½Õ¹Ê¾ï¿½ï¿½Bitmapï¿½ï¿½ï¿½ï¿½
 	 */
 	public void setImageBitmap(Bitmap bitmap) {
 		sourceBitmap = bitmap;
@@ -148,10 +149,11 @@ public class ZoomImageView extends View {
 	}
 
 	@Override
-	protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+	protected void onLayout(boolean changed, int left, int top, int right,
+			int bottom) {
 		super.onLayout(changed, left, top, right, bottom);
 		if (changed) {
-			// ·Ö±ð»ñÈ¡µ½ZoomImageViewµÄ¿í¶ÈºÍ¸ß¶È
+			// ï¿½Ö±ï¿½ï¿½È¡ï¿½ï¿½ZoomImageViewï¿½Ä¿ï¿½ÈºÍ¸ß¶ï¿½
 			width = getWidth();
 			height = getHeight();
 		}
@@ -162,13 +164,13 @@ public class ZoomImageView extends View {
 		switch (event.getActionMasked()) {
 		case MotionEvent.ACTION_POINTER_DOWN:
 			if (event.getPointerCount() == 2) {
-				// µ±ÓÐÁ½¸öÊÖÖ¸°´ÔÚÆÁÄ»ÉÏÊ±£¬¼ÆËãÁ½Ö¸Ö®¼äµÄ¾àÀë
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸Ö®ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
 				lastFingerDis = distanceBetweenFingers(event);
 			}
 			break;
 		case MotionEvent.ACTION_MOVE:
 			if (event.getPointerCount() == 1) {
-				// Ö»ÓÐµ¥Ö¸°´ÔÚÆÁÄ»ÉÏÒÆ¶¯Ê±£¬ÎªÍÏ¶¯×´Ì¬
+				// Ö»ï¿½Ðµï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Æ¶ï¿½Ê±ï¿½ï¿½Îªï¿½Ï¶ï¿½×´Ì¬
 				float xMove = event.getX();
 				float yMove = event.getY();
 				if (lastXMove == -1 && lastYMove == -1) {
@@ -178,7 +180,7 @@ public class ZoomImageView extends View {
 				currentStatus = STATUS_MOVE;
 				movedDistanceX = xMove - lastXMove;
 				movedDistanceY = yMove - lastYMove;
-				// ½øÐÐ±ß½ç¼ì²é£¬²»ÔÊÐí½«Í¼Æ¬ÍÏ³ö±ß½ç
+				// ï¿½ï¿½ï¿½Ð±ß½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½Ï³ï¿½ï¿½ß½ï¿½
 				if (totalTranslateX + movedDistanceX > 0) {
 					movedDistanceX = 0;
 				} else if (width - (totalTranslateX + movedDistanceX) > currentBitmapWidth) {
@@ -189,12 +191,12 @@ public class ZoomImageView extends View {
 				} else if (height - (totalTranslateY + movedDistanceY) > currentBitmapHeight) {
 					movedDistanceY = 0;
 				}
-				// µ÷ÓÃonDraw()·½·¨»æÖÆÍ¼Æ¬
+				// ï¿½ï¿½ï¿½ï¿½onDraw()ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 				invalidate();
 				lastXMove = xMove;
 				lastYMove = yMove;
 			} else if (event.getPointerCount() == 2) {
-				// ÓÐÁ½¸öÊÖÖ¸°´ÔÚÆÁÄ»ÉÏÒÆ¶¯Ê±£¬ÎªËõ·Å×´Ì¬
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Æ¶ï¿½Ê±ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½×´Ì¬
 				centerPointBetweenFingers(event);
 				double fingerDis = distanceBetweenFingers(event);
 				if (fingerDis > lastFingerDis) {
@@ -202,7 +204,7 @@ public class ZoomImageView extends View {
 				} else {
 					currentStatus = STATUS_ZOOM_IN;
 				}
-				// ½øÐÐËõ·Å±¶Êý¼ì²é£¬×î´óÖ»ÔÊÐí½«Í¼Æ¬·Å´ó4±¶£¬×îÐ¡¿ÉÒÔËõÐ¡µ½³õÊ¼»¯±ÈÀý
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½é£¬ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½Å´ï¿½4ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				if ((currentStatus == STATUS_ZOOM_OUT && totalRatio < 4 * initRatio)
 						|| (currentStatus == STATUS_ZOOM_IN && totalRatio > initRatio)) {
 					scaledRatio = (float) (fingerDis / lastFingerDis);
@@ -212,7 +214,7 @@ public class ZoomImageView extends View {
 					} else if (totalRatio < initRatio) {
 						totalRatio = initRatio;
 					}
-					// µ÷ÓÃonDraw()·½·¨»æÖÆÍ¼Æ¬
+					// ï¿½ï¿½ï¿½ï¿½onDraw()ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬
 					invalidate();
 					lastFingerDis = fingerDis;
 				}
@@ -220,13 +222,13 @@ public class ZoomImageView extends View {
 			break;
 		case MotionEvent.ACTION_POINTER_UP:
 			if (event.getPointerCount() == 2) {
-				// ÊÖÖ¸Àë¿ªÆÁÄ»Ê±½«ÁÙÊ±Öµ»¹Ô­
+				// ï¿½ï¿½Ö¸ï¿½ë¿ªï¿½ï¿½Ä»Ê±ï¿½ï¿½ï¿½ï¿½Ê±Öµï¿½ï¿½Ô­
 				lastXMove = -1;
 				lastYMove = -1;
 			}
 			break;
 		case MotionEvent.ACTION_UP:
-			// ÊÖÖ¸Àë¿ªÆÁÄ»Ê±½«ÁÙÊ±Öµ»¹Ô­
+			// ï¿½ï¿½Ö¸ï¿½ë¿ªï¿½ï¿½Ä»Ê±ï¿½ï¿½ï¿½ï¿½Ê±Öµï¿½ï¿½Ô­
 			lastXMove = -1;
 			lastYMove = -1;
 			break;
@@ -237,7 +239,7 @@ public class ZoomImageView extends View {
 	}
 
 	/**
-	 * ¸ù¾ÝcurrentStatusµÄÖµÀ´¾ö¶¨¶ÔÍ¼Æ¬½øÐÐÊ²Ã´ÑùµÄ»æÖÆ²Ù×÷¡£
+	 * ï¿½ï¿½ï¿½ï¿½currentStatusï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Ê²Ã´ï¿½ï¿½ï¿½Ä»ï¿½ï¿½Æ²ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -259,43 +261,45 @@ public class ZoomImageView extends View {
 	}
 
 	/**
-	 * ¶ÔÍ¼Æ¬½øÐÐËõ·Å´¦Àí¡£
+	 * ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å´ï¿½ï¿½ï¿½
 	 * 
 	 * @param canvas
 	 */
 	private void zoom(Canvas canvas) {
 		matrix.reset();
-		// ½«Í¼Æ¬°´×ÜËõ·Å±ÈÀý½øÐÐËõ·Å
+		// ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		matrix.postScale(totalRatio, totalRatio);
 		float scaledWidth = sourceBitmap.getWidth() * totalRatio;
 		float scaledHeight = sourceBitmap.getHeight() * totalRatio;
 		float translateX = 0f;
 		float translateY = 0f;
-		// Èç¹ûµ±Ç°Í¼Æ¬¿í¶ÈÐ¡ÓÚÆÁÄ»¿í¶È£¬Ôò°´ÆÁÄ»ÖÐÐÄµÄºá×ø±ê½øÐÐË®Æ½Ëõ·Å¡£·ñÔò°´Á½Ö¸µÄÖÐÐÄµãµÄºá×ø±ê½øÐÐË®Æ½Ëõ·Å
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Í¼Æ¬ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½È£ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½ÄµÄºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½ï¿½ï¿½Å¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½Äºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë®Æ½ï¿½ï¿½ï¿½ï¿½
 		if (currentBitmapWidth < width) {
 			translateX = (width - scaledWidth) / 2f;
 		} else {
-			translateX = totalTranslateX * scaledRatio + centerPointX * (1 - scaledRatio);
-			// ½øÐÐ±ß½ç¼ì²é£¬±£Ö¤Í¼Æ¬Ëõ·ÅºóÔÚË®Æ½·½ÏòÉÏ²»»áÆ«ÒÆ³öÆÁÄ»
+			translateX = totalTranslateX * scaledRatio + centerPointX
+					* (1 - scaledRatio);
+			// ï¿½ï¿½ï¿½Ð±ß½ï¿½ï¿½é£¬ï¿½ï¿½Ö¤Í¼Æ¬ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½Ë®Æ½ï¿½ï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½Æ«ï¿½Æ³ï¿½ï¿½ï¿½Ä»
 			if (translateX > 0) {
 				translateX = 0;
 			} else if (width - translateX > scaledWidth) {
 				translateX = width - scaledWidth;
 			}
 		}
-		// Èç¹ûµ±Ç°Í¼Æ¬¸ß¶ÈÐ¡ÓÚÆÁÄ»¸ß¶È£¬Ôò°´ÆÁÄ»ÖÐÐÄµÄ×Ý×ø±ê½øÐÐ´¹Ö±Ëõ·Å¡£·ñÔò°´Á½Ö¸µÄÖÐÐÄµãµÄ×Ý×ø±ê½øÐÐ´¹Ö±Ëõ·Å
+		// ï¿½ï¿½ï¿½ï¿½ï¿½Ç°Í¼Æ¬ï¿½ß¶ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ß¶È£ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½Ö±ï¿½ï¿½ï¿½Å¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð´ï¿½Ö±ï¿½ï¿½ï¿½ï¿½
 		if (currentBitmapHeight < height) {
 			translateY = (height - scaledHeight) / 2f;
 		} else {
-			translateY = totalTranslateY * scaledRatio + centerPointY * (1 - scaledRatio);
-			// ½øÐÐ±ß½ç¼ì²é£¬±£Ö¤Í¼Æ¬Ëõ·ÅºóÔÚ´¹Ö±·½ÏòÉÏ²»»áÆ«ÒÆ³öÆÁÄ»
+			translateY = totalTranslateY * scaledRatio + centerPointY
+					* (1 - scaledRatio);
+			// ï¿½ï¿½ï¿½Ð±ß½ï¿½ï¿½é£¬ï¿½ï¿½Ö¤Í¼Æ¬ï¿½ï¿½ï¿½Åºï¿½ï¿½Ú´ï¿½Ö±ï¿½ï¿½ï¿½ï¿½ï¿½Ï²ï¿½ï¿½ï¿½Æ«ï¿½Æ³ï¿½ï¿½ï¿½Ä»
 			if (translateY > 0) {
 				translateY = 0;
 			} else if (height - translateY > scaledHeight) {
 				translateY = height - scaledHeight;
 			}
 		}
-		// Ëõ·Åºó¶ÔÍ¼Æ¬½øÐÐÆ«ÒÆ£¬ÒÔ±£Ö¤Ëõ·ÅºóÖÐÐÄµãÎ»ÖÃ²»±ä
+		// ï¿½ï¿½ï¿½Åºï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Æ«ï¿½Æ£ï¿½ï¿½Ô±ï¿½Ö¤ï¿½ï¿½ï¿½Åºï¿½ï¿½ï¿½ï¿½Äµï¿½Î»ï¿½Ã²ï¿½ï¿½ï¿½
 		matrix.postTranslate(translateX, translateY);
 		totalTranslateX = translateX;
 		totalTranslateY = translateY;
@@ -305,18 +309,18 @@ public class ZoomImageView extends View {
 	}
 
 	/**
-	 * ¶ÔÍ¼Æ¬½øÐÐÆ½ÒÆ´¦Àí
+	 * ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Æ½ï¿½Æ´ï¿½ï¿½ï¿½
 	 * 
 	 * @param canvas
 	 */
 	private void move(Canvas canvas) {
 		matrix.reset();
-		// ¸ù¾ÝÊÖÖ¸ÒÆ¶¯µÄ¾àÀë¼ÆËã³ö×ÜÆ«ÒÆÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½Æ¶ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½Öµ
 		float translateX = totalTranslateX + movedDistanceX;
 		float translateY = totalTranslateY + movedDistanceY;
-		// ÏÈ°´ÕÕÒÑÓÐµÄËõ·Å±ÈÀý¶ÔÍ¼Æ¬½øÐÐËõ·Å
+		// ï¿½È°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½Å±ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		matrix.postScale(totalRatio, totalRatio);
-		// ÔÙ¸ù¾ÝÒÆ¶¯¾àÀë½øÐÐÆ«ÒÆ
+		// ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½
 		matrix.postTranslate(translateX, translateY);
 		totalTranslateX = translateX;
 		totalTranslateY = translateY;
@@ -324,7 +328,7 @@ public class ZoomImageView extends View {
 	}
 
 	/**
-	 * ¶ÔÍ¼Æ¬½øÐÐ³õÊ¼»¯²Ù×÷£¬°üÀ¨ÈÃÍ¼Æ¬¾ÓÖÐ£¬ÒÔ¼°µ±Í¼Æ¬´óÓÚÆÁÄ»¿í¸ßÊ±¶ÔÍ¼Æ¬½øÐÐÑ¹Ëõ¡£
+	 * ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ð³ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param canvas
 	 */
@@ -335,20 +339,20 @@ public class ZoomImageView extends View {
 			int bitmapHeight = sourceBitmap.getHeight();
 			if (bitmapWidth > width || bitmapHeight > height) {
 				if (bitmapWidth - width > bitmapHeight - height) {
-					// µ±Í¼Æ¬¿í¶È´óÓÚÆÁÄ»¿í¶ÈÊ±£¬½«Í¼Æ¬µÈ±ÈÀýÑ¹Ëõ£¬Ê¹Ëü¿ÉÒÔÍêÈ«ÏÔÊ¾³öÀ´
+					// ï¿½ï¿½Í¼Æ¬ï¿½ï¿½È´ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½È±ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 					float ratio = width / (bitmapWidth * 1.0f);
 					matrix.postScale(ratio, ratio);
 					float translateY = (height - (bitmapHeight * ratio)) / 2f;
-					// ÔÚ×Ý×ø±ê·½ÏòÉÏ½øÐÐÆ«ÒÆ£¬ÒÔ±£Ö¤Í¼Æ¬¾ÓÖÐÏÔÊ¾
+					// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê·½ï¿½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½Æ«ï¿½Æ£ï¿½ï¿½Ô±ï¿½Ö¤Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 					matrix.postTranslate(0, translateY);
 					totalTranslateY = translateY;
 					totalRatio = initRatio = ratio;
 				} else {
-					// µ±Í¼Æ¬¸ß¶È´óÓÚÆÁÄ»¸ß¶ÈÊ±£¬½«Í¼Æ¬µÈ±ÈÀýÑ¹Ëõ£¬Ê¹Ëü¿ÉÒÔÍêÈ«ÏÔÊ¾³öÀ´
+					// ï¿½ï¿½Í¼Æ¬ï¿½ß¶È´ï¿½ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ß¶ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½È±ï¿½ï¿½ï¿½Ñ¹ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½
 					float ratio = height / (bitmapHeight * 1.0f);
 					matrix.postScale(ratio, ratio);
 					float translateX = (width - (bitmapWidth * ratio)) / 2f;
-					// ÔÚºá×ø±ê·½ÏòÉÏ½øÐÐÆ«ÒÆ£¬ÒÔ±£Ö¤Í¼Æ¬¾ÓÖÐÏÔÊ¾
+					// ï¿½Úºï¿½ï¿½ï¿½ï¿½ê·½ï¿½ï¿½ï¿½Ï½ï¿½ï¿½ï¿½Æ«ï¿½Æ£ï¿½ï¿½Ô±ï¿½Ö¤Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 					matrix.postTranslate(translateX, 0);
 					totalTranslateX = translateX;
 					totalRatio = initRatio = ratio;
@@ -356,7 +360,7 @@ public class ZoomImageView extends View {
 				currentBitmapWidth = bitmapWidth * initRatio;
 				currentBitmapHeight = bitmapHeight * initRatio;
 			} else {
-				// µ±Í¼Æ¬µÄ¿í¸ß¶¼Ð¡ÓÚÆÁÄ»¿í¸ßÊ±£¬Ö±½ÓÈÃÍ¼Æ¬¾ÓÖÐÏÔÊ¾
+				// ï¿½ï¿½Í¼Æ¬ï¿½Ä¿ï¿½ß¶ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½Ê±ï¿½ï¿½Ö±ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 				float translateX = (width - sourceBitmap.getWidth()) / 2f;
 				float translateY = (height - sourceBitmap.getHeight()) / 2f;
 				matrix.postTranslate(translateX, translateY);
@@ -371,10 +375,10 @@ public class ZoomImageView extends View {
 	}
 
 	/**
-	 * ¼ÆËãÁ½¸öÊÖÖ¸Ö®¼äµÄ¾àÀë¡£
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸Ö®ï¿½ï¿½Ä¾ï¿½ï¿½ë¡£
 	 * 
 	 * @param event
-	 * @return Á½¸öÊÖÖ¸Ö®¼äµÄ¾àÀë
+	 * @return ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸Ö®ï¿½ï¿½Ä¾ï¿½ï¿½ï¿½
 	 */
 	private double distanceBetweenFingers(MotionEvent event) {
 		float disX = Math.abs(event.getX(0) - event.getX(1));
@@ -383,7 +387,7 @@ public class ZoomImageView extends View {
 	}
 
 	/**
-	 * ¼ÆËãÁ½¸öÊÖÖ¸Ö®¼äÖÐÐÄµãµÄ×ø±ê¡£
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸Ö®ï¿½ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½ê¡£
 	 * 
 	 * @param event
 	 */

@@ -15,7 +15,7 @@
 	    android:id="@+id/model_text"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
-	    android:text="添加新的模型"
+	    android:text="@string/pm_model_add_model"
 	    android:gravity="center"
 	    android:textSize="25sp"/>
 </LinearLayout>

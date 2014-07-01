@@ -7,19 +7,19 @@ import android.support.v4.util.LruCache;
 public class ImageLoader {
 
 	/**
-	 * Í¼Æ¬»º´æ¼¼ÊõµÄºËĞÄÀà£¬ÓÃÓÚ»º´æËùÓĞÏÂÔØºÃµÄÍ¼Æ¬£¬ÔÚ³ÌĞòÄÚ´æ´ïµ½Éè¶¨ÖµÊ±»á½«×îÉÙ×î½üÊ¹ÓÃµÄÍ¼Æ¬ÒÆ³ıµô¡£
+	 * Í¼Æ¬ï¿½ï¿½ï¿½æ¼¼ï¿½ï¿½ï¿½Äºï¿½ï¿½ï¿½ï¿½à£¬ï¿½ï¿½ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ØºÃµï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ú³ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ïµ½ï¿½è¶¨ÖµÊ±ï¿½á½«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ãµï¿½Í¼Æ¬ï¿½Æ³ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private static LruCache<String, Bitmap> mMemoryCache;
 
 	/**
-	 * ImageLoaderµÄÊµÀı¡£
+	 * ImageLoaderï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
 	 */
 	private static ImageLoader mImageLoader;
 
 	private ImageLoader() {
-		// »ñÈ¡Ó¦ÓÃ³ÌĞò×î´ó¿ÉÓÃÄÚ´æ
+		// ï¿½ï¿½È¡Ó¦ï¿½Ã³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½
 		int maxMemory = (int) Runtime.getRuntime().maxMemory();
-		// ÉèÖÃÍ¼Æ¬»º´æ´óĞ¡Îª³ÌĞò×î´ó¿ÉÓÃÄÚ´æµÄ1/8
+		// ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¡Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú´ï¿½ï¿½1/8
 		int cacheSize = maxMemory / 8;
 		mMemoryCache = new LruCache<String, Bitmap>(cacheSize) {
 			@Override
@@ -30,9 +30,9 @@ public class ImageLoader {
 	}
 
 	/**
-	 * »ñÈ¡ImageLoaderµÄÊµÀı¡£
+	 * ï¿½ï¿½È¡ImageLoaderï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
 	 * 
-	 * @return ImageLoaderµÄÊµÀı¡£
+	 * @return ImageLoaderï¿½ï¿½Êµï¿½ï¿½ï¿½ï¿½
 	 */
 	public static ImageLoader getInstance() {
 		if (mImageLoader == null) {
@@ -42,12 +42,12 @@ public class ImageLoader {
 	}
 
 	/**
-	 * ½«Ò»ÕÅÍ¼Æ¬´æ´¢µ½LruCacheÖĞ¡£
+	 * ï¿½ï¿½Ò»ï¿½ï¿½Í¼Æ¬ï¿½æ´¢ï¿½ï¿½LruCacheï¿½Ğ¡ï¿½
 	 * 
 	 * @param key
-	 *            LruCacheµÄ¼ü£¬ÕâÀï´«ÈëÍ¼Æ¬µÄURLµØÖ·¡£
+	 *            LruCacheï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï´«ï¿½ï¿½Í¼Æ¬ï¿½ï¿½URLï¿½ï¿½Ö·ï¿½ï¿½
 	 * @param bitmap
-	 *            LruCacheµÄ¼ü£¬ÕâÀï´«Èë´ÓÍøÂçÉÏÏÂÔØµÄBitmap¶ÔÏó¡£
+	 *            LruCacheï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï´«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½Bitmapï¿½ï¿½ï¿½ï¿½
 	 */
 	public void addBitmapToMemoryCache(String key, Bitmap bitmap) {
 		if (getBitmapFromMemoryCache(key) == null) {
@@ -56,11 +56,11 @@ public class ImageLoader {
 	}
 
 	/**
-	 * ´ÓLruCacheÖĞ»ñÈ¡Ò»ÕÅÍ¼Æ¬£¬Èç¹û²»´æÔÚ¾Í·µ»Ønull¡£
+	 * ï¿½ï¿½LruCacheï¿½Ğ»ï¿½È¡Ò»ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¾Í·ï¿½ï¿½ï¿½nullï¿½ï¿½
 	 * 
 	 * @param key
-	 *            LruCacheµÄ¼ü£¬ÕâÀï´«ÈëÍ¼Æ¬µÄURLµØÖ·¡£
-	 * @return ¶ÔÓ¦´«Èë¼üµÄBitmap¶ÔÏó£¬»òÕßnull¡£
+	 *            LruCacheï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï´«ï¿½ï¿½Í¼Æ¬ï¿½ï¿½URLï¿½ï¿½Ö·ï¿½ï¿½
+	 * @return ï¿½ï¿½Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Bitmapï¿½ï¿½ï¿½ó£¬»ï¿½ï¿½ï¿½nullï¿½ï¿½
 	 */
 	public Bitmap getBitmapFromMemoryCache(String key) {
 		return mMemoryCache.get(key);
@@ -68,11 +68,11 @@ public class ImageLoader {
 
 	public static int calculateInSampleSize(BitmapFactory.Options options,
 			int reqWidth) {
-		// Ô´Í¼Æ¬µÄ¿í¶È
+		// Ô´Í¼Æ¬ï¿½Ä¿ï¿½ï¿½
 		final int width = options.outWidth;
 		int inSampleSize = 1;
 		if (width > reqWidth) {
-			// ¼ÆËã³öÊµ¼Ê¿í¶ÈºÍÄ¿±ê¿í¶ÈµÄ±ÈÂÊ
+			// ï¿½ï¿½ï¿½ï¿½ï¿½Êµï¿½Ê¿ï¿½Èºï¿½Ä¿ï¿½ï¿½ï¿½ÈµÄ±ï¿½ï¿½ï¿½
 			final int widthRatio = Math.round((float) width / (float) reqWidth);
 			inSampleSize = widthRatio;
 		}
@@ -81,16 +81,15 @@ public class ImageLoader {
 
 	public static Bitmap decodeSampledBitmapFromResource(String pathName,
 			int reqWidth) {
-		// µÚÒ»´Î½âÎö½«inJustDecodeBoundsÉèÖÃÎªtrue£¬À´»ñÈ¡Í¼Æ¬´óĞ¡
+		// ï¿½ï¿½Ò»ï¿½Î½ï¿½ï¿½ï¿½ï¿½ï¿½inJustDecodeBoundsï¿½ï¿½ï¿½ï¿½Îªtrueï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡Í¼Æ¬ï¿½ï¿½Ğ¡
 		final BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
 		BitmapFactory.decodeFile(pathName, options);
-		// µ÷ÓÃÉÏÃæ¶¨ÒåµÄ·½·¨¼ÆËãinSampleSizeÖµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ¶¨ï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½inSampleSizeÖµ
 		options.inSampleSize = calculateInSampleSize(options, reqWidth);
-		// Ê¹ÓÃ»ñÈ¡µ½µÄinSampleSizeÖµÔÙ´Î½âÎöÍ¼Æ¬
+		// Ê¹ï¿½Ã»ï¿½È¡ï¿½ï¿½ï¿½ï¿½inSampleSizeÖµï¿½Ù´Î½ï¿½ï¿½ï¿½Í¼Æ¬
 		options.inJustDecodeBounds = false;
 		return BitmapFactory.decodeFile(pathName, options);
 	}
-	
 
 }
