@@ -1,58 +1,43 @@
 package com.bupt.bnrc.thesenser.utils;
 
 public class CommonDefinition {
+	// activity request code
 	public final static int REQUESTCODE_CAMERA = 0;
-	public final static String[] TEMP_IMAGE_URL = new String[] {
-		"http://img.my.csdn.net/uploads/201309/01/1378037235_3453.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037235_7476.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037235_9280.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037234_3539.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037234_6318.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037194_2965.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037193_1687.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037193_1286.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037192_8379.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037178_9374.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037177_1254.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037177_6203.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037152_6352.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037151_9565.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037151_7904.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037148_7104.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037129_8825.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037128_5291.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037128_3531.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037127_1085.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037095_7515.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037094_8001.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037093_7168.jpg",
-		"http://img.my.csdn.net/uploads/201309/01/1378037091_4950.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949643_6410.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949642_6939.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949630_4505.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949630_4593.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949629_7309.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949629_8247.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949615_1986.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949614_8482.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949614_3743.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949614_4199.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949599_3416.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949599_5269.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949598_7858.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949598_9982.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949578_2770.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949578_8744.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949577_5210.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949577_1998.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949482_8813.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949481_6577.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949480_4490.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949455_6792.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949455_6345.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949442_4553.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949441_8987.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949441_5454.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949454_6367.jpg",
-		"http://img.my.csdn.net/uploads/201308/31/1377949442_4562.jpg" };
+	public final static int REQUESTCODE_PMPREDICT = 1;
+	// activity result code
+	public final static int RESULTCODE_CAMERA_OK = 0;
+	public final static int RESULTCODE_CAMERA_CANCEL = 1;
+
+	// activity intent key and value
+	public final static String KEY_CAMERA_MODEL_TYPE = "model_type";
+	public final static int VALUE_CAMERA_MODEL_TYPE_NONE = 10;
+	public final static int VALUE_CAMERA_MODEL_TYPE_NEW = 11;
+	public final static int VALUE_CAMERA_MODEL_TYPE_SET = 12;
+	public final static int VALUE_CAMERA_MODEL_TYPE_PREDICT = 13;
+	public final static String KEY_CAMERA_MODEL_TAG = "model_tag";
+	public final static int VALUE_CAMERA_MODEL_TAG_DEFAULT = 10;
+
+	public final static String KEY_MODEL_DETAIL_TAG = "model_detail_tag";
+	public final static int VALUE_MODEL_DETAIL_TAG_DEFAULT = 10;
+
+	// setting preferences
+
+	// other preferences
+	public final static String PREFERENCE_NAME = "sense_prefs";
+	public final static String PREF_FILE_INDEX = "pref_file_index"; // long,
+																	// default:0
+	public final static long PREF_FILE_INDEX_DEFAULT = 0;
+	public final static String PREF_DATA_INDEX = "pref_data_index"; // long,
+																	// default:0
+	public final static long PREF_DATA_INDEX_DEFAULT = 0;
+	public final static String PREF_MODEL_TAG = "pref_model_tag"; // int,
+																	// default:11
+	public final static int PREF_MODEL_TAG_DEFAULT = 11;
+	
+	// PMPredict State
+	public final static int PMPREDICT_STATE_NONE = 0;
+	public final static int PMPREDICT_STATE_START = 1;
+	public final static int PMPREDICT_STATE_FAIL = 2;
+	public final static int PMPREDICT_STATE_SUCCESS = 3;
+
 }

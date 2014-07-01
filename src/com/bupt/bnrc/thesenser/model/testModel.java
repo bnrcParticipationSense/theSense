@@ -9,10 +9,5 @@ public class testModel {
 	private Float m_latitude;
 	private Integer m_exposureValue;
 	private Float m_focalDistance;
-	
-	
-	
-	
 
-	
 }

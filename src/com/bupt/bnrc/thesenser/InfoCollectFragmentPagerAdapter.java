@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class InfoCollectFragmentPagerAdapter extends FragmentPagerAdapter {
-	private final String[] mTabTitles = {"¹âÕÕ", "ÉùÒô"};
-	
+	private final String[] mTabTitles = { "å…‰ç…§", "å£°éŸ³" };
+
 	public InfoCollectFragmentPagerAdapter(FragmentManager fm) {
 		super(fm);
 	}

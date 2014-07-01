@@ -23,10 +23,15 @@
     <!-- collect fragment -->
     
     <!-- pmtools fragment -->
+    <string-array name="pmtools_photo_type_array">
+        <item>建立模型</item>
+        <item>进行预测</item>
+    </string-array>
     <!-- waterfalls view -->
-    <string name="image_url">Waterfalls image url tag</string>
+    <string name="image_index">image_index</string>
     <string name="border_top">Waterfalls border top tag</string>
     <string name="border_bottom">Waterfalls border bottom tag</string>
+    <string name="pm_model_add_model">添加新的模型</string>
     <!-- test fragment -->
     <string name="test_helloText">Hello bnrc! This is a test page.</string>
     <string name="test_cameraBtn">照相</string>

@@ -2,9 +2,6 @@ package com.bupt.bnrc.thesenser;
 
 import java.util.List;
 
-import com.bupt.bnrc.thesenser.model.DataModel;
-import com.bupt.bnrc.thesenser.utils.Logger;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,20 +9,23 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.TextView;
 
+import com.bupt.bnrc.thesenser.model.DataModel;
+import com.bupt.bnrc.thesenser.utils.Logger;
+
 public class ListDataActivity extends Activity implements OnClickListener {
 	private Integer num = null;
 	private List<DataModel> datas = null;
 	private Integer index = null;
-	
+
 	private TextView titleView = null;
 	private TextView detailsView = null;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		Logger.i("打开数据列表页");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_data);
-		
+
 		initDatas();
 		initViews();
 		refreshState();
@@ -35,12 +35,13 @@ public class ListDataActivity extends Activity implements OnClickListener {
 		// TODO Auto-generated method stub
 		String titleStr = "没有找到数据";
 		String detailsStr = "无数据";
-		
+
 		View preBtn = findViewById(R.id.listData_pre_btn);
 		View nextBtn = findViewById(R.id.listData_next_btn);
-		
-		if(index != null) {
-			titleStr = String.format("要查找%d个数据，共找到 %d 个数据, 当前为第 %d 个", num, datas.size(), index+1);
+
+		if (index != null) {
+			titleStr = String.format("要查找%d个数据，共找到 %d 个数据, 当前为第 %d 个", num,
+					datas.size(), index + 1);
 			detailsStr = transDataToMsg(datas.get(index));
 			preBtn.setEnabled(index > 0);
 			nextBtn.setEnabled(index < datas.size() - 1);
@@ -48,27 +49,23 @@ public class ListDataActivity extends Activity implements OnClickListener {
 			preBtn.setEnabled(false);
 			nextBtn.setEnabled(false);
 		}
-		
+
 		titleView.setText(titleStr);
 		detailsView.setText(detailsStr);
 	}
 
 	private void initViews() {
 		// TODO Auto-generated method stub
-		titleView = (TextView)findViewById(R.id.listData_title);
-		
-		
-		detailsView = (TextView)findViewById(R.id.listData_details);
-		
-		
+		titleView = (TextView) findViewById(R.id.listData_title);
+
+		detailsView = (TextView) findViewById(R.id.listData_details);
+
 		View preBtn = findViewById(R.id.listData_pre_btn);
 		View nextBtn = findViewById(R.id.listData_next_btn);
-		
+
 		preBtn.setOnClickListener(this);
 		nextBtn.setOnClickListener(this);
-		
-		
-		
+
 	}
 
 	private void initDatas() {
@@ -76,16 +73,16 @@ public class ListDataActivity extends Activity implements OnClickListener {
 		Intent intent = getIntent();
 		num = intent.getIntExtra("num", 0);
 		datas = DataModel.findNotUploadDatas(num, this);
-		
+
 		int datasSize = datas.size();
-		if(datasSize > 0) {
+		if (datasSize > 0) {
 			index = 0;
 		}
 	}
-	
+
 	private String transDataToMsg(DataModel data) {
 		String message = null;
-		if(data != null) {
+		if (data != null) {
 			message = "取到的数据是:\n";
 			message += "ID:" + data.getId().toString() + "\n";
 			message += "CreateTime:" + data.getCreateTimeString() + "\n";
