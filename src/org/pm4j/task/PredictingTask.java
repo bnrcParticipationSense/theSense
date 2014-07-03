@@ -40,22 +40,23 @@ public class PredictingTask extends PMTask {
 		this.modelParams.setImgHeight(photoData.getHeight());
 		this.modelParams.setModelPath(PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
 		Log.i(TAG, "setModelPath: " + PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
-		// to-do set modelname by tag HERE
-		allProgress = PredictProcess.progressStep + PreprocessingProcess.progressStep;
-		createHandler();
+
 		
 		List<PhotoData> photoList = new ArrayList<PhotoData>();
     	photoList.add(photoData);
     	
     	
-    	//taskStep = PredictProcess.progressStep;
-		if(enablePreprocess)
+    	if (enablePreprocess) 
 		{
-			//taskStep += PreprocessingProcess.progressStep;
-			this.preprocessingProcess = new PreprocessingProcess(photoList, handler, false);
+			allProgress = PredictProcess.progressStep + PreprocessingProcess.progressStep;
+			createHandler();
+			this.preprocessingProcess = new PreprocessingProcess(photoList,
+					handler, false);
 		}
-		else
+		else 
 		{
+			allProgress = PredictProcess.progressStep;
+			createHandler();
 			this.preprocessingProcess = null;
 		}
 		

@@ -22,6 +22,12 @@ public class ModelingTask extends PMTask {
 
 	private List<PhotoData> photoData;
 
+	
+	
+	
+	
+	
+	
 	public ModelingTask(List<FileModel> fileModelList, Handler taskHandler,
 			boolean enablePreprocess) {
 		this.taskHandler = taskHandler;
@@ -51,17 +57,22 @@ public class ModelingTask extends PMTask {
 		Log.i(TAG, "setModelPath: " + PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
 		
 		
-		allProgress = ModelProcess.progressStep + PreprocessingProcess.progressStep;
-		
-		createHandler();
-
-		
-		if (enablePreprocess) {
+		if (enablePreprocess) 
+		{
+			allProgress = ModelProcess.progressStep + PreprocessingProcess.progressStep;
+			createHandler();
 			this.preprocessingProcess = new PreprocessingProcess(photoData,
 					handler, true);
-		} else {
+			
+		} 
+		else 
+		{
+			allProgress = ModelProcess.progressStep;
+			createHandler();
 			this.preprocessingProcess = null;
+			
 		}
+		
 		
 	}
 
@@ -72,19 +83,25 @@ public class ModelingTask extends PMTask {
 		this.modelParams = modelParamsArg;
 		this.photoData = photoListArg;
 
-		allProgress = ModelProcess.progressStep + PreprocessingProcess.progressStep;
+		
 		Log.i(TAG, TAG + "ModelingTask allProgress: " + allProgress);
-		createHandler();
-		
-		
-		//taskStep = ModelProcess.progressStep;
-		if (enablePreprocess) {
-			//taskStep += PreprocessingProcess.progressStep;
+
+		if (enablePreprocess) 
+		{
+			allProgress = ModelProcess.progressStep + PreprocessingProcess.progressStep;
+			createHandler();
 			this.preprocessingProcess = new PreprocessingProcess(photoData,
 					handler, true);
-		} else {
+			
+		} 
+		else 
+		{
+			allProgress = ModelProcess.progressStep;
+			createHandler();
 			this.preprocessingProcess = null;
+			
 		}
+		
 		
 	}
 */
