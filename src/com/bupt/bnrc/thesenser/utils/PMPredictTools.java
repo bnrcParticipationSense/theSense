@@ -1,21 +1,29 @@
 package com.bupt.bnrc.thesenser.utils;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.pm4j.process.PMTaskStatus;
 import org.pm4j.settings.PMSettings;
+import org.pm4j.task.ModelingTask;
 import org.pm4j.task.PredictingTask;
 
 import android.os.Handler;
 import android.os.Message;
+
+import com.bupt.bnrc.thesenser.MainActivity;
 import com.bupt.bnrc.thesenser.interfaces.PMPredictObserver;
 import com.bupt.bnrc.thesenser.interfaces.PMPredictSubject;
 import com.bupt.bnrc.thesenser.model.FileModel;
 
 public class PMPredictTools implements PMPredictSubject {
 	private ArrayList<PMPredictObserver> observers;
-	private int mState = CommonDefinition.PMPREDICT_STATE_NONE;
-	private int mPMNum = 0;
+	private int mModelingState;
+	private Set<Integer> mModelingSet;
+	private int mPredictState = CommonDefinition.PMPREDICT_STATE_NONE;
+	private int mPredictPMNum = 0;
 	
 	private static PMPredictTools instance = null;
 	public static PMPredictTools getInstance() {
@@ -26,14 +34,19 @@ public class PMPredictTools implements PMPredictSubject {
 	
 	private PMPredictTools() {
 		observers = new ArrayList<PMPredictObserver>();
+		mModelingSet = new HashSet<Integer>();
 	}
 	
-	public int getState() {
-		return mState;
+	public int getModelingState() {
+		return mModelingState;
+	}
+	
+	public int getPredictState() {
+		return mPredictState;
 	}
 	
 	public int getPMNum() {
-		return mPMNum;
+		return mPredictPMNum;
 	}
 	
 	public void startPredict(FileModel fileModel) {
@@ -55,7 +68,7 @@ public class PMPredictTools implements PMPredictSubject {
 					// USING int PMTaskStatus.getProgress()
 					break;
 				case PMSettings.TASKRESULT_FAILURE:
-					mState = CommonDefinition.PMPREDICT_STATE_FAIL;
+					mPredictState = CommonDefinition.PMPREDICT_STATE_FAIL;
 					notifyObservers();
 					break;
 				case PMSettings.TASKRESULT_INVALID:
@@ -65,8 +78,8 @@ public class PMPredictTools implements PMPredictSubject {
 				}
 
 				if (revTaskStatus.isCompleted()) {
-					mState = CommonDefinition.PMPREDICT_STATE_SUCCESS;
-					mPMNum = revTaskStatus.getPmValue();
+					mPredictState = CommonDefinition.PMPREDICT_STATE_SUCCESS;
+					mPredictPMNum = revTaskStatus.getPmValue();
 					notifyObservers();
 				}
 
@@ -75,10 +88,36 @@ public class PMPredictTools implements PMPredictSubject {
 		};
 		PredictingTask predictingTask = new PredictingTask(fileModel, predictHandler, false);
 		predictingTask.runAsync();
-		mState = CommonDefinition.PMPREDICT_STATE_START;
+		mPredictState = CommonDefinition.PMPREDICT_STATE_START;
 		notifyObservers();
 	}
+	
+	public void startModeling(final int tag) {
+		Handler modelingHandler = new Handler() {
+			public void handleMessage(Message msg) {
+				PMTaskStatus revTaskStatus = (PMTaskStatus) msg.obj;
+				switch (revTaskStatus.getStatusCode()) {
 
+				default:
+					break;
+				}
+				
+				if (revTaskStatus.isCompleted()) {
+					mModelingSet.remove(tag);
+				}
+			}
+		};
+		List<FileModel> files = FileModel.findFilesByTag(tag, MainActivity.getContext());
+		ModelingTask modelingTask = new ModelingTask(files, modelingHandler, false);
+		modelingTask.runAsync();
+		
+		mModelingSet.add(tag);
+	}
+	
+	public boolean isModeling(int tag) {
+		return mModelingSet.contains(tag);
+	}
+	
 	@Override
 	public void registerObserver(PMPredictObserver o) {
 		// TODO Auto-generated method stub
@@ -98,7 +137,7 @@ public class PMPredictTools implements PMPredictSubject {
 		// TODO Auto-generated method stub
 		for(int i=0; i < observers.size();i++) {
 			PMPredictObserver observer = (PMPredictObserver)observers.get(i);
-			observer.update();
+			observer.updatePredictState();
 		}
 	}
 

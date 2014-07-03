@@ -2,6 +2,8 @@ package com.bupt.bnrc.thesenser;
 
 import java.util.List;
 
+import org.opencv.core.Core.MinMaxLocResult;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -22,14 +24,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PMModelModel;
 import com.bupt.bnrc.thesenser.utils.CommonDefinition;
+import com.bupt.bnrc.thesenser.utils.PMPredictTools;
 
 public class PMToolsModelPickActivity extends Activity {
 	private List<PMModelModel> mModelTagList;
 	private PMToolsModelPickAdapter mAdapter;
+	private PMPredictTools mPredictTools = PMPredictTools.getInstance();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -83,11 +88,15 @@ public class PMToolsModelPickActivity extends Activity {
 	}
 
 	protected void predictModel(Integer modelTag) {
-		Intent intent = new Intent(this, CameraActivity.class);
-		// intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE, CommonDefinition.VALUE_CAMERA_MODEL_TYPE_SET);
-		intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE, CommonDefinition.VALUE_CAMERA_MODEL_TYPE_PREDICT);
-		intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TAG, modelTag);
-		startActivityForResult(intent, CommonDefinition.REQUESTCODE_CAMERA);
+		if(mPredictTools.isModeling(modelTag)) {
+			Toast.makeText(getApplicationContext(), "该系列正在总结以前照片（大约1-2分钟），请稍后再试", Toast.LENGTH_SHORT).show();
+		} else {
+			Intent intent = new Intent(this, CameraActivity.class);
+			// intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE, CommonDefinition.VALUE_CAMERA_MODEL_TYPE_SET);
+			intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE, CommonDefinition.VALUE_CAMERA_MODEL_TYPE_PREDICT);
+			intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TAG, modelTag);
+			startActivityForResult(intent, CommonDefinition.REQUESTCODE_CAMERA);
+		}
 	}
 
 	private void addNewModel() {
@@ -119,15 +128,31 @@ public class PMToolsModelPickActivity extends Activity {
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
-		switch (requestCode) {
-		case CommonDefinition.REQUESTCODE_CAMERA:
-			refreshList();
-			break;
-
-		default:
-			break;
+		if(requestCode == CommonDefinition.REQUESTCODE_CAMERA && resultCode == CommonDefinition.RESULTCODE_CAMERA_OK) {
+			int type = data.getIntExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE, CommonDefinition.VALUE_CAMERA_MODEL_TYPE_NONE);
+			int tag = data.getIntExtra(CommonDefinition.KEY_CAMERA_MODEL_TAG, CommonDefinition.VALUE_CAMERA_MODEL_TAG_DEFAULT);
+			long id = data.getLongExtra(CommonDefinition.KEY_CAMERA_MODEL_ID, CommonDefinition.VALUE_CAMERA_MODEL_ID_DEFAULT);
+			if(type == CommonDefinition.VALUE_CAMERA_MODEL_TYPE_PREDICT) {
+				startPredict(id);
+			} else if (type == CommonDefinition.VALUE_CAMERA_MODEL_TYPE_NEW) {
+				startModeling(tag);
+			}
 		}
+
+		refreshList();
+		
 		super.onActivityResult(requestCode, resultCode, data);
+	}
+
+	private void startPredict(long id) {
+		// TODO Auto-generated method stub
+		FileModel file = FileModel.findFileById(id, getApplicationContext());
+		mPredictTools.startPredict(file);
+	}
+
+	private void startModeling(int tag) {
+		// TODO Auto-generated method stub
+		mPredictTools.startModeling(tag);
 	}
 
 	private void refreshList() {

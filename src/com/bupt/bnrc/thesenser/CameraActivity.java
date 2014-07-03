@@ -103,7 +103,7 @@ public class CameraActivity extends Activity {
 	// 传入参数
 	int mModelType;
 	int mModelTag;
-	private PMPredictTools mPredictTools = PMPredictTools.getInstance();
+	Intent mIntent;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -155,12 +155,12 @@ public class CameraActivity extends Activity {
 		});
 
 		// 传入参数
-		Intent intent = getIntent();
-		mModelType = intent.getIntExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE,
+		mIntent = getIntent();
+		mModelType = mIntent.getIntExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE,
 				CommonDefinition.VALUE_CAMERA_MODEL_TYPE_NONE);
 		if (mModelType == CommonDefinition.VALUE_CAMERA_MODEL_TYPE_SET || mModelType == CommonDefinition.VALUE_CAMERA_MODEL_TYPE_PREDICT) {
 			// TODO 设置tag
-			mModelTag = intent.getIntExtra(
+			mModelTag = mIntent.getIntExtra(
 					CommonDefinition.KEY_CAMERA_MODEL_TAG,
 					CommonDefinition.VALUE_CAMERA_MODEL_TAG_DEFAULT);
 		}
@@ -517,11 +517,15 @@ public class CameraActivity extends Activity {
 						PMModelModel pmModel = new PMModelModel(mModelTag,
 								"新的模型");
 						pmModel.save(app);
+						
+						// intent添加tag
+						mIntent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TAG, mModelTag);
 					} else if (mModelType == CommonDefinition.VALUE_CAMERA_MODEL_TYPE_NONE) {
 						mModelTag = 10;
 					}
 					fileModel.setTag(mModelTag);
-					fileModel.save(app);
+					FileModel idFile = fileModel.save(app);
+					mIntent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_ID, idFile.getId());
 
 					// TODO
 					/*
@@ -529,7 +533,7 @@ public class CameraActivity extends Activity {
 						mPredictTools.startPredict(fileModel);
 					}
 					*/
-					setResult(CommonDefinition.RESULTCODE_CAMERA_OK);
+					setResult(CommonDefinition.RESULTCODE_CAMERA_OK, mIntent);
 					finish();
 					// mcamera.startPreview();
 
