@@ -46,6 +46,7 @@ public class PMToolsParentFragment extends Fragment {
 	}
 
 	public void takePhoto() {
+		/*
 		new AlertDialog.Builder(getActivity())
 		.setTitle("PM2.5预测")
 		.setItems(R.array.pmtools_photo_type_array,
@@ -65,20 +66,26 @@ public class PMToolsParentFragment extends Fragment {
 						}
 					}
 				}).create().show();
+		*/
 		// get to know which pager is sellected
-		/*
+		
 		int nowPosition = mPager.getCurrentItem();
 		switch (nowPosition) {
 		case 0: // local pm2.5
-			Intent intent = new Intent(getActivity(), CameraActivity.class);
-			startActivityForResult(intent, CommonDefinition.REQUESTCODE_CAMERA);
+			takePhotoForPredictOrSetModel();
 			break;
 		case 1: // network photos
 			break;
 		default:
 			break;
 		}
-		*/
+		
+	}
+
+	private void takePhotoForPredictOrSetModel() {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(getActivity(), PMToolsModelPickActivity.class);
+		startActivity(intent);
 	}
 
 	protected void takePhotoForPredict() {

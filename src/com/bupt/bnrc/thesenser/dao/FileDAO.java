@@ -167,7 +167,7 @@ public class FileDAO extends DAOHelper {
 		} finally {
 			cursor.close();
 		}
-		return null;
+		return file;
 	}
 	
 	private FileModel createFileFromCursorData(Cursor cursor) {
