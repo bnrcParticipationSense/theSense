@@ -50,8 +50,8 @@ public class Upload {
 	
 	static public JSONObject Uploading(Activity app, String uploadUrl, JSONObject sendObj) {
 		//HttpPost post = new HttpPost(uploadUrl);
-		//HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
-		HttpPost post = new HttpPost("http://10.108.105.190:8080/uploadFile/fileServlet");
+		HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
+		//HttpPost post = new HttpPost("http://10.108.107.92:8080/uploadFile/fileServlet");
 		JSONObject receiveObj = null;
 		
 		HttpClient httpClient;
@@ -161,7 +161,7 @@ public class Upload {
 	    	
 	    	//URL url = new URL(uploadUrl);
 	    	URL url = new URL("http://10.108.108.11/upload11.php");
-	    	//URL url = new URL("http://10.108.105.190:8080/uploadFile/fileServlet");
+	    	//URL url = new URL("http://10.108.107.92:8080/uploadFile/fileServlet");
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 	    	// �����ゆ�烽����ゆ�锋�����杞胯揪��烽����ゆ�烽����ゆ�烽����ゆ�烽����������烽����ゆ�烽����ゆ�烽����ゆ�烽���������烽��琛���告�峰�������ゆ�烽��杞匡拷������瀛�涓������ゆ�烽����ゆ�烽��锟�

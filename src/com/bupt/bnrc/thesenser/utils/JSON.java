@@ -86,6 +86,34 @@ public class JSON {
 		return photoList;
 	}
 
+	static public JSONObject toJSON(List<DataModel> datas) {
+		JSONObject obj = new JSONObject();
+		JSONArray jsonArr = new JSONArray();
+		try {
+			obj.put("username", "zzy");
+			for (DataModel data : datas) {
+				JSONObject dataJSON = new JSONObject();
+
+				dataJSON.put("Time", data.getCreateTimeString());
+
+				dataJSON.put("Light", data.getLightIntensity());
+				dataJSON.put("Noise", data.getSoundIntensity());
+
+				dataJSON.put("BatteryState", data.getBatteryState());
+				dataJSON.put("ChargeState", data.getChargeState());
+				dataJSON.put("NetState", data.getNetState());
+
+				dataJSON.put("Latitude", data.getLatitude());
+				dataJSON.put("Longitude", data.getLongitude());
+
+				jsonArr.put(dataJSON);
+			}
+			obj.put("data", jsonArr);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return obj;
+	}
 	static public JSONObject toJSON(DataModel[] list) {
 		JSONObject obj = new JSONObject();
 		JSONArray jsonArr = new JSONArray();
