@@ -12,6 +12,8 @@ import org.pm4j.task.PredictingTask;
 
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.bupt.bnrc.thesenser.MainActivity;
 import com.bupt.bnrc.thesenser.interfaces.PMPredictObserver;
@@ -49,7 +51,7 @@ public class PMPredictTools implements PMPredictSubject {
 		return mPredictPMNum;
 	}
 	
-	public void startPredict(FileModel fileModel) {
+	public void startPredict(final FileModel fileModel) {
 		/*
 		 * // Synchronized way: ModelingTask modelingTask = new
 		 * ModelingTask(photoList, AppConfig.MODELPARAMS, false);
@@ -61,6 +63,7 @@ public class PMPredictTools implements PMPredictSubject {
 			public void handleMessage(Message msg) { // 接收message对象
 				PMTaskStatus revTaskStatus = (PMTaskStatus) msg.obj;
 
+				Log.i("info ", "info: " + revTaskStatus.getInfo());
 				switch (revTaskStatus.getStatusCode()) {
 				case PMSettings.TASKRESULT_OK:
 
@@ -68,19 +71,26 @@ public class PMPredictTools implements PMPredictSubject {
 					// USING int PMTaskStatus.getProgress()
 					break;
 				case PMSettings.TASKRESULT_FAILURE:
-					mPredictState = CommonDefinition.PMPREDICT_STATE_FAIL;
-					notifyObservers();
 					break;
 				case PMSettings.TASKRESULT_INVALID:
 					// DO SOMETHING HERE TO HANDLE THE INVALID DATA
 					break;
 
 				}
+				if(revTaskStatus.isFailed()) {
+					mPredictState = CommonDefinition.PMPREDICT_STATE_FAIL;
+					Toast.makeText(MainActivity.getContext(), revTaskStatus.getDetail(), Toast.LENGTH_SHORT).show();
+					notifyObservers();
+					int modelTag = fileModel.getTag();
+					startModeling(modelTag);
+				}
 
 				if (revTaskStatus.isCompleted()) {
 					mPredictState = CommonDefinition.PMPREDICT_STATE_SUCCESS;
 					mPredictPMNum = revTaskStatus.getPmValue();
 					notifyObservers();
+					int modelTag = fileModel.getTag();
+					startModeling(modelTag);
 				}
 
 				super.handleMessage(msg);
@@ -97,19 +107,28 @@ public class PMPredictTools implements PMPredictSubject {
 			public void handleMessage(Message msg) {
 				PMTaskStatus revTaskStatus = (PMTaskStatus) msg.obj;
 				switch (revTaskStatus.getStatusCode()) {
-
+				case PMSettings.TASKRESULT_INVALID:
+				case PMSettings.TASKRESULT_FAILURE:
+					break;
 				default:
 					break;
+				}
+				if (revTaskStatus.isFailed()) {
+					Toast.makeText(MainActivity.getContext(), "分析失败：" + revTaskStatus.getDetail(), Toast.LENGTH_SHORT).show();
+					mModelingSet.remove(tag);
 				}
 				
 				if (revTaskStatus.isCompleted()) {
 					mModelingSet.remove(tag);
+					Toast.makeText(MainActivity.getContext(), "照片分析完成", Toast.LENGTH_SHORT).show();
 				}
 			}
 		};
 		List<FileModel> files = FileModel.findFilesByTag(tag, MainActivity.getContext());
-		ModelingTask modelingTask = new ModelingTask(files, modelingHandler, false);
+		ModelingTask modelingTask = new ModelingTask(files, modelingHandler, true);
 		modelingTask.runAsync();
+		
+		Toast.makeText(MainActivity.getContext(), "开始为照片进行分析，为下次预测做准备", Toast.LENGTH_SHORT).show();
 		
 		mModelingSet.add(tag);
 	}
