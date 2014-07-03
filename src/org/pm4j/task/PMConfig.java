@@ -10,8 +10,9 @@ import android.util.Log;
 
 public class PMConfig {
 
-	public static final String TAG = "PMConfig";
+	public static final String 	TAG 					= "PMConfig";
 
+	public static boolean 		debugMode 				= true; 
 	
 	static 
 	{
@@ -34,14 +35,14 @@ public class PMConfig {
 	public static final String	jsonRequestWeather	= "weather_list";
 	public static final String	jsonRequestCRF		= "crf_model";
 	
-	public static final String  pmWeatherURL		= "";
+	public static final String  pmWeatherURL		= "http://10.108.110.68:8080/PMServlets/MainServlet";
 	
 	public static final int 	defaultStepDiv 		= 8;
 	public static final int 	defaultBlockDiv 	= 4;
 	public static final float 	defaultBlockScale 	= 1.0f;
 	
 	public static final String 	SDPath 				= Environment.getExternalStorageDirectory().getPath();
-	public static final String 	PMHomeName 			= "aqitest";
+	public static final String 	PMHomeName 			= "BUPTAQI";
 	public static final String 	defaultModelDirName = "model";
 	public static final String 	defaultTmpDirName 	= "tmp";
 	public static final String 	defaultModelDirPath = SDPath + "/" + PMHomeName + "/" + defaultModelDirName + "/";

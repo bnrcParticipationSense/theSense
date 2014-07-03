@@ -8,15 +8,16 @@ import org.pm4j.engine.ModelParams;
 import org.pm4j.process.ModelProcess;
 import org.pm4j.process.PMProcess;
 
+import com.bupt.bnrc.thesenser.model.FileModel;
+
 import android.os.Handler;
 import android.util.Log;
-
-import com.bupt.bnrc.thesenser.model.FileModel;
 
 public class ModelingTask extends PMTask {
 
 	static {
 		TAG = "ModelingTask";
+		
 	}
 
 	private List<PhotoData> photoData;
@@ -46,48 +47,51 @@ public class ModelingTask extends PMTask {
 		this.modelParams.setImgWidth(photoData.get(0).getWidth());
 		this.modelParams.setImgHeight(photoData.get(0).getHeight());
 
-		this.modelParams.setModelPath(PMConfig.defaultModelPath + PMConfig.defaultModelBaseName + photoData.get(tagId) + ".yml");
+		this.modelParams.setModelPath(PMConfig.defaultModelPath + PMConfig.defaultModelBaseName + tagId + ".yml");
 		Log.i(TAG, "setModelPath: " + PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
 		
 
+		allProgress = ModelProcess.progressStep + PreprocessingProcess.progressStep;
+		
 		createHandler();
 
-		taskStep = ModelProcess.progressStep;
-
+		
 		if (enablePreprocess) {
-			taskStep += PreprocessingProcess.progressStep;
 			this.preprocessingProcess = new PreprocessingProcess(photoData,
 					handler, true);
 		} else {
 			this.preprocessingProcess = null;
 		}
+		
 	}
 
-	public ModelingTask(List<PhotoData> photoListArg,
-			ModelParams modelParamsArg, Handler taskHandlerArg,
-			boolean enablePreprocess) {
+	/*
+	public ModelingTask(List<PhotoData> photoListArg, ModelParams modelParamsArg, Handler taskHandlerArg, boolean enablePreprocess) 
+	{
 		this.taskHandler = taskHandlerArg;
 		this.modelParams = modelParamsArg;
 		this.photoData = photoListArg;
 
-		taskStep = ModelProcess.progressStep;
-
+		allProgress = ModelProcess.progressStep + PreprocessingProcess.progressStep;
+		Log.i(TAG, TAG + "ModelingTask allProgress: " + allProgress);
 		createHandler();
-
+		
+		
+		//taskStep = ModelProcess.progressStep;
 		if (enablePreprocess) {
-			taskStep += PreprocessingProcess.progressStep;
+			//taskStep += PreprocessingProcess.progressStep;
 			this.preprocessingProcess = new PreprocessingProcess(photoData,
 					handler, true);
 		} else {
 			this.preprocessingProcess = null;
 		}
+		
 	}
-
+*/
 	@Override
 	protected PMProcess createPMProcess(Handler handler) {
 		if (preprocessingProcess != null)
-			return new ModelProcess(handler, modelParams,
-					preprocessingProcess.getPhotoData());
+			return new ModelProcess(handler, modelParams, preprocessingProcess.getPhotoData());
 		else
 			return new ModelProcess(handler, modelParams, photoData);
 	}

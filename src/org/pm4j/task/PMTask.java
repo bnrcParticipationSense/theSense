@@ -1,6 +1,7 @@
 package org.pm4j.task;
 
 import org.pm4j.engine.ModelParams;
+import org.pm4j.process.ModelProcess;
 import org.pm4j.process.PMProcess;
 import org.pm4j.process.PMTaskStatus;
 import org.pm4j.settings.PMSettings;
@@ -15,15 +16,16 @@ public abstract class PMTask {
 	protected boolean isAsync;
 	protected PreprocessingProcess preprocessingProcess;
 
-	public int taskStep;
-
+	public int allProgress;
+	
 	protected PMProcess pmProcess;
 	protected ModelParams modelParams;
 	protected Handler taskHandler;
 	protected Handler handler;
 
-	public PMTask() {
-
+	public PMTask() 
+	{
+		
 	}
 
 	protected void createHandler() {
@@ -38,12 +40,14 @@ public abstract class PMTask {
 				PMTaskStatus revTaskStatus = (PMTaskStatus) msg.obj;
 				int step = 0;
 
+				
 				switch (revTaskStatus.getTaskId()) {
 				case PMSettings.TASK_PREPROCESS:
 					Log.i(TAG, TAG + " Handler: " + revTaskStatus.getInfo());
 
 					boolean isCompleted = revTaskStatus.isCompleted();
-					revTaskStatus.setAllSteps(taskStep);
+					revTaskStatus.setAllSteps(allProgress);
+					Log.i(TAG, TAG + " allProgress: " + allProgress);
 					taskMsg = taskHandler.obtainMessage(0, 0, 0, revTaskStatus);
 					taskHandler.sendMessage(taskMsg);
 
@@ -63,9 +67,9 @@ public abstract class PMTask {
 						step = revTaskStatus.getStep();
 					else
 						step = revTaskStatus.getStep()
-								+ PreprocessingProcess.progressStep;
+								+ preprocessingProcess.progressStep;
 
-					revTaskStatus.setAllSteps(taskStep);
+					revTaskStatus.setAllSteps(allProgress);
 					revTaskStatus.setStep(step);
 					taskMsg = taskHandler.obtainMessage(0, 0, 0, revTaskStatus);
 					taskHandler.sendMessage(taskMsg);
@@ -78,9 +82,9 @@ public abstract class PMTask {
 						step = revTaskStatus.getStep();
 					else
 						step = revTaskStatus.getStep()
-								+ PreprocessingProcess.progressStep;
+								+ preprocessingProcess.progressStep;
 
-					revTaskStatus.setAllSteps(taskStep);
+					revTaskStatus.setAllSteps(allProgress);
 					revTaskStatus.setStep(step);
 					taskMsg = taskHandler.obtainMessage(0, 0, 0, revTaskStatus);
 					taskHandler.sendMessage(taskMsg);
@@ -93,6 +97,9 @@ public abstract class PMTask {
 		};
 
 	}
+	
+
+	
 
 	public PMTaskStatus runSync() {
 		isAsync = false;
@@ -133,11 +140,5 @@ public abstract class PMTask {
 
 	protected abstract PMProcess createPMProcess(Handler handler);
 
-	public int getTaskStep() {
-		return taskStep;
-	}
 
-	public void setTaskStep(int taskStep) {
-		this.taskStep = taskStep;
-	}
 }
