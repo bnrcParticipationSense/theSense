@@ -151,6 +151,7 @@ public class InfoCollectLightFragment extends Fragment {
 			average = sum/size;
 		}
 		
+		
 		mRenderer.addXTextLabel(1, TimeController.getDayString(today));
 		mCurrentSeries.add(0, average);
 		mChartView.repaint();
