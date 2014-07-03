@@ -17,6 +17,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 import com.bupt.bnrc.thesenser.utils.Logger;
+import com.bupt.bnrc.thesenser.utils.TimeController;
 
 public class DataDAO extends DAOHelper {
 	private static SimpleDateFormat m_sdf = null;
@@ -39,7 +40,27 @@ public class DataDAO extends DAOHelper {
 			throw new RuntimeException(msg);
 		}
 	}
-
+	
+	public List<DataModel> findDatasByDay(Date date, Context context) {
+		List<DataModel> datas = new ArrayList<DataModel>();
+		Cursor cursor = null;
+		
+		try {
+			SQLiteDatabase db = getReadableDatabase();
+			Date tomorrow = TimeController.getTomorrow(date);
+			cursor = db.query(DATA_TABLE_NAME, DATA_ALL_COLUMS, DATA_CREATE_TIME + ">? and " + DATA_CREATE_TIME + "<?",
+					new String[] {String.valueOf(date.getTime()), String.valueOf(tomorrow.toString())}, null, null, null, "30");
+			
+			while (cursor.moveToNext()) {
+				datas.add(createDataFromCursorData(cursor));
+			}
+		} finally {
+			cursor.close();
+		}
+		
+		return datas;
+	}
+	
 	public List<DataModel> findNotUploadDatas(Integer num, Context context) {
 		List<DataModel> datas = new ArrayList<DataModel>();
 		Cursor cursor = null;
@@ -56,7 +77,7 @@ public class DataDAO extends DAOHelper {
 					new String[] { index.toString() }, null, null, null,
 					num.toString());
 			index += cursor.getCount();
-			editor.putLong("data_index", index);
+			editor.putLong(CommonDefinition.PREF_DATA_INDEX, index);
 			editor.commit();
 			while (cursor.moveToNext()) {
 				datas.add(createDataFromCursorData(cursor));

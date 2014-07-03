@@ -108,6 +108,18 @@ public class DataModel {
 
 		return datas;
 	}
+	
+	public static List<DataModel> findDatasByDay(Date date, Context context) {
+		DataDAO dao = null;
+		try {
+			dao = daoFactory.getDataDAO(context);
+			return dao.findDatasByDay(date, context);
+		} finally {
+			if (dao != null) {
+				dao.close();
+			}
+		}
+	}
 
 	public static List<DataModel> findNotUploadDatas(Integer num,
 			Context context) {

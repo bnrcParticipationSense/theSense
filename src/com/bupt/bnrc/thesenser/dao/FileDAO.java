@@ -88,7 +88,7 @@ public class FileDAO extends DAOHelper {
 					new String[] { index.toString() }, null, null, null,
 					num.toString());
 			index += cursor.getCount();
-			editor.putLong("file_index", index);
+			editor.putLong(CommonDefinition.PREF_FILE_INDEX, index);
 			editor.commit();
 			while (cursor.moveToNext()) {
 				files.add(createFileFromCursorData(cursor));
