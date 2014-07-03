@@ -73,13 +73,16 @@ public class PreprocessingProcess extends PMProcess {
 
 		// filter the data
 		Log.i(LOG_TAG, "filter the data");
+		
+		Log.i(LOG_TAG, LOG_PREFIX + "First photo weather is " + photoData.get(0).getWeatherData().getWeather());
+		
 		PhotoDataFilter pdf = new PhotoDataFilter(photoData,
 				new FilterCriteria(), isTrainingData);
 		isValidData = pdf.ValidateData();
 
-		Log.i(LOG_TAG, LOG_PREFIX + "isValidData: "
-				+ photoData.get(0).getWeatherData().getWeather() + " "
-				+ (isValidData ? "yes" : "no"));
+		
+
+		Log.i(LOG_TAG, LOG_PREFIX + "isValidData: " + (isValidData ? "yes" : "no"));
 
 		if (isValidData) {
 			taskStatus = new PMTaskStatus(PMSettings.TASK_PREPROCESS, getCurrentProgress(3),

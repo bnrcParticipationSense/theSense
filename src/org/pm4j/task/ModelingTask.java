@@ -46,11 +46,11 @@ public class ModelingTask extends PMTask {
 		this.modelParams = PMConfig.getDefaultModelParams();
 		this.modelParams.setImgWidth(photoData.get(0).getWidth());
 		this.modelParams.setImgHeight(photoData.get(0).getHeight());
-
-		this.modelParams.setModelPath(PMConfig.defaultModelPath + PMConfig.defaultModelBaseName + tagId + ".yml");
+		
+		this.modelParams.setModelPath(PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
 		Log.i(TAG, "setModelPath: " + PMConfig.defaultModelDirPath + PMConfig.defaultModelBaseName + tagId + ".yml");
 		
-
+		
 		allProgress = ModelProcess.progressStep + PreprocessingProcess.progressStep;
 		
 		createHandler();
