@@ -81,9 +81,9 @@ public class PMToolsLocalFragment extends Fragment implements PMPredictObserver 
 	}
 
 	@Override
-	public void update() {
+	public void updatePredictState() {
 		// TODO Auto-generated method stub
-		switch (mPredictTools.getState()) {
+		switch (mPredictTools.getPredictState()) {
 		case CommonDefinition.PMPREDICT_STATE_START:
 			mTextView.setText("PM2.5：\n正在预测..");
 			break;

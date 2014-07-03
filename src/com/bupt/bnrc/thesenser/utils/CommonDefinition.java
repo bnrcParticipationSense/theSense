@@ -21,6 +21,8 @@ public class CommonDefinition {
 	public final static int VALUE_CAMERA_MODEL_TYPE_PREDICT = 13;
 	public final static String KEY_CAMERA_MODEL_TAG = "model_tag";
 	public final static int VALUE_CAMERA_MODEL_TAG_DEFAULT = 10;
+	public final static String KEY_CAMERA_MODEL_ID = "model_id";
+	public final static long VALUE_CAMERA_MODEL_ID_DEFAULT = -1; 
 
 	public final static String KEY_MODEL_DETAIL_TAG = "model_detail_tag";
 	public final static int VALUE_MODEL_DETAIL_TAG_DEFAULT = 10;
@@ -44,5 +46,7 @@ public class CommonDefinition {
 	public final static int PMPREDICT_STATE_START = 1;
 	public final static int PMPREDICT_STATE_FAIL = 2;
 	public final static int PMPREDICT_STATE_SUCCESS = 3;
+	// PMModeling State
+	public final static int PMMODELING_STATE_NONE = 0;
 
 }

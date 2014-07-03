@@ -28,7 +28,7 @@ public class JSON {
 		try {
 			obj.put("request_type", "photo_list");
 			obj.put("request_maxnum", maxNum);
-			obj.put("begin_time", "2014-06-23 00:10:00");
+			obj.put("begin_time", "2014-07-01 00:10:00");
 		} catch (JSONException e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -49,8 +49,8 @@ public class JSON {
 					String packUrl = photoObject.getString("pack_url");
 					String srcUrl = photoObject.getString("src_url");
 					// add pre
-					packUrl = "http://10.108.105.190:8080/" + packUrl;
-					srcUrl = "http://10.108.105.190:8080/" + srcUrl;
+					packUrl = "http://10.108.107.92:8080/" + packUrl;
+					srcUrl = "http://10.108.107.92:8080/" + srcUrl;
 					WebPhotoModel photo = new WebPhotoModel(packUrl, srcUrl);
 					photoList.add(photo);
 				}

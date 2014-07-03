@@ -3,6 +3,7 @@ package com.bupt.bnrc.thesenser;
 import org.pm4j.task.PMConfig;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -30,6 +31,8 @@ public class MainActivity extends FragmentActivity {
 	private CharSequence mTitle;
 	private String[] mListTitles;
 
+	private static Context mContext;
+	
 	private int mNowPosition;
 
 	private static FragmentFactory fragmentFactory = FragmentFactory.getInstance();
@@ -38,7 +41,9 @@ public class MainActivity extends FragmentActivity {
 		PMConfig.init();
 	}
 	
-	
+	public static Context getContext() {
+		return mContext;
+	}
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,7 @@ public class MainActivity extends FragmentActivity {
     	//intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     	//intent.addCategory(Intent.CATEGORY_HOME);
 		startService(intent);
+		mContext = getApplicationContext();
     }
     
     protected void onPause() {
