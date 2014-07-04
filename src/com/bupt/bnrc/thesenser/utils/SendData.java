@@ -3,15 +3,11 @@ package com.bupt.bnrc.thesenser.utils;
 import java.util.List;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.content.Context;
-import android.os.Bundle;
 import android.os.Looper;
-
-import com.bupt.bnrc.thesenser.R;
 import com.bupt.bnrc.thesenser.model.DataModel;
 
-public class SendData extends Activity{
+public class SendData {
 	
 	
 
