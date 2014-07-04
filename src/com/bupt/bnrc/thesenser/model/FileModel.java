@@ -196,7 +196,7 @@ public class FileModel {
 	}
 
 	public String getCreateTimeString() {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return new String(sdf.format(m_createTime));
 	}
 

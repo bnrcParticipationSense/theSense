@@ -38,14 +38,14 @@ public class TimeController {
 	}
 	
 	public static Date getDateDiffHours(int hours) {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		calendar.add(Calendar.HOUR, hours);
 		Date newDate = calendar.getTime();
 		return newDate;
 	}
 	
 	public static String getDateString(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		return new String(sdf.format(date));
 	}
 	

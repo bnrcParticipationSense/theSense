@@ -75,11 +75,18 @@ public class PMToolsParentFragment extends Fragment {
 			takePhotoForPredictOrSetModel();
 			break;
 		case 1: // network photos
+			takePhotoForRealTimeScene();
 			break;
 		default:
 			break;
 		}
 		
+	}
+
+	private void takePhotoForRealTimeScene() {
+		// TODO Auto-generated method stub
+		Intent intent = new Intent(getActivity(), CameraUploadAcitivity.class);
+		startActivity(intent);
 	}
 
 	private void takePhotoForPredictOrSetModel() {
