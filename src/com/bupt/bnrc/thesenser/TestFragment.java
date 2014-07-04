@@ -1,7 +1,11 @@
 package com.bupt.bnrc.thesenser;
 
+import java.util.List;
+
 import org.json.JSONObject;
 
+import android.R.string;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
@@ -15,6 +19,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Logger;
 import com.bupt.bnrc.thesenser.utils.Upload;
@@ -26,6 +31,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 	boolean thread_flag = true;
 	static boolean thread_uniqueness = false;
 	int sleeptime = 2000;
+	List<DataModel> datas = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -173,32 +179,42 @@ public class TestFragment extends Fragment implements OnClickListener {
 			break;
 
 		case R.id.sendmsg:
+			datas = DataModel.findNotUploadDatas(500, getActivity());
 			Thread t = new Thread() {
 				public void run() {
 
 					Looper.prepare();
+//					JSONObject obj = null;
+//					String str = "{\"request_type\":\"photo_list\",\"request_maxnum\": \"50\",\"begin_time\": \"2010-12-26 03:36:25\"}";
+//					try {
+//						obj = Upload.Uploading(getActivity(), "",
+//								JSON.toJSON(str));
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//
+//					if (obj != null) {
+//						/*
+//						 * 解析obj，干点啥。。。
+//						 */
+//						Toast.makeText(getActivity(), obj.toString(),
+//								Toast.LENGTH_LONG).show();
+//					} else {
+//						/*
+//						 * 发送失败，干点啥。。。
+//						 */
+//						Toast.makeText(getActivity(), "obj == null",
+//								Toast.LENGTH_LONG).show();
+//					}
 					JSONObject obj = null;
-					String str = "{\"request_type\":\"photo_list\",\"request_maxnum\": \"50\",\"begin_time\": \"2010-12-26 03:36:25\"}";
+					obj = JSON.toJSON(datas);
 					try {
 						obj = Upload.Uploading(getActivity(), "",
-								JSON.toJSON(str));
+								obj);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
-
-					if (obj != null) {
-						/*
-						 * 解析obj，干点啥。。。
-						 */
-						Toast.makeText(getActivity(), obj.toString(),
-								Toast.LENGTH_LONG).show();
-					} else {
-						/*
-						 * 发送失败，干点啥。。。
-						 */
-						Toast.makeText(getActivity(), "obj == null",
-								Toast.LENGTH_LONG).show();
-					}
+						
 					Looper.loop();
 				}
 			};
@@ -223,7 +239,9 @@ public class TestFragment extends Fragment implements OnClickListener {
 	private void processCameraBtnClick() {
 		Logger.d("杩���ョ�告�烘��璇�椤�");
 		Intent intent = new Intent(getActivity(), CameraUploadAcitivity.class);
+		//getActivity().startService(intent);
 		startActivity(intent);
+		
 	}
 
 }
