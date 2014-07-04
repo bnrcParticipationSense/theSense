@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.bupt.bnrc.thesenser.model.PMModelModel;
+import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 import com.bupt.bnrc.thesenser.utils.Logger;
 
 public class PMModelDAO extends DAOHelper {
