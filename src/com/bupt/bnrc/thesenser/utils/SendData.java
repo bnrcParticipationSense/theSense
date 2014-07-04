@@ -26,7 +26,7 @@ public class SendData extends Activity{
 				JSONObject obj = null;
 				obj = JSON.toJSON(datas);
 				try {
-					obj = Upload.Uploading(context, "", obj);
+					obj = Upload.Uploading(CommonDefinition.SERVER_URL_JSON, obj);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
