@@ -657,7 +657,7 @@ public class Collection implements SensorEventListener {
 						forWait();
 					}
 					try {
-						sleep(sleeptime);
+						sleep(CommonDefinition.COLLECTION_SPACE_TIME);
 					} catch(InterruptedException e) {
 						e.printStackTrace();
 					}
@@ -691,6 +691,7 @@ public class Collection implements SensorEventListener {
 		}
 	}
     public void stop() {
-    	app.stopService(intent);
+    	//app.stopService(intent);
+    	CommonDefinition.AUTO_COLLECTION = false;
     }
 }

@@ -43,12 +43,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 public class Upload {
 	
-	static public JSONObject Uploading(Activity app, String uploadUrl, JSONObject sendObj) {
+	static public JSONObject Uploading(Context app, String uploadUrl, JSONObject sendObj) {
 		//HttpPost post = new HttpPost(uploadUrl);
 		HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
 		//HttpPost post = new HttpPost("http://10.108.107.92:8080/uploadFile/fileServlet");
@@ -151,7 +152,7 @@ public class Upload {
 	}
 	
 	
-	static public void Uploading(Activity app, String uploadUrl, String fileName) {
+	static public void Uploading(Context app, String uploadUrl, String fileName) {
 		String end = "\r\n";
 	    String twoHyphens = "--";
 	    String boundary = UUID.randomUUID().toString();

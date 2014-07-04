@@ -22,15 +22,12 @@ import android.widget.Toast;
 import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Logger;
+import com.bupt.bnrc.thesenser.utils.SendData;
 import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class TestFragment extends Fragment implements OnClickListener {
 
 	Collection collect = null;
-	static Thread collect_t = null;
-	boolean thread_flag = true;
-	static boolean thread_uniqueness = false;
-	int sleeptime = 2000;
 	List<DataModel> datas = null;
 
 	@Override
@@ -73,49 +70,8 @@ public class TestFragment extends Fragment implements OnClickListener {
 
 		collect = Collection.getCollection(getActivity());
 
-		if (!TestFragment.thread_uniqueness) {
-			collect_t = new Thread() {
-				private boolean flag = false;
-
-				public void run() {
-					flag = true;
-					while (true) {
-						if (!thread_flag) {
-							thread_flag = true;
-							forWait();
-						}
-						try {
-							sleep(sleeptime);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						// collect.setDataModel();
-						// TODO collect.save();
-					}
-				}
-
-				public synchronized void forWait() {
-					if (flag) {
-						try {
-							wait();
-							flag = false;
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-					} else {
-						try {
-							flag = true;
-							notify();
-						} catch (Exception e) {
-							e.printStackTrace();
-						}
-					}
-				}
-			};
 		
-			//collect_t.start();
-			TestFragment.thread_uniqueness = true;
-		}
+		
 
 		cameraBtn.setOnClickListener(this);
 		fileBtn.setOnClickListener(this);
@@ -179,46 +135,47 @@ public class TestFragment extends Fragment implements OnClickListener {
 			break;
 
 		case R.id.sendmsg:
-			datas = DataModel.findNotUploadDatas(500, getActivity());
-			Thread t = new Thread() {
-				public void run() {
-
-					Looper.prepare();
+			SendData.send(getActivity());
+//			datas = DataModel.findNotUploadDatas(500, getActivity());
+//			Thread t = new Thread() {
+//				public void run() {
+//
+//					Looper.prepare();
+////					JSONObject obj = null;
+////					String str = "{\"request_type\":\"photo_list\",\"request_maxnum\": \"50\",\"begin_time\": \"2010-12-26 03:36:25\"}";
+////					try {
+////						obj = Upload.Uploading(getActivity(), "",
+////								JSON.toJSON(str));
+////					} catch (Exception e) {
+////						e.printStackTrace();
+////					}
+////
+////					if (obj != null) {
+////						/*
+////						 * 解析obj，干点啥。。。
+////						 */
+////						Toast.makeText(getActivity(), obj.toString(),
+////								Toast.LENGTH_LONG).show();
+////					} else {
+////						/*
+////						 * 发送失败，干点啥。。。
+////						 */
+////						Toast.makeText(getActivity(), "obj == null",
+////								Toast.LENGTH_LONG).show();
+////					}
 //					JSONObject obj = null;
-//					String str = "{\"request_type\":\"photo_list\",\"request_maxnum\": \"50\",\"begin_time\": \"2010-12-26 03:36:25\"}";
+//					obj = JSON.toJSON(datas);
 //					try {
 //						obj = Upload.Uploading(getActivity(), "",
-//								JSON.toJSON(str));
+//								obj);
 //					} catch (Exception e) {
 //						e.printStackTrace();
 //					}
-//
-//					if (obj != null) {
-//						/*
-//						 * 解析obj，干点啥。。。
-//						 */
-//						Toast.makeText(getActivity(), obj.toString(),
-//								Toast.LENGTH_LONG).show();
-//					} else {
-//						/*
-//						 * 发送失败，干点啥。。。
-//						 */
-//						Toast.makeText(getActivity(), "obj == null",
-//								Toast.LENGTH_LONG).show();
-//					}
-					JSONObject obj = null;
-					obj = JSON.toJSON(datas);
-					try {
-						obj = Upload.Uploading(getActivity(), "",
-								obj);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-						
-					Looper.loop();
-				}
-			};
-			t.start();
+//						
+//					Looper.loop();
+//				}
+//			};
+//			t.start();
 			break;
 
 		case R.id.exitBtn:

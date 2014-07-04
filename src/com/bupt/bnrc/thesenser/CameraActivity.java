@@ -189,11 +189,14 @@ public class CameraActivity extends Activity {
 				// 设置照片的大小
 				parameters.setPictureSize(2048, 1152);
 				//
+				//自动对焦
+				parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
 				mcamera.setParameters(parameters);
 				// 通过SurfaceView显示取景画面
 				mcamera.setPreviewDisplay(surfaceHolder); // ②
 				// 开始预览
 				mcamera.startPreview(); // ③
+				mcamera.cancelAutoFocus();// 2如果要实现连续的自动对焦，这一句必须加上
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -204,50 +207,82 @@ public class CameraActivity extends Activity {
 	public void capture(View source) {
 		if (mcamera != null) {
 			// 控制摄像头自动对焦后才拍照
-			mcamera.autoFocus(autoFocusCallback); // ④
+			//mcamera.autoFocus(autoFocusCallback); // ④
+			// takePicture()方法需要传入3个监听器参数
+			// 第1个监听器：当用户按下快门时激发该监听器
+			// 第2个监听器：当相机获取原始照片时激发该监听器
+			// 第3个监听器：当相机获取JPG照片时激发该监听器
+			mcamera.takePicture(new ShutterCallback() {
+				public void onShutter() {
+					// 按下快门瞬间会执行此处代码
+					collect.getLight();
+					dataModel = collect.getDataModel();
+					Camera.Parameters parameters = mcamera.getParameters();
+					photoStats = new PhotoStats(collect.getxDirect(),
+							collect.getyDirect(), collect.getzDirect(),
+							collect.getLongtitude(), collect.getLatitude(),
+							0, parameters.getFocalLength(), (float) 0,
+							parameters.getPictureSize().width, parameters
+									.getPictureSize().height);
+					Log.i("onShutter", "Hello ShutterCallback :"
+							+ parameters.getPictureSize().width + " : "
+							+ parameters.getPictureSize().height);
+				}
+			}, new PictureCallback() {
+				public void onPictureTaken(byte[] data, Camera c) {
+					// 此处代码可以决定是否需要保存原始照片信息
+					if (data != null) {
+						Log.i("RAW-PictureCallback", "data != null");
+						int l = data.length;
+						Log.i("RAW-PictureCallback", "data.length = " + l);
+					} else {
+						Log.i("RAW-PictureCallback", "data == null");
+					}
+				}
+			}, myJpegCallback); // ⑤
 		}
 	}
 
-	AutoFocusCallback autoFocusCallback = new AutoFocusCallback() {
-		// 当自动对焦时激发该方法
-		@Override
-		public void onAutoFocus(boolean success, Camera camera) {
-			if (success) {
-				// takePicture()方法需要传入3个监听器参数
-				// 第1个监听器：当用户按下快门时激发该监听器
-				// 第2个监听器：当相机获取原始照片时激发该监听器
-				// 第3个监听器：当相机获取JPG照片时激发该监听器
-				camera.takePicture(new ShutterCallback() {
-					public void onShutter() {
-						// 按下快门瞬间会执行此处代码
-						collect.getLight();
-						dataModel = collect.getDataModel();
-						Camera.Parameters parameters = mcamera.getParameters();
-						photoStats = new PhotoStats(collect.getxDirect(),
-								collect.getyDirect(), collect.getzDirect(),
-								collect.getLongtitude(), collect.getLatitude(),
-								0, parameters.getFocalLength(), (float) 0,
-								parameters.getPictureSize().width, parameters
-										.getPictureSize().height);
-						Log.i("onShutter", "Hello ShutterCallback :"
-								+ parameters.getPictureSize().width + " : "
-								+ parameters.getPictureSize().height);
-					}
-				}, new PictureCallback() {
-					public void onPictureTaken(byte[] data, Camera c) {
-						// 此处代码可以决定是否需要保存原始照片信息
-						if (data != null) {
-							Log.i("RAW-PictureCallback", "data != null");
-							int l = data.length;
-							Log.i("RAW-PictureCallback", "data.length = " + l);
-						} else {
-							Log.i("RAW-PictureCallback", "data == null");
-						}
-					}
-				}, myJpegCallback); // ⑤
-			}
-		}
-	};
+//	AutoFocusCallback autoFocusCallback = new AutoFocusCallback() {
+//		// 当自动对焦时激发该方法
+//		@Override
+//		public void onAutoFocus(boolean success, Camera camera) {
+//			if (success) {
+//				// takePicture()方法需要传入3个监听器参数
+//				// 第1个监听器：当用户按下快门时激发该监听器
+//				// 第2个监听器：当相机获取原始照片时激发该监听器
+//				// 第3个监听器：当相机获取JPG照片时激发该监听器
+//				camera.takePicture(new ShutterCallback() {
+//					public void onShutter() {
+//						// 按下快门瞬间会执行此处代码
+//						collect.getLight();
+//						dataModel = collect.getDataModel();
+//						Camera.Parameters parameters = mcamera.getParameters();
+//						photoStats = new PhotoStats(collect.getxDirect(),
+//								collect.getyDirect(), collect.getzDirect(),
+//								collect.getLongtitude(), collect.getLatitude(),
+//								0, parameters.getFocalLength(), (float) 0,
+//								parameters.getPictureSize().width, parameters
+//										.getPictureSize().height);
+//						Log.i("onShutter", "Hello ShutterCallback :"
+//								+ parameters.getPictureSize().width + " : "
+//								+ parameters.getPictureSize().height);
+//					}
+//				}, new PictureCallback() {
+//					public void onPictureTaken(byte[] data, Camera c) {
+//						// 此处代码可以决定是否需要保存原始照片信息
+//						if (data != null) {
+//							Log.i("RAW-PictureCallback", "data != null");
+//							int l = data.length;
+//							Log.i("RAW-PictureCallback", "data.length = " + l);
+//						} else {
+//							Log.i("RAW-PictureCallback", "data == null");
+//						}
+//					}
+//				}, myJpegCallback); // ⑤
+//			}
+//		}
+//	};
 
 	Bitmap bm = null;
 	PictureCallback myJpegCallback = new PictureCallback() {
