@@ -1,5 +1,8 @@
 package com.bupt.bnrc.thesenser;
 
+import java.util.Date;
+import java.util.List;
+
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
 import org.achartengine.chart.PointStyle;
@@ -20,8 +23,10 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.utils.DataCache;
 import com.bupt.bnrc.thesenser.utils.Logger;
+import com.bupt.bnrc.thesenser.utils.TimeController;
 
 public class InfoCollectLightFragment extends Fragment {
 	private GraphicalView mChartView = null;
@@ -69,13 +74,13 @@ public class InfoCollectLightFragment extends Fragment {
 		// Axes
 		mRenderer.setAxisTitleTextSize(50);
 		mRenderer.setBarSpacing(50);
-		mRenderer.setYTitle("����ǿ��");
+		mRenderer.setYTitle("Light");
 		// mRenderer.setAxesColor(Color.BLACK);
 		// Labels
 		// mRenderer.setLabelsColor(Color.WHITE);
 		mRenderer.setLabelsTextSize(35);
-		mRenderer.setXLabels(10);
-		mRenderer.setYLabels(8);
+		mRenderer.setXLabels(0);
+		mRenderer.setYLabels(10);
 		mRenderer.setXLabelsColor(Color.BLACK);
 		mRenderer.setYLabelsColor(0, Color.BLACK);
 		mRenderer.setXLabelsAngle(-45f);
@@ -90,15 +95,15 @@ public class InfoCollectLightFragment extends Fragment {
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		refreshAll();
-		handler.postDelayed(refreshRunnable, 3000);
+		// refreshAll();
+		// handler.postDelayed(refreshRunnable, 3000);
 	}
 
 	@Override
 	public void onPause() {
 		// TODO Auto-generated method stub
 		super.onPause();
-		handler.removeCallbacks(refreshRunnable);
+		// handler.removeCallbacks(refreshRunnable);
 	}
 
 	@Override
@@ -132,6 +137,24 @@ public class InfoCollectLightFragment extends Fragment {
 				mRenderer);
 		parentLayout.addView(mChartView, new LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+		
+		// 今天的平均值
+		Date today = TimeController.getToday();
+		List<DataModel> datas = DataModel.findDatasByDay(today, getActivity());
+		int size = datas.size();
+		Float average = (float) 0;
+		if(size > 0) {
+			Float sum = (float) 0;
+			for(int i = 0; i< size;i++) {
+				sum+=datas.get(i).getLightIntensity();
+			}
+			average = sum/size;
+		}
+		
+		
+		mRenderer.addXTextLabel(1, TimeController.getDayString(today));
+		mCurrentSeries.add(0, average);
+		mChartView.repaint();
 	}
 
 	public void refreshAll() {

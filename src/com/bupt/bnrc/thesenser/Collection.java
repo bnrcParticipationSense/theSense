@@ -50,7 +50,6 @@ import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class Collection implements SensorEventListener {
 
-	boolean auto_collect = false;
 	private Activity app;
 	private SensorManager sensorManager;
 	private Sensor sensor;

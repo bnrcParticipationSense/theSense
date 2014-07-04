@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.bupt.bnrc.thesenser.model.FileModel;
 import com.bupt.bnrc.thesenser.model.PMModelModel;
 import com.bupt.bnrc.thesenser.utils.CommonDefinition;
+import com.bupt.bnrc.thesenser.utils.ImageLoader;
 import com.bupt.bnrc.thesenser.utils.PMPredictTools;
 
 public class PMToolsModelPickActivity extends Activity {
@@ -193,7 +194,8 @@ public class PMToolsModelPickActivity extends Activity {
 				imageView.setTag(modelTag);
 				FileModel file = FileModel.findOneFileFromTag(modelTag,
 						mContext);
-				Bitmap bitmap = BitmapFactory.decodeFile(file.getFileName());
+				// Bitmap bitmap = BitmapFactory.decodeFile(file.getFileName());
+				Bitmap bitmap = ImageLoader.decodeSampledBitmapFromResource(file.getFileName(), 90);
 				imageView.setImageBitmap(bitmap);
 				textView.setText(modelDesc);
 			} else {

@@ -48,5 +48,9 @@ public class CommonDefinition {
 	public final static int PMPREDICT_STATE_SUCCESS = 3;
 	// PMModeling State
 	public final static int PMMODELING_STATE_NONE = 0;
+	
+	
+	// public path
+	
 
 }
