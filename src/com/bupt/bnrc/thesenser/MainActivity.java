@@ -2,6 +2,8 @@ package com.bupt.bnrc.thesenser;
 
 import org.pm4j.task.PMConfig;
 
+import com.bupt.bnrc.thesenser.utils.SendData;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -63,6 +65,7 @@ public class MainActivity extends FragmentActivity {
     	//intent.addCategory(Intent.CATEGORY_HOME);
 		startService(intent);
 		mContext = getApplicationContext();
+		SendData.send(mContext);
     }
     
     protected void onPause() {
