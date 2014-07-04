@@ -7,6 +7,8 @@ import org.opencv.core.Core.MinMaxLocResult;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -44,6 +46,13 @@ public class PMToolsModelPickActivity extends Activity {
 		setContentView(R.layout.activity_pmtools_models_pick);
 
 		mModelTagList = PMModelModel.findAllModelTags(getApplicationContext());
+		
+		int maxTag = findMaxTag(mModelTagList);
+		SharedPreferences prefs = getSharedPreferences(CommonDefinition.PREFERENCE_NAME, Context.MODE_PRIVATE);
+		Editor editor = prefs.edit();
+		editor.putInt(CommonDefinition.PREF_MODEL_TAG, maxTag);
+		editor.commit();
+		
 		ListView listView = (ListView) findViewById(R.id.pm_model_sel_listView);
 		mAdapter = new PMToolsModelPickAdapter(this);
 		listView.setAdapter(mAdapter);
@@ -86,6 +95,20 @@ public class PMToolsModelPickActivity extends Activity {
 		 * view, int position, long id) { // TODO Auto-generated method stub
 		 * return false; } });
 		 */
+	}
+
+	private int findMaxTag(List<PMModelModel> modelTagList) {
+		// TODO Auto-generated method stub
+		int maxtag = -1;
+		for(int i=0;i<modelTagList.size();i++) {
+			maxtag = (modelTagList.get(i).getTag() > maxtag) ? modelTagList.get(i).getTag() : maxtag;
+		}
+		if(maxtag < 0) {
+			maxtag = CommonDefinition.VALUE_CAMERA_MODEL_TAG_DEFAULT;
+		} else {
+			maxtag = maxtag+1;
+		}
+		return maxtag;
 	}
 
 	protected void predictModel(Integer modelTag) {

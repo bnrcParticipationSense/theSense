@@ -537,17 +537,12 @@ public class CameraActivity extends Activity {
 					FileModel fileModel = new FileModel(fileName, collect
 							.getDate(), photoStats);
 					if (mModelType == CommonDefinition.VALUE_CAMERA_MODEL_TYPE_NEW) {
-						SharedPreferences prefs = getSharedPreferences(
-								CommonDefinition.PREFERENCE_NAME,
-								Context.MODE_PRIVATE);
-						mModelTag = prefs.getInt(
-								CommonDefinition.PREF_MODEL_TAG,
-								CommonDefinition.PREF_MODEL_TAG_DEFAULT);
+						SharedPreferences prefs = getSharedPreferences(CommonDefinition.PREFERENCE_NAME, Context.MODE_PRIVATE);
+						mModelTag = prefs.getInt(CommonDefinition.PREF_MODEL_TAG, CommonDefinition.PREF_MODEL_TAG_DEFAULT);
 						int tempTag = mModelTag;
 						tempTag++;
 						Editor editor = prefs.edit();
-						editor.putInt(CommonDefinition.PREF_MODEL_TAG,
-								tempTag);
+						editor.putInt(CommonDefinition.PREF_MODEL_TAG, tempTag);
 						editor.commit();
 						PMModelModel pmModel = new PMModelModel(mModelTag,
 								"新的模型");

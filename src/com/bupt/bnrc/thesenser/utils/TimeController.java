@@ -3,10 +3,11 @@ package com.bupt.bnrc.thesenser.utils;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class TimeController {
 	public static Date getToday() {
-		Calendar calendar = Calendar.getInstance();
+		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
 		calendar.set(Calendar.HOUR, 0);
 		calendar.set(Calendar.MINUTE, 0);
 		calendar.set(Calendar.SECOND, 0);
