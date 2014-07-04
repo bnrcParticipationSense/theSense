@@ -74,6 +74,28 @@ public class PMToolsLocalFragment extends Fragment implements PMPredictObserver 
 		}
 
 	}
+	
+	private void refreshPic(Long id) {
+		FileModel nowFile = FileModel.findFileById(id, getActivity());
+		if (nowFile != null) {
+			FileInputStream fileStream = null;
+			try {
+				fileStream = new FileInputStream(nowFile.getFileName());
+			} catch (Exception e) {
+				Logger.i(e.getMessage());
+			}
+
+			BitmapDrawable bitmapDrawable = (BitmapDrawable) backPicView
+					.getDrawable();
+			// ���ͼƬ��û���ջأ����ջ�
+			if (bitmapDrawable != null
+					&& !bitmapDrawable.getBitmap().isRecycled()) {
+				bitmapDrawable.getBitmap().recycle();
+			}
+			// �ı���ʾ��ͼƬ
+			backPicView.setImageBitmap(BitmapFactory.decodeStream(fileStream));
+		}
+	}
 
 	public void updateOnTakePhoto() {
 		// TODO Auto-generated method stub
@@ -85,10 +107,12 @@ public class PMToolsLocalFragment extends Fragment implements PMPredictObserver 
 		// TODO Auto-generated method stub
 		switch (mPredictTools.getPredictState()) {
 		case CommonDefinition.PMPREDICT_STATE_START:
-			mTextView.setText("PM2.5：\n正在预测..");
+			mTextView.setText("PM2.5：\npredicting...");
+			Long id = mPredictTools.getPredictModelId();
+			refreshPic(id);
 			break;
 		case CommonDefinition.PMPREDICT_STATE_FAIL:
-			mTextView.setText("PM2.5：\n预测失败");
+			mTextView.setText("PM2.5：\npredict failed");
 			break;
 		case CommonDefinition.PMPREDICT_STATE_SUCCESS:
 			String text = "PM2.5:\n" + mPredictTools.getPMNum();

@@ -26,6 +26,7 @@ public class PMPredictTools implements PMPredictSubject {
 	private Set<Integer> mModelingSet;
 	private int mPredictState = CommonDefinition.PMPREDICT_STATE_NONE;
 	private int mPredictPMNum = 0;
+	private Long mPredictModelId;
 	
 	private static PMPredictTools instance = null;
 	public static PMPredictTools getInstance() {
@@ -49,6 +50,10 @@ public class PMPredictTools implements PMPredictSubject {
 	
 	public int getPMNum() {
 		return mPredictPMNum;
+	}
+	
+	public Long getPredictModelId() {
+		return mPredictModelId;
 	}
 	
 	public void startPredict(final FileModel fileModel) {
@@ -98,6 +103,7 @@ public class PMPredictTools implements PMPredictSubject {
 		};
 		PredictingTask predictingTask = new PredictingTask(fileModel, predictHandler, false);
 		predictingTask.runAsync();
+		mPredictModelId = fileModel.getId();
 		mPredictState = CommonDefinition.PMPREDICT_STATE_START;
 		notifyObservers();
 	}

@@ -1,5 +1,6 @@
 package com.bupt.bnrc.thesenser;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,6 +82,8 @@ public class InfoCollectLightFragment extends Fragment {
 		mRenderer.setLabelsTextSize(35);
 		mRenderer.setXLabels(0);
 		mRenderer.setYLabels(10);
+		mRenderer.setYAxisMin(0);
+		mRenderer.setYAxisMax(1000);
 		mRenderer.setXLabelsColor(Color.BLACK);
 		mRenderer.setYLabelsColor(0, Color.BLACK);
 		mRenderer.setXLabelsAngle(-45f);
@@ -138,23 +141,32 @@ public class InfoCollectLightFragment extends Fragment {
 		parentLayout.addView(mChartView, new LayoutParams(
 				LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
 		
-		// 今天的平均值
-		Date today = TimeController.getToday();
-		List<DataModel> datas = DataModel.findDatasByDay(today, getActivity());
+		// 平均值
+		Date day = TimeController.getToday();
+		day = TimeController.getDayDiffDay(-6, day);
+		for(int i=1;i<=7;i++) {
+			mRenderer.addXTextLabel(i, TimeController.getDayString(day));
+			Integer light = getAverageLight(day);
+			mCurrentSeries.add(i, light);
+			day = TimeController.getTomorrow(day);
+		}
+		
+		mChartView.repaint();
+	}
+
+	private Integer getAverageLight(Date day) {
+		// TODO Auto-generated method stub
+		List<DataModel> datas = DataModel.findDatasByDay(day, getActivity());
 		int size = datas.size();
-		Float average = (float) 0;
+		Integer average = 0;
 		if(size > 0) {
 			Float sum = (float) 0;
 			for(int i = 0; i< size;i++) {
 				sum+=datas.get(i).getLightIntensity();
 			}
-			average = sum/size;
+			average = (int) (sum/size);
 		}
-		
-		
-		mRenderer.addXTextLabel(1, TimeController.getDayString(today));
-		mCurrentSeries.add(0, average);
-		mChartView.repaint();
+		return average;
 	}
 
 	public void refreshAll() {

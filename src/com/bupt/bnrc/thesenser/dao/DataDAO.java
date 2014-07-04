@@ -48,8 +48,10 @@ public class DataDAO extends DAOHelper {
 		try {
 			SQLiteDatabase db = getReadableDatabase();
 			Date tomorrow = TimeController.getTomorrow(date);
+			Long a = date.getTime();
+			Long b = tomorrow.getTime();
 			cursor = db.query(DATA_TABLE_NAME, DATA_ALL_COLUMS, DATA_CREATE_TIME + ">? and " + DATA_CREATE_TIME + "<?",
-					new String[] {String.valueOf(date.getTime()), String.valueOf(tomorrow.toString())}, null, null, null, "30");
+					new String[] {a.toString(), b.toString()}, null, null, null, "30");
 			
 			while (cursor.moveToNext()) {
 				datas.add(createDataFromCursorData(cursor));

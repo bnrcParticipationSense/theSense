@@ -25,6 +25,29 @@ public class TimeController {
 		return newDate;
 	}
 	
+	public static Date getDayDiffDay(int dayNum, Date date) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, dayNum);
+		calendar.set(Calendar.HOUR, 0);
+		calendar.set(Calendar.MINUTE, 0);
+		calendar.set(Calendar.SECOND, 0);
+		Date newDate = calendar.getTime();
+		return newDate;
+	}
+	
+	public static Date getDateDiffHours(int hours) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.HOUR, hours);
+		Date newDate = calendar.getTime();
+		return newDate;
+	}
+	
+	public static String getDateString(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return new String(sdf.format(date));
+	}
+	
 	public static Date getTomorrow(Date date) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);

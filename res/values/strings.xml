@@ -10,7 +10,7 @@
     <!-- drawer -->
     <string-array name="main_list_array">
         <item>采集</item>
-        <item>PM采集</item>
+        <item>PM Collection</item>
         <item>任务</item>
         <item>用户</item>
         <item>设置</item>
@@ -26,6 +26,11 @@
     <string-array name="pmtools_photo_type_array">
         <item>建立模型</item>
         <item>进行预测</item>
+    </string-array>
+    
+    <string-array name="pmtools_tabs">
+        <item>PM predict</item>
+        <item>real time scene</item>
     </string-array>
     <!-- waterfalls view -->
     <string name="image_index">image_index</string>

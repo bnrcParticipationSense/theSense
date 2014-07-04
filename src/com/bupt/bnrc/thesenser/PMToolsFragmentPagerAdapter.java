@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class PMToolsFragmentPagerAdapter extends FragmentPagerAdapter {
-	private final String[] mTabTitles = { "pm预测", "实时景色" };
+	private final String[] mTabTitles = { "PM predict", "real time scene" };
 
 	public PMToolsFragmentPagerAdapter(FragmentManager fm) {
 		super(fm);

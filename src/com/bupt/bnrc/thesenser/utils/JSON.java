@@ -1,6 +1,7 @@
 package com.bupt.bnrc.thesenser.utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -28,7 +29,8 @@ public class JSON {
 		try {
 			obj.put("request_type", "photo_list");
 			obj.put("request_maxnum", maxNum);
-			obj.put("begin_time", "2014-07-01 00:10:00");
+			Date date = TimeController.getDateDiffHours(-2);
+			obj.put("begin_time", TimeController.getDateString(date));
 		} catch (JSONException e) {
 			// TODO: handle exception
 			e.printStackTrace();

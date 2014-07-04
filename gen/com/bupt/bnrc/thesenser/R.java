@@ -16,6 +16,7 @@ public final class R {
  pmtools fragment 
          */
         public static final int pmtools_photo_type_array=0x7f070001;
+        public static final int pmtools_tabs=0x7f070002;
     }
     public static final class attr {
         /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
