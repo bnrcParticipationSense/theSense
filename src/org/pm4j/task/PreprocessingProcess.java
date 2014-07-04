@@ -135,6 +135,7 @@ public class PreprocessingProcess extends PMProcess {
 				Thread.sleep(3000);
 			// ONLY FOR TEST
 				int testPmArray[] = { 322, 13, 25, 12, 14, 102, 213, 9, 14, 22, 49,
+					76, 74, 13, 18, 141, 322, 13, 25, 12, 14, 102, 213, 9, 14, 22, 49,
 					76, 74, 13, 18, 141 };
 				for (int i = 0; i < photoData.size(); i++) 
 				{
