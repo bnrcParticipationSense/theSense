@@ -385,9 +385,15 @@ public class Collection implements SensorEventListener {
 	}
 
 	public String getDateSring() {
+		// TODO
+		/*
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		date = new Date();
 		return new String(sdf.format(date));
+		*/
+		date = new Date();
+		Long time = date.getTime();
+		return time.toString();
 	}
 
 	public float getxDirect() {

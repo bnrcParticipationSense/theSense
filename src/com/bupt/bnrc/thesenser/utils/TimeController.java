@@ -38,7 +38,7 @@ public class TimeController {
 	}
 	
 	public static Date getDateDiffHours(int hours) {
-		Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("GMT+8"));
+		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.HOUR, hours);
 		Date newDate = calendar.getTime();
 		return newDate;
