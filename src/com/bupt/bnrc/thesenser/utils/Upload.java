@@ -161,8 +161,8 @@ public class Upload {
 	    {
 	    	
 	    	//URL url = new URL(uploadUrl);
-	    	URL url = new URL("http://10.108.108.11/upload11.php");
-	    	//URL url = new URL("http://10.108.107.92:8080/uploadFile/fileServlet");
+	    	// URL url = new URL("http://10.108.108.11/upload11.php");
+	    	URL url = new URL("http://10.108.107.92:8080/uploadFile/fileServlet");
 
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();

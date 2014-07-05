@@ -29,7 +29,7 @@ public class JSON {
 		try {
 			obj.put("request_type", "photo_list");
 			obj.put("request_maxnum", maxNum);
-			Date date = TimeController.getDateDiffHours(-2);
+			Date date = TimeController.getDateDiffHours(-3);
 			// Date date = TimeController.getToday();
 			Long time = date.getTime();
 			obj.put("begin_time", time.toString());
