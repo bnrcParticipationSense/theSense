@@ -25,12 +25,13 @@ public class SendFile {
 						e.printStackTrace();
 					}	
 				}
-				
 					
 				Looper.loop();
 			}
 		};
-		t.start();
+		if(files.size()>0){
+			t.start();
+		}
 	}
 
 }

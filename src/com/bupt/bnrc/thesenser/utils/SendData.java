@@ -9,8 +9,6 @@ import com.bupt.bnrc.thesenser.model.DataModel;
 
 public class SendData {
 	
-	
-
 	static public void send(final Context context) {
 		final List<DataModel> datas = DataModel.findNotUploadDatas(500, context);
 	
@@ -30,6 +28,8 @@ public class SendData {
 				Looper.loop();
 			}
 		};
-		t.start();
+		if(datas.size()>0){
+			t.start();
+		}
 	}
 }

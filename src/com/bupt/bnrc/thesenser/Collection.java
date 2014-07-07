@@ -562,7 +562,7 @@ public class Collection implements SensorEventListener {
 				try {
 					Log.i("CameraActivity",
 							"NEW Thread for UploadingPrecess...");
-					obj = Upload.Uploading(app, "", JSON.toJSON(mData));
+					obj = Upload.Uploading(CommonDefinition.SERVER_URL_JSON, JSON.toJSON(mData));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

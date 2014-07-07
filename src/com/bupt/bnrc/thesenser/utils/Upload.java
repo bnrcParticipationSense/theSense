@@ -310,12 +310,16 @@ public class Upload {
 			{
 					
 				String rev = EntityUtils.toString(entity);
-				try {
-					receiveObj = new JSONObject(rev); 
-				} catch(Exception e) {
-					e.printStackTrace();
+				Log.i("UploadJSON", "return msg:"+rev);
+				if(rev.length()>2)
+				{
+					try {
+						receiveObj = new JSONObject(rev); 
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+					Log.i("UploadJSON", "return msg:"+receiveObj.toString());
 				}
-				Log.i("UploadJSON", "return msg:"+receiveObj.toString());
 				return receiveObj;
 			} else
 				return null;
@@ -443,11 +447,13 @@ public class Upload {
 	    	}
 	    	reader.close();
 	    	
-	    	Log.i("Upload", result);
-	    	try{
-	    		receiveObj = new JSONObject(result);
-	    	}catch(JSONException e) {
-	    		e.printStackTrace();
+	    	Log.i("UploadFile", "return msg:"+result);
+	    	if(result.length()>2){
+	    		try{
+	    			receiveObj = new JSONObject(result);
+	    		}catch(JSONException e) {
+	    			e.printStackTrace();
+	    		}
 	    	}
 	      	dos.close();
 	      	
