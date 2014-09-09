@@ -4,6 +4,7 @@ import org.pm4j.task.PMConfig;
 
 import com.bupt.bnrc.thesenser.utils.SendData;
 import com.bupt.bnrc.thesenser.utils.SendFile;
+import com.bupt.bnrc.thesenser.utils.WifiUtil;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -33,8 +34,11 @@ public class MainActivity extends FragmentActivity {
 	private CharSequence mDrawerTitle;
 	private CharSequence mTitle;
 	private String[] mListTitles;
+	
+	private WifiUtil mWifiUtil;
 
 	private static Context mContext;
+	static public final Intent intent = new Intent();
 	
 	private int mNowPosition;
 
@@ -60,14 +64,17 @@ public class MainActivity extends FragmentActivity {
             selectItem(mNowPosition);
         }
     	Collection.getCollection(this);
-    	final Intent intent = new Intent();
+    	//final Intent intent = new Intent();
     	intent.setAction("com.bupt.bnrc.thesenser.collection.forCollection");
     	//intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     	//intent.addCategory(Intent.CATEGORY_HOME);
 		startService(intent);
 		mContext = getApplicationContext();
-		SendData.send(mContext);
-		SendFile.send(mContext);
+		mWifiUtil = WifiUtil.getInstance(mContext);
+		if(mWifiUtil.getWifiState() == 3) {
+		    SendData.send(mContext);
+		    SendFile.send(mContext);
+		}
     }
     
     protected void onPause() {

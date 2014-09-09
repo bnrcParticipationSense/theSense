@@ -20,7 +20,7 @@ public class SendData {
 				JSONObject obj = null;
 				obj = JSON.toJSON(datas);
 				try {
-					obj = Upload.Uploading(CommonDefinition.SERVER_URL_JSON, obj);
+					obj = Upload.Uploading(context,CommonDefinition.SERVER_URL_JSON, obj);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

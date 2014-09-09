@@ -3,7 +3,7 @@ package com.bupt.bnrc.thesenser.utils;
 public class CommonDefinition {
 	
 	// Collection
-	public static boolean AUTO_COLLECTION = false;
+	public static boolean AUTO_COLLECTION = true;
 	public final static int COLLECTION_SPACE_TIME = 2000;  //1800000
 	
 	//Upload URL

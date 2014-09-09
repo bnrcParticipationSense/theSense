@@ -5,9 +5,21 @@
     android:orientation="vertical" >
     
 	<TextView 
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:text="声音" />
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="声音:"
+	    android:textSize="48sp" />
 	
+	<TextView 
+        android:id="@+id/info_sound_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="32sp"/>
+    
+	<LinearLayout 
+	    android:id="@+id/chart_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:orientation="vertical"/>
 	
 </LinearLayout>

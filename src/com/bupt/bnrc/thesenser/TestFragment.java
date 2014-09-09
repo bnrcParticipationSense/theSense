@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import android.R.string;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Looper;
@@ -113,7 +114,8 @@ public class TestFragment extends Fragment implements OnClickListener {
 			//if(thread_flag) {
 			//	thread_flag = false;
 			//}
-			collect.stop();
+			//collect.stop();
+			getActivity().stopService(MainActivity.intent);
 			break;
 
 		case R.id.fileTestBtn:

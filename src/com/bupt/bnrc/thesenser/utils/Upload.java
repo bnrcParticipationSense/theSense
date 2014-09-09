@@ -50,8 +50,8 @@ import android.widget.Toast;
 public class Upload {
 	
 	static public JSONObject Uploading(Context app, String uploadUrl, JSONObject sendObj) {
-		//HttpPost post = new HttpPost(uploadUrl);
-		HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
+		HttpPost post = new HttpPost(uploadUrl);
+		//HttpPost post = new HttpPost("http://10.108.108.11/uploadjson.php");
 		//HttpPost post = new HttpPost("http://10.108.107.92:8080/uploadFile/fileServlet");
 		JSONObject receiveObj = null;
 		
@@ -94,7 +94,7 @@ public class Upload {
 			}
 			else
 			{
-				Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
+				Toast.makeText(app, "Upload Data SUCCESS", Toast.LENGTH_LONG).show();
 				Log.i("Upload", "SUCCESS");
 			}
 			
@@ -160,9 +160,9 @@ public class Upload {
 	    try
 	    {
 	    	
-	    	//URL url = new URL(uploadUrl);
-	    	// URL url = new URL("http://10.108.108.11/upload11.php");
-	    	URL url = new URL("http://10.108.107.92:8080/uploadFile/fileServlet");
+	    	URL url = new URL(uploadUrl);
+	    	//URL url = new URL("http://10.108.108.11/upload11.php");
+	    	//URL url = new URL("http://10.108.107.92:8080/uploadFile/fileServlet");
 
 	    	Log.i("Upload", "file = "+fileName);
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -238,7 +238,7 @@ public class Upload {
 	    	
 	    	if(res == 200)
 	    	{
-	    		Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
+	    		Toast.makeText(app, "Upload File SUCCESS", Toast.LENGTH_LONG).show();
 	    		Log.i("Upload", "SUCCESS");
 	    	}
 	    	if(s != null){

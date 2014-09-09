@@ -50,7 +50,7 @@ import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class Collection implements SensorEventListener {
 
-	private Activity app;
+	private Context app;
 	private SensorManager sensorManager;
 	private Sensor sensor;
 
@@ -168,7 +168,7 @@ public class Collection implements SensorEventListener {
 	static Thread collect_t = null;
 	private static Collection instance = null;
 
-	public static Collection getCollection(Activity app) {
+	public static Collection getCollection(Context app) {
 		if (instance == null) {
 			instance = new Collection(app);
 		}
@@ -203,7 +203,7 @@ public class Collection implements SensorEventListener {
 	 * setValues();//register every sensors }
 	 */
 
-	private Collection(Activity app) {
+	private Collection(Context app) {
 		this.app = app;
 
 		Log.i("new Collection()", "new Collection @ Activity = "
@@ -631,12 +631,12 @@ public class Collection implements SensorEventListener {
     	for_noise.stop();
     }
     */
-    public Activity getActivity(){
+    public Context getActivity(){
     	return app;
     }
     boolean thread_flag = true;
     int sleeptime = 2000;
-    final Intent intent = new Intent();
+    //final Intent intent = new Intent();
     private void collect() {
     	Log.i("Collection", "collect()");
     	//intent.setAction("com.bupt.bnrc.thesenser.collection.forCollection");
@@ -692,6 +692,6 @@ public class Collection implements SensorEventListener {
 	}
     public void stop() {
     	//app.stopService(intent);
-    	CommonDefinition.AUTO_COLLECTION = false;
+    	//CommonDefinition.AUTO_COLLECTION = false;
     }
 }
