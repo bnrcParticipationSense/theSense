@@ -29,7 +29,7 @@ public class DataCache {
 	// Light
 	public int addLightData(Float num) {
 		int size = mLightList.size();
-		if (size < 19) {
+		if (size < 5) {
 			mLightList.add(num);
 			return size + 1;
 		} else {

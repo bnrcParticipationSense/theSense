@@ -20,7 +20,7 @@ public class SendFile {
 
 				for(FileModel file:files){
 					try {
-						Upload.Uploading(CommonDefinition.SERVER_URL_FILE, file.getFileName());
+						Upload.Uploading(context,CommonDefinition.SERVER_URL_FILE, file.getFileName());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}	

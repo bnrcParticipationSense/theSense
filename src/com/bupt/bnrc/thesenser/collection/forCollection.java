@@ -4,6 +4,7 @@ import com.bupt.bnrc.thesenser.Collection;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -21,13 +22,10 @@ public class forCollection extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.i("Collection Service", "onCreate()");
-		if(col == null && app == null){
-			col = Collection.getCollection();
-			app = col.getActivity();
+		if(col == null){
+			col = Collection.getCollection(getBaseContext());
 		}
-		else if(col == null && app != null){
-			col = Collection.getCollection(app);
-		}
+		
 		//Collection col = Collection.getCollection();
 		//Collection c = Collection.getCollection();
 		col.collect_new();
