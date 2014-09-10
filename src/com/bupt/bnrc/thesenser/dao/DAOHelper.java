@@ -16,7 +16,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public abstract class DAOHelper extends SQLiteOpenHelper implements
 		DatabaseConstants {
-	// file datebase
+	// file database
 	protected static final String FILE_TABLE_NAME = "files";
 	protected static final String FILE_FILE_NAME = "file_name";
 	protected static final String FILE_CREATE_TIME = "create_time";
@@ -47,7 +47,7 @@ public abstract class DAOHelper extends SQLiteOpenHelper implements
 			+ FILE_WIDTH + " INTEGER, " + FILE_HEIGHT + " INTEGER, " + FILE_TAG
 			+ " INTEGER NOT NULL" + ");";
 
-	// data datebase
+	// data database
 	protected static final String DATA_TABLE_NAME = "datas";
 	protected static final String DATA_LIGHT_INTENSITY = "light_intensity";
 	protected static final String DATA_SOUND_INTENSITY = "sound_intensity";
