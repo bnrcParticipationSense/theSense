@@ -486,7 +486,8 @@ public class CameraUploadAcitivity extends Activity {
 							e.printStackTrace();
 						}
 
-						//**************Exif设置*************
+						//**************Exif设置a*************
+						/*
 						try {
 							ExifInterface exif = new ExifInterface(fileName);
 							exif.setAttribute("Light", ""+collect.getLight());
@@ -501,8 +502,62 @@ public class CameraUploadAcitivity extends Activity {
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
+						*/
+						//**************Exif设置a***END*******
+						//**************Exif设置b***START**********
+                        try {
+                            ExifInterface exif = new ExifInterface(fileName);
+                            
+                            //*****************************************************************start
+                            TelephonyManager telephonyManager= (TelephonyManager) app.getSystemService(Context.TELEPHONY_SERVICE);
+                            String imei=telephonyManager.getDeviceId();
+                            /*String str =  "\"username\":\"zzy\"," +
+                                            "\"Model\":"+imei+"," +
+                                            "\"Light\":"+collect.getLight()+"," +
+                                            "\"Noise\":"+collect.getNoise()+"," +
+                                            "\"BatteryState\":"+collect.getBatteryState()+","+
+                                            "\"ChargeState\":"+collect.getChargeState()+","+
+                                            "\"NetState\":"+collect.getNetState()+","+
+                                            "\"Latitued\":"+collect.getLatitude()+","+
+                                            "\"Longitude\":"+collect.getLongtitude()+","+
+                                            "\"Orientation_X\":"+collect.getxDirect()+","+
+                                            "\"Orientation_Y\":"+collect.getyDirect()+","+
+                                            "\"Orientation_Z\":"+collect.getzDirect();
+                                            */
+                            JSONObject obj = new JSONObject();
+                            try {
+                                obj.put("username", "zzy");
+                                obj.put("Model", imei);
+                                    
+                                //obj.put("Time", collect.getDateSring());
+                                    
+                                obj.put("Latitude", collect.getLatitude());
+                                obj.put("Longitude", collect.getLongtitude());
+                                
+                                obj.put("Orientation_X", collect.getxDirect());
+                                obj.put("Orientation_Y", collect.getyDirect());
+                                obj.put("Orientation_Z", collect.getzDirect());
+                                    
+                            } catch(JSONException e) {
+                                e.printStackTrace();
+                            }
+                            //*****************************************************************end
+                            exif.setAttribute(ExifInterface.TAG_DATETIME, collect.getDateSring());
+                            exif.setAttribute(ExifInterface.TAG_MODEL, "{\"PM2.5\":"+1024+"}");
+                            //exif.setAttribute(ExifInterface.TAG_GPS_LATITUDE, ""+collect.getLatitude());
+                            //exif.setAttribute(ExifInterface.TAG_GPS_LONGITUDE, ""+collect.getLongtitude());
+                            exif.setAttribute(ExifInterface.TAG_MAKE, obj.toString());
+                            //exif.setAttribute(ExifInterface.TAG_ISO, "\"PM2.5\":"+1024);
+                            //exif.setAttribute(ExifInterface.TAG_APERTURE, "\"PM2.5\":"+1024);
+                            //exif.setAttribute(ExifInterface.TAG_FLASH, "\"PM2.5\":"+1024);
+                            //exif.setAttribute("Light", ""+collect.getLight());
+                            exif.saveAttributes();
+                            Log.i("CameraActivity", "Exif.Light = "+exif.getAttribute("Light"));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
 
-						//**************Exif设置***END*******
+                        //**************Exif设置b***END*******
 
 						FileModel fileModel = new FileModel(fileName, collect.getDate(), photoStats);
 						fileModel.save(app);

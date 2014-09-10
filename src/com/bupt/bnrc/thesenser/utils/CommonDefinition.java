@@ -4,7 +4,7 @@ public class CommonDefinition {
 	
 	// Collection
 	public static boolean AUTO_COLLECTION = true;
-	public final static int COLLECTION_SPACE_TIME = 2000;  //1800000
+	public final static int COLLECTION_SPACE_TIME = 1000*60*60;  //1800000
 	
 	//Upload URL
 	//public final static String SERVER_URL_JSON= "http://10.108.108.11/uploadjson.php";

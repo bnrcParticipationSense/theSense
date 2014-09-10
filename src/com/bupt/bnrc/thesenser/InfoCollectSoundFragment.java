@@ -101,7 +101,7 @@ public class InfoCollectSoundFragment extends Fragment {
         // TODO Auto-generated method stub
         super.onResume();
         refreshAll();
-        handler.postDelayed(refreshRunnable, 3000);
+        handler.postDelayed(refreshRunnable, 1000*60*60);
     }
 
     @Override
@@ -220,7 +220,7 @@ public class InfoCollectSoundFragment extends Fragment {
             // TODO Auto-generated method stub
             try {
                 refreshAll();
-                handler.postDelayed(this, 3000);
+                handler.postDelayed(this, 1000*60*60);
             } catch (Exception e) {
                 // TODO: handle exception
                 Logger.e(e.getMessage());
