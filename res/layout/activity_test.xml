@@ -57,11 +57,18 @@
         android:layout_below="@id/saveInfo"
         android:text="上传SQLite数据"
     />
+    
+    <Button android:id="@+id/sendpic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sendmsg"
+        android:text="上传照片"
+    />
    
     <Button android:id="@+id/exitBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/sendmsg"
+        android:layout_below="@id/sendpic"
         android:text="退出"
     />
 
