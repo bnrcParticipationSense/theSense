@@ -24,6 +24,7 @@ import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Logger;
 import com.bupt.bnrc.thesenser.utils.SendData;
+import com.bupt.bnrc.thesenser.utils.SendFile;
 import com.bupt.bnrc.thesenser.utils.Upload;
 
 public class TestFragment extends Fragment implements OnClickListener {
@@ -68,6 +69,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View infoBtn = parentView.findViewById(R.id.infoBtn);
 		View uploadBtn = parentView.findViewById(R.id.uploadBtn);
 		View sendBtn = parentView.findViewById(R.id.sendmsg);
+		View sendPic = parentView.findViewById(R.id.sendpic);
 
 		collect = Collection.getCollection(getActivity());
 
@@ -83,6 +85,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		infoBtn.setOnClickListener(this);
 		uploadBtn.setOnClickListener(this);
 		sendBtn.setOnClickListener(this);
+		sendPic.setOnClickListener(this);
 	}
 
 	private void showinfo() {
@@ -179,6 +182,9 @@ public class TestFragment extends Fragment implements OnClickListener {
 //			};
 //			t.start();
 			break;
+		case R.id.sendpic:
+		    SendFile.send(getActivity());
+		    break;
 
 		case R.id.exitBtn:
 			System.exit(0);
@@ -196,7 +202,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 	}
 
 	private void processCameraBtnClick() {
-		Logger.d("杩���ョ�告�烘��璇�椤�");
+		Logger.d("processCameraBtnClick()");
 		Intent intent = new Intent(getActivity(), CameraUploadAcitivity.class);
 		//getActivity().startService(intent);
 		startActivity(intent);

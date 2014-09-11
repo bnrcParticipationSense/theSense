@@ -71,7 +71,7 @@ public class MainActivity extends FragmentActivity {
 		startService(intent);
 		mContext = getApplicationContext();
 		mWifiUtil = WifiUtil.getInstance(mContext);
-		if(mWifiUtil.getWifiState() == 3) {
+		if(mWifiUtil.getWifiState() == 30) {
 		    SendData.send(mContext);
 		    SendFile.send(mContext);
 		}
