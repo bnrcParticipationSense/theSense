@@ -274,7 +274,9 @@ public class CameraUploadAcitivity extends Activity {
 			//改变方向
 			//*****************************************************************start
 			Configuration config = getResources().getConfiguration();
-			if(config.orientation == 1) {
+			Log.i("ORIENTATION", ""+config.orientation);
+			Log.i("ORIENTATION", "l = "+bm.getHeight()+";w = "+bm.getWidth());
+			if(bm.getWidth() > bm.getHeight()) {
 				Matrix matrix = new Matrix();
 				matrix.postRotate(90);
 				try {
@@ -283,7 +285,7 @@ public class CameraUploadAcitivity extends Activity {
 					e.printStackTrace();
 				}	
 			}
-			
+			Log.i("ORIENTATION", "l = "+bm.getHeight()+";w = "+bm.getWidth());
 			//*****************************************************************end
 			
 			

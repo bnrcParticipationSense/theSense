@@ -358,7 +358,7 @@ public class Upload {
 	}
 	
 	
-	static public JSONObject Uploading(String uploadUrl, String fileName) {
+	static public boolean Uploading(String uploadUrl, String fileName) {
 		String end = "\r\n";
 	    String twoHyphens = "--";
 	    String boundary = UUID.randomUUID().toString();
@@ -446,23 +446,18 @@ public class Upload {
 	    		result += inputLine + "\n";
 	    	}
 	    	reader.close();
+	    	dos.close();
 	    	
 	    	Log.i("UploadFile", "return msg:"+result);
-	    	if(result.length()>2){
-	    		try{
-	    			receiveObj = new JSONObject(result);
-	    		}catch(JSONException e) {
-	    			e.printStackTrace();
-	    		}
+	    	if(result.equals("OK")){
+	    		return true;
 	    	}
-	      	dos.close();
-	      	
-	      	return receiveObj;
+	      	return false;
 
 	    } catch (Exception e)
 	    {
 	    	e.printStackTrace();
-	    	return null;
+	    	return false;
 	    }    
 	}
 
