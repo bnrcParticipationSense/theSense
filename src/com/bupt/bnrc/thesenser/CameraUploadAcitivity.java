@@ -185,6 +185,10 @@ public class CameraUploadAcitivity extends Activity {
 				// 设置照片的大小
 				parameters.setPictureSize(2048, 1152);
 				//
+				//自动对焦
+                parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                mcamera.setParameters(parameters);
+                
 				mcamera.setParameters(parameters);
 				// 通过SurfaceView显示取景画面
 				mcamera.setPreviewDisplay(surfaceHolder);  //②
@@ -204,10 +208,39 @@ public class CameraUploadAcitivity extends Activity {
 		if (mcamera != null)
 		{
 			// 控制摄像头自动对焦后才拍照
-			mcamera.autoFocus(autoFocusCallback);  //④
+			//mcamera.autoFocus(autoFocusCallback);  //④
+		    
+		    mcamera.takePicture(new ShutterCallback() {
+                public void onShutter() {
+                    // 按下快门瞬间会执行此处代码
+                    collect.getLight();
+                    dataModel = collect.getDataModel();
+                    Camera.Parameters parameters = mcamera.getParameters();
+                    photoStats = new PhotoStats(collect.getxDirect(),
+                            collect.getyDirect(), collect.getzDirect(),
+                            collect.getLongtitude(), collect.getLatitude(),
+                            0, parameters.getFocalLength(), (float) 0,
+                            parameters.getPictureSize().width, parameters
+                                    .getPictureSize().height);
+                    Log.i("onShutter", "Hello ShutterCallback :"
+                            + parameters.getPictureSize().width + " : "
+                            + parameters.getPictureSize().height);
+                }
+            }, new PictureCallback() {
+                public void onPictureTaken(byte[] data, Camera c) {
+                    // 此处代码可以决定是否需要保存原始照片信息
+                    if (data != null) {
+                        Log.i("RAW-PictureCallback", "data != null");
+                        int l = data.length;
+                        Log.i("RAW-PictureCallback", "data.length = " + l);
+                    } else {
+                        Log.i("RAW-PictureCallback", "data == null");
+                    }
+                }
+            }, myJpegCallback); // ⑤
 		}
 	}
-
+/*
 	AutoFocusCallback autoFocusCallback = new AutoFocusCallback()
 	{
 		// 当自动对焦时激发该方法
@@ -251,7 +284,7 @@ public class CameraUploadAcitivity extends Activity {
 			}
 		}
 	};
-
+*/
 	Bitmap bm = null;
 	PictureCallback myJpegCallback = new PictureCallback()
 	{
