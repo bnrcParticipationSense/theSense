@@ -5,7 +5,10 @@ import java.util.List;
 import org.opencv.core.Core.MinMaxLocResult;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -23,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -41,7 +45,6 @@ public class PMToolsModelPickActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pmtools_models_pick);
 
@@ -124,9 +127,37 @@ public class PMToolsModelPickActivity extends Activity {
 	}
 
 	private void addNewModel() {
+		
+		LayoutInflater layoutInflater = LayoutInflater.from(this);
+		final View dialogView = layoutInflater.inflate(R.layout.dialog_pmtools_model_desc, null);
+		Dialog alertDialog = new AlertDialog.Builder(this).
+				setTitle("场景命名").
+				setView(dialogView).
+				setPositiveButton("确定", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// TODO Auto-generated method stub
+						EditText editText = (EditText) dialogView.findViewById(R.id.dialog_model_desc_edit);
+						String modelDesc = editText.getText().toString();
+						addNewModel(modelDesc);
+					}
+				}).
+				setNegativeButton("取消", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int id) {
+						// TODO Auto-generated method stub
+						dialog.cancel();
+					}
+				}).
+				create();
+		alertDialog.show();
+	}
+	
+	private void addNewModel(String desc) {
 		Intent intent = new Intent(this, CameraActivity.class);
 		intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_TYPE,
 				CommonDefinition.VALUE_CAMERA_MODEL_TYPE_NEW);
+		intent.putExtra(CommonDefinition.KEY_CAMERA_MODEL_DESC, desc);
 		// startActivity(intent);
 		startActivityForResult(intent, CommonDefinition.REQUESTCODE_CAMERA);
 	}

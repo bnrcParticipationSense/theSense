@@ -103,6 +103,7 @@ public class CameraActivity extends Activity {
 	// 传入参数
 	int mModelType;
 	int mModelTag;
+	String mModelDesc = null;
 	Intent mIntent;
 
 	@Override
@@ -163,6 +164,14 @@ public class CameraActivity extends Activity {
 			mModelTag = mIntent.getIntExtra(
 					CommonDefinition.KEY_CAMERA_MODEL_TAG,
 					CommonDefinition.VALUE_CAMERA_MODEL_TAG_DEFAULT);
+		}
+		
+		if (mModelType == CommonDefinition.VALUE_CAMERA_MODEL_TYPE_NEW) {
+			// set model name
+			mModelDesc = mIntent.getStringExtra(CommonDefinition.KEY_CAMERA_MODEL_DESC);
+			if(mModelDesc == null || "".equals(mModelDesc)) {
+				mModelDesc = CommonDefinition.VALUE_CAMERA_MODEL_DESC_DEFAULT;
+			}
 		}
 	}
 
@@ -545,7 +554,7 @@ public class CameraActivity extends Activity {
 						editor.putInt(CommonDefinition.PREF_MODEL_TAG, tempTag);
 						editor.commit();
 						PMModelModel pmModel = new PMModelModel(mModelTag,
-								"新的模型");
+								mModelDesc);
 						pmModel.save(app);
 						
 						// intent添加tag
