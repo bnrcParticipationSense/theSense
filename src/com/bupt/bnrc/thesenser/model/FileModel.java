@@ -5,9 +5,12 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 
 import com.bupt.bnrc.thesenser.dao.DAOFactory;
 import com.bupt.bnrc.thesenser.dao.FileDAO;
+import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 import com.bupt.bnrc.thesenser.utils.Logger;
 
 public class FileModel {
@@ -121,6 +124,17 @@ public class FileModel {
 			}
 		}
 
+	}
+	
+	public static void setUploadFilesNumber(Integer num, Context context) {
+		SharedPreferences prefs = context.getSharedPreferences(
+				CommonDefinition.PREFERENCE_NAME, Context.MODE_PRIVATE);
+		Long index = prefs.getLong(CommonDefinition.PREF_FILE_INDEX,
+				CommonDefinition.PREF_FILE_INDEX_DEFAULT);
+		index += num;
+		Editor editor = prefs.edit();
+		editor.putLong(CommonDefinition.PREF_FILE_INDEX, index);
+		editor.commit();
 	}
 	
 	public static FileModel findFileById(Long id, Context context) {

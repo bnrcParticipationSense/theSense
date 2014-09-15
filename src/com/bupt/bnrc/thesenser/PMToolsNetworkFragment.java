@@ -75,7 +75,9 @@ public class PMToolsNetworkFragment extends Fragment {
 	}
 
 	private void onNotAccessToServer() {
-		// TODO Auto-generated method stub
+		if(getActivity() == null || mWaterFallsView == null) {
+			return;
+		}
 		Toast.makeText(getActivity(), "wrong. can't access to server",
 				Toast.LENGTH_SHORT).show();
 		mLoadingTextView.setText("加载失败！");
@@ -85,7 +87,9 @@ public class PMToolsNetworkFragment extends Fragment {
 	}
 
 	private void onGetPhotoListSuccess() {
-		// TODO Auto-generated method stub
+		if(getActivity() == null || mWaterFallsView == null) {
+			return;
+		}
 		Toast.makeText(getActivity(), "request photo list success",
 				Toast.LENGTH_SHORT).show();
 		showWaterFallView(true);
