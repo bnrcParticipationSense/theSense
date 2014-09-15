@@ -407,7 +407,7 @@ public class CameraUploadAcitivity extends Activity {
 							bos.flush();
 							Log.i("CaptureImage","bos.flush()");
 							bos.close();
-							bm.recycle();
+							//bm.recycle();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -517,7 +517,7 @@ public class CameraUploadAcitivity extends Activity {
 							bos.flush();
 							Log.i("CaptureImage","bos.flush()");
 							bos.close();
-							bm.recycle();
+							//bm.recycle();
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
