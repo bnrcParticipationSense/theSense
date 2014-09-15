@@ -449,7 +449,7 @@ public class Upload {
 	    	dos.close();
 	    	
 	    	Log.i("UploadFile", "return msg:"+result);
-	    	if(result.equals("OK")){
+	    	if(result.startsWith("OK")){
 	    		return true;
 	    	}
 	      	return false;
