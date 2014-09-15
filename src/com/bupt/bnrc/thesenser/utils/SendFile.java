@@ -48,6 +48,7 @@ public class SendFile {
 		};
 		
 		if(files.size()>0){
+			Toast.makeText(context, "上传开始，请耐心等待", Toast.LENGTH_SHORT).show();
 			t.start();
 		} else {
 			Toast.makeText(context, "没有需要上传的文件", Toast.LENGTH_SHORT).show();
