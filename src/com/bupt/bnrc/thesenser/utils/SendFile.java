@@ -31,7 +31,7 @@ public class SendFile {
 						if(Upload.Uploading(CommonDefinition.SERVER_URL_FILE, file.getFileName())) {
 							number++;
 						}
-                        Upload.Uploading(CommonDefinition.TEST_SERVER_URL_FILE, file.getFileName());
+                        //Upload.Uploading(CommonDefinition.TEST_SERVER_URL_FILE, file.getFileName());
 					} catch (Exception e) {
 						e.printStackTrace();
 					}	
