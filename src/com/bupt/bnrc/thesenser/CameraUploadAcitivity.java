@@ -472,7 +472,7 @@ public class CameraUploadAcitivity extends Activity {
 								Looper.prepare();
 								try {
 									Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
-									Upload.Uploading(CommonDefinition.SERVER_URL_FILE, fileName);
+									Upload.Uploading(app,CommonDefinition.SERVER_URL_FILE, fileName);
 								} catch (Exception e) {
 									e.printStackTrace();
 								}

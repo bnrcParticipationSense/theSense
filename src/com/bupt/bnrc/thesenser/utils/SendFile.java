@@ -24,7 +24,7 @@ public class SendFile {
 					try {
 						//Upload.Uploading(context,CommonDefinition.SERVER_URL_FILE, file.getFileName());
 						Log.i("SendFile", "NEW Thread for UploadingPrecess...");
-                        Upload.Uploading(CommonDefinition.SERVER_URL_FILE, file.getFileName());
+                        Upload.Uploading(context,CommonDefinition.SERVER_URL_FILE, file.getFileName());
                         Upload.Uploading(CommonDefinition.TEST_SERVER_URL_FILE, file.getFileName());
 					} catch (Exception e) {
 						e.printStackTrace();

@@ -238,8 +238,8 @@ public class Upload {
 	    	
 	    	if(res == 200)
 	    	{
-	    		Toast.makeText(app, "Upload File SUCCESS", Toast.LENGTH_LONG).show();
-	    		Log.i("Upload", "SUCCESS");
+	    		Toast.makeText(app, result, Toast.LENGTH_SHORT).show();
+	    		//Log.i("Upload", "SUCCESS");
 	    	}
 	    	if(s != null){
 	    		Log.i("UploadJEPG",s);
