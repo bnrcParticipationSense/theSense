@@ -109,7 +109,9 @@ public class CameraActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		collect = Collection.getCollection(this);
+		//collect = Collection.getCollection(this);
+		collect = Collection.getCollection();
+		collect.setLocation();
 		app = this;
 		// 设置全屏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -229,7 +231,7 @@ public class CameraActivity extends Activity {
 					Camera.Parameters parameters = mcamera.getParameters();
 					photoStats = new PhotoStats(collect.getxDirect(),
 							collect.getyDirect(), collect.getzDirect(),
-							collect.getLongtitude(), collect.getLatitude(),
+							collect.longitude, collect.latitude,
 							0, parameters.getFocalLength(), (float) 0,
 							parameters.getPictureSize().width, parameters
 									.getPictureSize().height);
@@ -407,8 +409,8 @@ public class CameraActivity extends Activity {
 
 							// obj.put("Time", collect.getDateSring());
 
-							obj.put("Latitude", collect.getLatitude());
-							obj.put("Longitude", collect.getLongtitude());
+							obj.put("Latitude", collect.latitude);
+							obj.put("Longitude", collect.longitude);
 
 							obj.put("Orientation_X", collect.getxDirect());
 							obj.put("Orientation_Y", collect.getyDirect());

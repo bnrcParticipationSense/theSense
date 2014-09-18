@@ -55,6 +55,7 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
+    	Log.i("Collection Activity", "onCreate()");
     	setContentView(R.layout.activity_main);
     	
     	initDatas();
@@ -63,20 +64,27 @@ public class MainActivity extends FragmentActivity {
     	if (savedInstanceState == null) {
             selectItem(mNowPosition);
         }
-    	Collection.getCollection(this);
+    	//Collection.getCollection(this.getBaseContext());
     	//final Intent intent = new Intent();
     	intent.setAction("com.bupt.bnrc.thesenser.collection.forCollection");
     	//intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
     	//intent.addCategory(Intent.CATEGORY_HOME);
 		startService(intent);
 		mContext = getApplicationContext();
-		mWifiUtil = WifiUtil.getInstance(mContext);
-		if(mWifiUtil.getWifiState() == 30) {
-		    SendData.send(mContext);
-		    SendFile.send(mContext);
-		}
+//		mWifiUtil = WifiUtil.getInstance(mContext);
+//		if(mWifiUtil.getWifiState() == 30) {
+//		    SendData.send(mContext);
+//		    SendFile.send(mContext);
+//		}
     }
-    
+    protected void onStart() {
+        super.onStart();
+        Log.i("Collection Activity", "onStart()");
+    }
+    protected void onResume() {
+        super.onResume();
+        Log.i("Collection Activity", "onResume()");
+    }
     protected void onPause() {
     	super.onPause();
     	Log.i("Collection Activity", "onPause()");
@@ -85,11 +93,15 @@ public class MainActivity extends FragmentActivity {
     protected void onStop() {
     	super.onStop();
     	Log.i("Collection Activity", "onStop()");
-    }
-    
+    }    
     protected void onDestroy() {
+        
     	super.onDestroy();
     	Log.i("Collection Activity", "onDestroy()");
+    }
+    protected void onRestart() {
+        super.onRestart();
+        Log.i("Collection Activity", "onRestart()");
     }
 
 	private void initDatas() {

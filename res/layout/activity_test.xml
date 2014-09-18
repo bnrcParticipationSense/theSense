@@ -41,7 +41,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/fileTestBtn"
-        android:text="停止自动采集数据"
+        android:text="停止自动采集并退出"
     />
    
     <Button android:id="@+id/saveInfo"
@@ -88,5 +88,15 @@
         android:layout_above="@+id/sendmsg"
         android:layout_toRightOf="@+id/saveInfo"
         android:text="展示数据" />
+
+    <!-- 
+    <Button
+        android:id="@+id/wifiBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/dataTestBtn"
+        android:layout_alignLeft="@+id/infoBtn"
+        android:text="isWifiValid" />
+     -->
 
 </RelativeLayout>

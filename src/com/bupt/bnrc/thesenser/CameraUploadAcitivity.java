@@ -84,12 +84,18 @@ public class CameraUploadAcitivity extends Activity {
 	View saveView;
 	AlertDialog.Builder saveAlertBuilder;
 	AlertDialog saveAlertDialog;
+	
+	int picWidth = 0;
+	int picHeight = 0;
+	int preWidth = 0;
+	int preHeight = 0;
+	
 	//是否在浏览中
 	boolean isPreview = false;
 
-	private Camera.AutoFocusCallback mAutoFocusCallback;
-	List<android.hardware.Camera.Size> supPreSize;
-	List<android.hardware.Camera.Size> supPicSize;
+//	private Camera.AutoFocusCallback mAutoFocusCallback;
+	private List<android.hardware.Camera.Size> supPreSize;
+	private List<android.hardware.Camera.Size> supPicSize;
 	List<Integer> supFps;
 
 
@@ -105,11 +111,15 @@ public class CameraUploadAcitivity extends Activity {
 	String fileName;
 	private Activity app;
 	
+	Bitmap bm = null;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		collect = Collection.getCollection(this);
+		//collect = Collection.getCollection(this);
+		collect = Collection.getCollection();
+		collect.setLocation();
 		app = this;
 		// 设置全屏
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -174,8 +184,24 @@ public class CameraUploadAcitivity extends Activity {
 			try
 			{
 				Camera.Parameters parameters = mcamera.getParameters();
+				
+				supPreSize = parameters.getSupportedPreviewSizes();
+				supPicSize = parameters.getSupportedPictureSizes();
+				
+				for(int i=0;i<supPreSize.size();i++)
+                    Log.i(ACTIVITY_TAG, LOG_PREFIX+"supported preview size "+(i+1)+": "+supPreSize.get(i).width+"x"+supPreSize.get(i).height);
+				for(int i=0;i<supPicSize.size();i++)
+                    Log.i(ACTIVITY_TAG, LOG_PREFIX+"supported picture size "+(i+1)+": "+supPicSize.get(i).width+"x"+supPicSize.get(i).height);
+				
+				if(supPreSize.size() > 0) {
+				    setPreSize();
+				}
+				if(supPicSize.size() > 0) {
+				    setPicSize();
+				}
 				// 设置预览照片的大小
-				//parameters.setPreviewSize(1280, 720);
+				if(this.preHeight != 0 && this.preWidth != 0)
+				    parameters.setPreviewSize(this.preWidth, this.preHeight);
 				// 设置预览照片时每秒显示多少帧的最小值和最大值
 				//parameters.setPreviewFpsRange(4, 10);
 				// 设置图片格式
@@ -183,7 +209,18 @@ public class CameraUploadAcitivity extends Activity {
 				// 设置JPG照片的质量
 				parameters.set("jpeg-quality", 100);
 				// 设置照片的大小
-				parameters.setPictureSize(2048, 1152);
+				/* OOM
+				if(this.picHeight != 0 && this.picWidth != 0)
+				    parameters.setPictureSize(this.picWidth, this.picHeight);
+				else
+    				parameters.setPictureSize(2048, 1152); //??!!
+				*/
+				parameters.setPictureSize(2048, 1152); //??!!
+				
+				
+				parameters.setGpsAltitude(collect.altitude);
+				parameters.setGpsLatitude(collect.latitude);
+				parameters.setGpsLongitude(collect.longitude);
 				//
 				//自动对焦
                 parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
@@ -218,7 +255,7 @@ public class CameraUploadAcitivity extends Activity {
                     Camera.Parameters parameters = mcamera.getParameters();
                     photoStats = new PhotoStats(collect.getxDirect(),
                             collect.getyDirect(), collect.getzDirect(),
-                            collect.getLongtitude(), collect.getLatitude(),
+                            collect.longitude, collect.latitude,
                             0, parameters.getFocalLength(), (float) 0,
                             parameters.getPictureSize().width, parameters
                                     .getPictureSize().height);
@@ -285,7 +322,7 @@ public class CameraUploadAcitivity extends Activity {
 		}
 	};
 */
-	Bitmap bm = null;
+	
 	PictureCallback myJpegCallback = new PictureCallback()
 	{
 		@Override
@@ -440,8 +477,8 @@ public class CameraUploadAcitivity extends Activity {
 									
 								//obj.put("Time", collect.getDateSring());
 									
-								obj.put("Latitude", collect.getLatitude());
-								obj.put("Longitude", collect.getLongtitude());
+								obj.put("Latitude", collect.latitude);
+								obj.put("Longitude", collect.longitude);
 								
 								obj.put("Orientation_X", collect.getxDirect());
 								obj.put("Orientation_Y", collect.getyDirect());
@@ -568,8 +605,8 @@ public class CameraUploadAcitivity extends Activity {
                                     
                                 //obj.put("Time", collect.getDateSring());
                                     
-                                obj.put("Latitude", collect.getLatitude());
-                                obj.put("Longitude", collect.getLongtitude());
+                                obj.put("Latitude", collect.latitude);
+                                obj.put("Longitude", collect.longitude);
                                 
                                 obj.put("Orientation_X", collect.getxDirect());
                                 obj.put("Orientation_Y", collect.getyDirect());
@@ -607,6 +644,7 @@ public class CameraUploadAcitivity extends Activity {
 				saveAlertDialog = saveAlertBuilder.create();
 				saveAlertDialog.show();
 				// 重新浏览
+				//bm.recycle();
 				camera.stopPreview();
 				camera.startPreview();
 				isPreview = true;
@@ -616,34 +654,35 @@ public class CameraUploadAcitivity extends Activity {
 
     @Override 
     protected void onStart() {  
-        // Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onStart called!");  
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onStart called!");  
         super.onStart();  
     }  
  
     @Override 
     protected void onRestart() {  
-        // Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onRestart called!");  
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onRestart called!");  
         super.onRestart();  
     }  
  
     @Override 
     protected void onResume() {  
-       //  Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onResume called!");
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onResume called!");
         //sensors.SensorsInit();
         super.onResume();  
     }  
  
     @Override 
     protected void onPause() {  
-        // Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onPause called!");  
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onPause called!");  
      
         //sensors.SensorsRelease();
+        bm.recycle();
         super.onPause();  
     }  
  
     @Override 
     protected void onStop() {  
-        // Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onStop called!");  
+        Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onStop called!");  
 
         super.finish();
         //退出后台线程,以及销毁静态变量
@@ -656,5 +695,38 @@ public class CameraUploadAcitivity extends Activity {
         Log.i(ACTIVITY_TAG, LOG_PREFIX+"onDestroy called!");  
 
         super.onDestroy();  
+    }
+    
+    private void setPreSize() {
+        //
+        int maxH = 0;
+        int maxW = 0;
+        float space = 99;
+        float ratio = CommonDefinition.PIC_WIDTH/CommonDefinition.PIC_HEIGHT;
+        for(Size size:supPreSize) {
+            if(Math.abs(size.width/size.height - ratio) < space) {
+                maxH = size.height;
+                maxW = size.width;
+                space = Math.abs(size.width/size.height - ratio);
+            }
+        }
+        this.preHeight = maxH;
+        this.preWidth = maxW;
+    }
+    private void setPicSize() {
+        //
+        int maxH = 0;
+        int maxW = 0;
+        float space = 99;
+        float ratio = CommonDefinition.PIC_WIDTH/CommonDefinition.PIC_HEIGHT;
+        for(Size size:supPicSize) {
+            if(Math.abs(size.width/size.height - ratio) <= space) {
+                maxH = maxH > size.height?maxH:size.height;
+                maxW = maxW > size.width?maxW:size.width;
+                space = Math.abs(size.width/size.height - ratio);
+            }
+        }
+        this.picHeight = maxH;
+        this.picWidth = maxW;
     }
 }

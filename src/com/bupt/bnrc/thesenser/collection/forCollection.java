@@ -22,17 +22,20 @@ public class forCollection extends Service {
 	public void onCreate() {
 		super.onCreate();
 		Log.i("Collection Service", "onCreate()");
-		if(col == null){
-			col = Collection.getCollection(getBaseContext());
-		}
 		
-		//Collection col = Collection.getCollection();
-		//Collection c = Collection.getCollection();
-		col.collect_new();
 	}
 	
 	public int onStartCommand(Intent intent, int flag, int startId) {
 		Log.i("Collection Service", "onStartCommand()");
+		
+		if(col == null){
+            col = Collection.getCollection(getBaseContext());
+        }
+        
+        //Collection col = Collection.getCollection();
+        //Collection c = Collection.getCollection();
+        col.collect_new();
+        
 		return START_STICKY;
 	}
 	

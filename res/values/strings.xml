@@ -40,8 +40,8 @@
     <!-- test fragment -->
     <string name="test_helloText">Hello bnrc! This is a test page.</string>
     <string name="test_cameraBtn">照相</string>
-    <string name="test_dataTestBtn">数据测试</string>
-    <string name="test_fileTestBtn">照片测试</string>
+    <string name="test_dataTestBtn">查看未上传数据</string>
+    <string name="test_fileTestBtn">查看未上传照片</string>
     
     <string name="camera_helloText">Hello! 这个是照相界面。</string>
     <string name="photo_name">相片名称</string>

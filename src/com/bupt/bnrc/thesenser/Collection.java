@@ -79,8 +79,9 @@ public class Collection implements SensorEventListener {
 	private int batteryState;
 	private int percent;
 	// 位置
-	private float latitude;
-	private float longitude;
+	float latitude;
+	float longitude;
+	float altitude;
 
 	// is SensorListener registered
 	private boolean sensorlistener_flag = true;
@@ -126,6 +127,7 @@ public class Collection implements SensorEventListener {
 			// logMsg(sb.toString());
 			latitude = (float) location.getLatitude();
 			longitude = (float) location.getLongitude();
+			altitude = (float) location.getAltitude();
 			// Log.i("BD_LBS_SDK", sb.toString());
 		}
 
@@ -339,6 +341,7 @@ public class Collection implements SensorEventListener {
 		// need_noise = true;
 		// noise = for_noise.getValue();
 		setNoise();
+		setLocation();
 		mData = new DataModel(this.light, this.noise, this.date,
 				this.batteryState, this.percent, this.connectionState,
 				this.longitude, this.latitude);
@@ -401,18 +404,28 @@ public class Collection implements SensorEventListener {
 	public float getzDirect() {
 		return this.sensor_orientation[2];
 	}
-
-	public float getLongtitude() {
-		// this.longitude = (float)testLocation.getLongitude();
-		mLocationClient.requestLocation();
-		return this.longitude;
+	
+	public void setLocation() {
+	    mLocationClient.requestLocation();
 	}
+
+//	public float getLongtitude() {
+//		// this.longitude = (float)testLocation.getLongitude();
+//		mLocationClient.requestLocation();
+//		return this.longitude;
+//	}
 
 	public float getLatitude() {
 		// this.latitude = (float)testLocation.getLatitude();
 		mLocationClient.requestLocation();
 		return this.latitude;
 	}
+	
+	public float getAltitude() {
+        // this.latitude = (float)testLocation.getAltitude();
+        mLocationClient.requestLocation();
+        return this.altitude;
+    }
 
 	public int getBatteryState() {
 		return this.percent;
@@ -687,11 +700,13 @@ public class Collection implements SensorEventListener {
 		
 		if(CommonDefinition.AUTO_COLLECTION)
 		{
+		    Log.i("Auto Collection", "auto collection started");
 			collect_t.start();
 		}
 	}
     public void stop() {
     	//app.stopService(intent);
     	//CommonDefinition.AUTO_COLLECTION = false;
+        this.app.unregisterReceiver(receiver);
     }
 }

@@ -115,7 +115,8 @@ public class InfoCollectSoundFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
-        collection = Collection.getCollection(getActivity());
+        //collection = Collection.getCollection(getActivity());
+        collection = Collection.getCollection();
     }
 
     private void initView(View view) {

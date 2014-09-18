@@ -38,6 +38,7 @@ public class RecordThread {
             mRecorder.setOutputFile(fileName);
             try {
 				mRecorder.prepare();
+				mRecorder.start();
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -45,13 +46,17 @@ public class RecordThread {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			mRecorder.start();
+			
 		}
 	}
 
 	public void stop() {
 		if (mRecorder != null) {
-			mRecorder.stop();
+		    try {
+    			mRecorder.stop();
+		    } catch (IllegalStateException e) {
+		        e.printStackTrace();
+		    }
 			mRecorder.release();
 			mRecorder = null;
 		}

@@ -1,5 +1,9 @@
 package com.bupt.bnrc.thesenser;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -21,8 +25,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bupt.bnrc.thesenser.model.DataModel;
+import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Logger;
+import com.bupt.bnrc.thesenser.utils.NetworkUtil;
 import com.bupt.bnrc.thesenser.utils.SendData;
 import com.bupt.bnrc.thesenser.utils.SendFile;
 import com.bupt.bnrc.thesenser.utils.Upload;
@@ -70,8 +76,11 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View uploadBtn = parentView.findViewById(R.id.uploadBtn);
 		View sendBtn = parentView.findViewById(R.id.sendmsg);
 		View sendPic = parentView.findViewById(R.id.sendpic);
+		//View wifiBtn = parentView.findViewById(R.id.wifiBtn);
 
-		collect = Collection.getCollection(getActivity());
+		//collect = Collection.getCollection(getActivity().getBaseContext());
+		collect = Collection.getCollection();
+		collect.setLocation();
 
 		
 		
@@ -86,13 +95,14 @@ public class TestFragment extends Fragment implements OnClickListener {
 		uploadBtn.setOnClickListener(this);
 		sendBtn.setOnClickListener(this);
 		sendPic.setOnClickListener(this);
+		//wifiBtn.setOnClickListener(this);
 	}
 
 	private void showinfo() {
 		// collect.showinfo(getActivity());
 		String str = "光线：" + collect.getLight() + ";\n" + "噪音："
-				+ collect.getNoise() + ";\n" + "经度：" + collect.getLongtitude()
-				+ ";\n" + "纬度：" + collect.getLatitude() + "\n" + "x方向："
+				+ collect.getNoise() + ";\n" + "经度：" + collect.longitude
+				+ ";\n" + "纬度：" + collect.latitude + "\n" + "x方向："
 				+ collect.getxDirect() + ";\n" + "y方向：" + collect.getyDirect()
 				+ ";\n" + "z方向：" + collect.getzDirect() + ";\n" + "电量："
 				+ collect.getBatteryState() + ";\n" + "时间："
@@ -119,6 +129,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 			//}
 			//collect.stop();
 			getActivity().stopService(MainActivity.intent);
+			System.exit(0);
 			break;
 
 		case R.id.fileTestBtn:
@@ -185,10 +196,17 @@ public class TestFragment extends Fragment implements OnClickListener {
 		case R.id.sendpic:
 		    SendFile.send(getActivity());
 		    break;
+		/*case R.id.wifiBtn:
+            func();
+            break;*/
 
 		case R.id.exitBtn:
 			System.exit(0);
 		}
+	}
+	
+	private void func() {
+	    //
 	}
 
 	private void processFileBtnClick() {
