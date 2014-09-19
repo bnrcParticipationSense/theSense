@@ -472,7 +472,8 @@ public class CameraUploadAcitivity extends Activity {
 											*/
 							JSONObject obj = new JSONObject();
 							try {
-								obj.put("username", "zzy");
+//								obj.put("username", "zzy");
+							    obj.put("username", imei);
 								obj.put("Model", imei);
 									
 								//obj.put("Time", collect.getDateSring());
@@ -608,7 +609,8 @@ public class CameraUploadAcitivity extends Activity {
                                             */
                             JSONObject obj = new JSONObject();
                             try {
-                                obj.put("username", "zzy");
+//                                obj.put("username", "zzy");
+                                obj.put("username", imei);
                                 obj.put("Model", imei);
                                     
                                 //obj.put("Time", collect.getDateSring());
