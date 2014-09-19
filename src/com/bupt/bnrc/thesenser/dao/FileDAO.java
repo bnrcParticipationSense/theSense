@@ -25,7 +25,7 @@ public class FileDAO extends DAOHelper {
 	public FileDAO(Context ctx) {
 		super(ctx, DATABASE_NAME, null, DATABASE_VERSION);
 		if (m_sdf == null)
-			m_sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			m_sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	}
 
 	public FileModel save(FileModel file) {

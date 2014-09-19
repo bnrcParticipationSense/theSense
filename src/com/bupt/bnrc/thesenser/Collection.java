@@ -297,8 +297,8 @@ public class Collection implements SensorEventListener {
 
 		date = new Date();
 
-		Toast toast = Toast.makeText(this.app, "" + date, Toast.LENGTH_LONG);
-		toast.show();
+//		Toast toast = Toast.makeText(this.app, "" + date, Toast.LENGTH_LONG);
+//		toast.show();
 	}
 
 	private void calculateOrientation() {

@@ -11,6 +11,8 @@ import java.io.InputStreamReader;
 import java.io.File;
 import java.net.ContentHandler;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.TimeoutException;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -94,20 +97,25 @@ public class Upload {
 			}
 			else
 			{
-				Toast.makeText(app, "Upload Data SUCCESS", Toast.LENGTH_LONG).show();
-				Log.i("Upload", "SUCCESS");
+				//Toast.makeText(app, "Upload Data SUCCESS", Toast.LENGTH_LONG).show();
+				Log.i("Upload", "Connection SUCCESS");
 			}
 			
 			if (entity != null)
 			{
 					
 				String rev = EntityUtils.toString(entity);
+				Log.i("UploadJSON", "return msg:"+rev);
+				if(rev.startsWith("OK"))
+				    Toast.makeText(app, "上传成功", Toast.LENGTH_LONG).show();
+				else
+				    Toast.makeText(app, "上传失败", Toast.LENGTH_LONG).show();
 				try {
 					receiveObj = new JSONObject(rev); 
 				} catch(Exception e) {
 					e.printStackTrace();
 				}
-				Log.i("UploadJSON", "return msg:"+receiveObj.toString());
+				
 				return receiveObj;
 			}
 			else if(receiveObj != null){
@@ -121,7 +129,7 @@ public class Upload {
 		catch (ConnectTimeoutException e)
 		{
 			e.printStackTrace();
-			Toast.makeText(app, "Time out", Toast.LENGTH_LONG).show();
+			Toast.makeText(app, "无法连接服务器，请等网络较好时重传", Toast.LENGTH_LONG).show();
 			Log.i("UploadJSON", "time out");
 			for(int i=0 ; i<3 ; i++) {
 				try{
@@ -374,8 +382,8 @@ public class Upload {
 	    	HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 	    	// �����ゆ�烽����ゆ�锋�����杞胯揪��烽����ゆ�烽����ゆ�烽����ゆ�烽����������烽����ゆ�烽����ゆ�烽����ゆ�烽���������烽��琛���告�峰�������ゆ�烽��杞匡拷������瀛�涓������ゆ�烽����ゆ�烽��锟�
 	    	// �����垮�ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽�����楗鸿�ф�风�ラ����ゆ�烽����ゆ�烽����风�规�烽����ゆ�锋�堕����ゆ�烽����ゆ�锋病��������ゆ�烽����ゆ�烽�����璇ф�烽����ゆ�烽����ゆ�烽��锟� HTTP �����ゆ�烽����ゆ�烽����ゆ�烽��渚ョ����烽����ゆ�烽����ゆ��
-	    	httpURLConnection.setReadTimeout(5 * 1000);
-	    	httpURLConnection.setConnectTimeout(5 * 1000);
+	    	httpURLConnection.setReadTimeout(2 * 1000);
+	    	httpURLConnection.setConnectTimeout(2 * 1000);
 	    	//httpURLConnection.setChunkedStreamingMode(128 * 1024);// 128K
 	    	// �����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽����ゆ�烽��锟�
 	    	httpURLConnection.setDoInput(true);
@@ -432,6 +440,8 @@ public class Upload {
 	    	{
 	    		//Toast.makeText(app, "SUCCESS", Toast.LENGTH_LONG).show();
 	    		Log.i("Upload", "SUCCESS");
+	    	} else {
+	    	    Log.i("Upload", "Failed : "+res);
 	    	}
 	    	
 	    	/*
@@ -459,6 +469,29 @@ public class Upload {
 	    	e.printStackTrace();
 	    	return false;
 	    }    
+	}
+	
+	@SuppressWarnings("finally")
+    static public boolean isConnection() {
+	    try {
+	        URL url = new URL(CommonDefinition.SERVER_URL);
+	        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+	        httpURLConnection.setConnectTimeout(2000);
+	        httpURLConnection.connect();
+	        if(httpURLConnection.getResponseCode() == 200)
+	            return true;
+	        else
+	            return false;
+	    } catch (SocketTimeoutException e) {
+	        Log.i("Upload test", "Time out");
+	        e.printStackTrace();
+	        return false;
+	    } catch (MalformedURLException e) {
+	        e.printStackTrace();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    return false;
 	}
 
 }

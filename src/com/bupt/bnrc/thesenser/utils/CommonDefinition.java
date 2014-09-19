@@ -11,6 +11,7 @@ public class CommonDefinition {
 	public final static String SERVER_URL_JSON= "http://10.108.107.92:8080/uploadFile/fileServlet";
 	//public final static String TEST_SERVER_URL_FILE = "http://10.108.108.11/upload11.php";
 	public final static String SERVER_URL_FILE= "http://10.108.107.92:8080/uploadFile/fileServlet";
+	public final static String SERVER_URL= "http://10.108.107.92:8080/uploadFile/fileServlet";
 	
 	// database
 	public final static boolean DATABASE_SDCARD_SAVE = true;

@@ -26,7 +26,7 @@ public class DataDAO extends DAOHelper {
 		// TODO Auto-generated constructor stub
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 		if (m_sdf == null) {
-			m_sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			m_sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		}
 	}
 

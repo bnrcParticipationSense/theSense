@@ -76,7 +76,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		View uploadBtn = parentView.findViewById(R.id.uploadBtn);
 		View sendBtn = parentView.findViewById(R.id.sendmsg);
 		View sendPic = parentView.findViewById(R.id.sendpic);
-		//View wifiBtn = parentView.findViewById(R.id.wifiBtn);
+//		View wifiBtn = parentView.findViewById(R.id.wifiBtn);
 
 		//collect = Collection.getCollection(getActivity().getBaseContext());
 		collect = Collection.getCollection();
@@ -95,7 +95,7 @@ public class TestFragment extends Fragment implements OnClickListener {
 		uploadBtn.setOnClickListener(this);
 		sendBtn.setOnClickListener(this);
 		sendPic.setOnClickListener(this);
-		//wifiBtn.setOnClickListener(this);
+//		wifiBtn.setOnClickListener(this);
 	}
 
 	private void showinfo() {
@@ -207,6 +207,22 @@ public class TestFragment extends Fragment implements OnClickListener {
 	
 	private void func() {
 	    //
+	    Thread t = new Thread() {
+	        public void run() {
+	            Looper.prepare();
+	            try{
+	                if(Upload.isConnection())
+	                    Log.i("Upload", "isConnection = ture");
+	                else
+	                    Log.i("Upload", "isConnection = false");
+	            } catch (Exception e) {
+	                e.printStackTrace();
+	            }
+	            Looper.loop();
+	        }
+	    };
+	    
+	    t.start();
 	}
 
 	private void processFileBtnClick() {

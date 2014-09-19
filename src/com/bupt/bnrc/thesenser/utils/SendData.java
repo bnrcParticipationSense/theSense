@@ -5,6 +5,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.os.Looper;
+import android.widget.Toast;
+
 import com.bupt.bnrc.thesenser.model.DataModel;
 
 public class SendData {
@@ -28,8 +30,19 @@ public class SendData {
 				Looper.loop();
 			}
 		};
+		
+		
 		if(datas.size()>0){
-			t.start();
-		}
+		    Toast.makeText(context, "上传开始，请耐心等待", Toast.LENGTH_LONG).show();
+            t.start();
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(context, "没有需要上传的文件", Toast.LENGTH_SHORT).show();
+        }
 	}
 }

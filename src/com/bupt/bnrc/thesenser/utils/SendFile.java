@@ -20,28 +20,39 @@ public class SendFile {
 		Thread t = new Thread() {
 			public void run() {
 				int number = 0;
+				int failed = 0;
 				Looper.prepare();
 
-				for(FileModel file:files){
-					try {
-						JSONObject jsonObject = null;
-						//Upload.Uploading(context,CommonDefinition.SERVER_URL_FILE, file.getFileName());
-						Log.i("SendFile", "NEW Thread for UploadingPrecess...");
+				if(Upload.isConnection()) {
+				    for(FileModel file:files){
+	                    try {
+	                        JSONObject jsonObject = null;
+	                        //Upload.Uploading(context,CommonDefinition.SERVER_URL_FILE, file.getFileName());
+	                        Log.i("SendFile", "NEW Thread for UploadingPrecess...");
 
-						if(Upload.Uploading(CommonDefinition.SERVER_URL_FILE, file.getFileName())) {
-							number++;
-						}
-                        //Upload.Uploading(CommonDefinition.TEST_SERVER_URL_FILE, file.getFileName());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}	
-				}
-				
-				if(number < files.size()) {
-					Toast.makeText(context, "上传失败,请等网络较好时再传", Toast.LENGTH_SHORT).show();
+	                        if(Upload.Uploading(CommonDefinition.SERVER_URL_FILE, file.getFileName())) {
+	                            number++;
+	                            Toast.makeText(context, "上传中："+number+"/"+files.size()+"；上传失败："+failed+"张；", Toast.LENGTH_SHORT).show();
+	                        }
+	                        else {
+	                            failed++;
+	                            Toast.makeText(context, "上传中："+number+"/"+files.size()+"；上传失败："+failed+"张；", Toast.LENGTH_SHORT).show();
+	                        }
+	                        //Upload.Uploading(CommonDefinition.TEST_SERVER_URL_FILE, file.getFileName());
+	                    } catch (Exception e) {
+	                        Toast.makeText(context, "上传中："+number+"/"+files.size()+"；上传失败："+failed+"张；", Toast.LENGTH_SHORT).show();
+	                        e.printStackTrace();
+	                    }   
+	                }
+	                
+	                if(number < files.size()) {
+	                    Toast.makeText(context, "上传失败,请等网络较好时再传", Toast.LENGTH_SHORT).show();
+	                } else {
+	                    Toast.makeText(context, "上传成功,上传数量为" + number, Toast.LENGTH_SHORT).show();
+//    	                FileModel.setUploadFilesNumber(number, context);
+	                }
 				} else {
-					Toast.makeText(context, "上传成功,上传数量为" + number, Toast.LENGTH_SHORT).show();
-					FileModel.setUploadFilesNumber(number, context);
+				    Toast.makeText(context, "无法连接服务器，请稍后再试", Toast.LENGTH_LONG).show();
 				}
 					
 				Looper.loop();
@@ -49,8 +60,14 @@ public class SendFile {
 		};
 		
 		if(files.size()>0){
-			Toast.makeText(context, "上传开始，请耐心等待", Toast.LENGTH_SHORT).show();
+			Toast.makeText(context, "上传开始，请耐心等待", Toast.LENGTH_LONG).show();
 			t.start();
+			try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
 		} else {
 			Toast.makeText(context, "没有需要上传的文件", Toast.LENGTH_SHORT).show();
 		}

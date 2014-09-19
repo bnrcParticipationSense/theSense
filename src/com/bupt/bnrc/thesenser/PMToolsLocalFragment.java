@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class PMToolsLocalFragment extends Fragment implements PMPredictObserver 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
+	    Log.i("Fragment PMTools Local", "onCreateView");
 		View view = inflater.inflate(R.layout.fragment_pmtools_local,
 				container, false);
 		InitData();
@@ -65,9 +67,10 @@ public class PMToolsLocalFragment extends Fragment implements PMPredictObserver 
 			BitmapDrawable bitmapDrawable = (BitmapDrawable) backPicView
 					.getDrawable();
 			// ���ͼƬ��û���ջأ����ջ�
-			if (bitmapDrawable != null
-					&& !bitmapDrawable.getBitmap().isRecycled()) {
-				bitmapDrawable.getBitmap().recycle();
+			
+    	    if (bitmapDrawable != null
+	    			&& !bitmapDrawable.getBitmap().isRecycled()) {
+		    	bitmapDrawable.getBitmap().recycle();
 			}
 			// �ı���ʾ��ͼƬ
 			backPicView.setImageBitmap(BitmapFactory.decodeStream(fileStream));
@@ -120,6 +123,27 @@ public class PMToolsLocalFragment extends Fragment implements PMPredictObserver 
 		default:
 			break;
 		}
+	}
+	public void onPause() {
+	    Log.i("Fragment PMTools Local", "onPause");
+	    super.onPause();
+	}
+	public void onStop() {
+	    Log.i("Fragment PMTools Local", "onStop");
+	    super.onStop();
+	}
+	public void onDestroyView() {
+	    Log.i("Fragment PMTools Local", "onDestroyView");
+	    
+	    BitmapDrawable bitmapDrawable = (BitmapDrawable) backPicView
+                .getDrawable();
+        // ���ͼƬ��û���ջأ����ջ�
+        if (bitmapDrawable != null
+                && !bitmapDrawable.getBitmap().isRecycled()) {
+            bitmapDrawable.getBitmap().recycle();
+        }
+        
+	    super.onDestroyView();
 	}
 
 }

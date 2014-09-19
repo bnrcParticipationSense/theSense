@@ -510,7 +510,15 @@ public class CameraUploadAcitivity extends Activity {
 								Looper.prepare();
 								try {
 									Log.i("CameraActivity", "NEW Thread for UploadingPrecess...");
-									Upload.Uploading(app,CommonDefinition.SERVER_URL_FILE, fileName);
+									if(Upload.Uploading(CommonDefinition.SERVER_URL_FILE, fileName)) {
+									    Toast.makeText(app, "上传成功", Toast.LENGTH_LONG).show();
+									} else {
+									    Toast.makeText(app, "上传失败，照片已经保存，请等网络情况较好时再试", Toast.LENGTH_LONG).show();
+									    FileModel fileModel = new FileModel(fileName, collect.getDate(), photoStats);
+				                        fileModel.save(app);
+				                        setResult(CommonDefinition.REQUESTCODE_CAMERA);
+//				                        finish();
+									}
 								} catch (Exception e) {
 									e.printStackTrace();
 								}
@@ -676,7 +684,9 @@ public class CameraUploadAcitivity extends Activity {
         Log.i(ACTIVITY_TAG, LOG_PREFIX+"　onPause called!");  
      
         //sensors.SensorsRelease();
-        bm.recycle();
+        if(bm != null && !bm.isRecycled())
+            bm.recycle();
+        
         super.onPause();  
     }  
  
