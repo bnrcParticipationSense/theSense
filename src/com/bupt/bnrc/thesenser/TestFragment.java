@@ -28,7 +28,6 @@ import com.bupt.bnrc.thesenser.model.DataModel;
 import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Logger;
-import com.bupt.bnrc.thesenser.utils.NetworkUtil;
 import com.bupt.bnrc.thesenser.utils.SendData;
 import com.bupt.bnrc.thesenser.utils.SendFile;
 import com.bupt.bnrc.thesenser.utils.Upload;
