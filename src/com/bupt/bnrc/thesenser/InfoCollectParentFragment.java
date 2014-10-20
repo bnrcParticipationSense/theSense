@@ -29,8 +29,7 @@ public class InfoCollectParentFragment extends Fragment {
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onViewCreated(view, savedInstanceState);
-		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view
-				.findViewById(R.id.info_collect_tabs);
+		PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) view.findViewById(R.id.info_collect_tabs);
 		mPager = (ViewPager) view.findViewById(R.id.info_collect_pager);
 		mAdapter = new InfoCollectFragmentPagerAdapter(
 				getChildFragmentManager());
