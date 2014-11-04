@@ -291,6 +291,7 @@ public class Upload {
 			post.setEntity(new UrlEncodedFormEntity(params, HTTP.UTF_8));
 
 			// �����ゆ�烽����ゆ��POST�����ゆ�烽����ゆ��
+			Log.i("Upload", "httpClient.execute(post)");
 			httpResponse = httpClient.execute(post);
 			entity = httpResponse.getEntity();
 			

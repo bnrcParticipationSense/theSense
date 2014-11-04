@@ -99,4 +99,13 @@
         android:text="isWifiValid" />
      -->
 
+    <Button
+        android:id="@+id/connTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/sendmsg"
+        android:layout_alignBottom="@+id/sendmsg"
+        android:layout_toRightOf="@+id/fileTestBtn"
+        android:text="ConnTest" />
+
 </RelativeLayout>

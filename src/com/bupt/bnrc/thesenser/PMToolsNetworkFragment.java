@@ -138,7 +138,7 @@ public class PMToolsNetworkFragment extends Fragment {
 				// String tempSendStr =
 				// "{\"request_type\":\"photo_list\",\"request_maxnum\":\"50\",\"begin_time\":\"2010-12-26 03:36:25\"}";
 				responseObject = Upload.Uploading(
-						"http://10.108.107.92:8080/queryDB/getPhotoServlet",
+						"http://10.108.109.124:8080/queryDB/getPhotoServlet",
 						JSON.photoListRequestToJson(60));
 				// responseObject =
 				// Upload.Uploading("http://10.108.107.92:8080/queryDB/getPhotoServlet",

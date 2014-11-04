@@ -135,13 +135,13 @@ public class PMToolsLocalFragment extends Fragment implements PMPredictObserver 
 	public void onDestroyView() {
 	    Log.i("Fragment PMTools Local", "onDestroyView");
 	    
-	    BitmapDrawable bitmapDrawable = (BitmapDrawable) backPicView
+	    /*BitmapDrawable bitmapDrawable = (BitmapDrawable) backPicView
                 .getDrawable();
         // ���ͼƬ��û���ջأ����ջ�
         if (bitmapDrawable != null
                 && !bitmapDrawable.getBitmap().isRecycled()) {
             bitmapDrawable.getBitmap().recycle();
-        }
+        }*/
         
 	    super.onDestroyView();
 	}
