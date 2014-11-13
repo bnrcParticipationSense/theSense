@@ -53,8 +53,8 @@ public class JSON {
 					String packUrl = photoObject.getString("pack_url");
 					String srcUrl = photoObject.getString("src_url");
 					// add pre
-					packUrl = "http://10.108.107.92:8080/" + packUrl;
-					srcUrl = "http://10.108.107.92:8080/" + srcUrl;
+					packUrl = CommonDefinition.SERVER_URL_ROOT + packUrl;
+					srcUrl = CommonDefinition.SERVER_URL_ROOT + srcUrl;
 					WebPhotoModel photo = new WebPhotoModel(packUrl, srcUrl);
 					photoList.add(photo);
 				}

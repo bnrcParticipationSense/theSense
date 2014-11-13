@@ -7,11 +7,15 @@ public class CommonDefinition {
 	public final static int COLLECTION_SPACE_TIME = 1000*60*60;  //1800000
 	
 	//Upload URL
+	public final static String SERVER_URL_ROOT = "http://10.108.109.124:8080/";
 	//public final static String SERVER_URL_JSON= "http://10.108.108.11/uploadjson.php";
-	public final static String SERVER_URL_JSON= "http://10.108.107.92:8080/uploadFile/fileServlet";
+	public final static String SERVER_URL_JSON= "http://10.108.109.124:8080/uploadFile/fileServlet";
 	//public final static String TEST_SERVER_URL_FILE = "http://10.108.108.11/upload11.php";
-	public final static String SERVER_URL_FILE= "http://10.108.107.92:8080/uploadFile/fileServlet";
-	public final static String SERVER_URL= "http://10.108.107.92:8080/uploadFile/fileServlet";
+	public final static String SERVER_URL_FILE= "http://10.108.109.124:8080/uploadFile/fileServlet";
+	public final static String SERVER_URL= "http://10.108.109.124:8080/uploadFile/fileServlet";
+	
+	// Download URL
+	public final static String SERVER_PHOTO_WALL_URL = "http://10.108.109.124:8080/queryDB/getPhotoServlet";
 	
 	// database
 	public final static boolean DATABASE_SDCARD_SAVE = true;

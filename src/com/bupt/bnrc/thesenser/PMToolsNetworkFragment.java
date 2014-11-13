@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bupt.bnrc.thesenser.utils.CommonDefinition;
 import com.bupt.bnrc.thesenser.utils.DataCache;
 import com.bupt.bnrc.thesenser.utils.JSON;
 import com.bupt.bnrc.thesenser.utils.Logger;
@@ -138,7 +139,7 @@ public class PMToolsNetworkFragment extends Fragment {
 				// String tempSendStr =
 				// "{\"request_type\":\"photo_list\",\"request_maxnum\":\"50\",\"begin_time\":\"2010-12-26 03:36:25\"}";
 				responseObject = Upload.Uploading(
-						"http://10.108.107.92:8080/queryDB/getPhotoServlet",
+						CommonDefinition.SERVER_PHOTO_WALL_URL,
 						JSON.photoListRequestToJson(60));
 				// responseObject =
 				// Upload.Uploading("http://10.108.107.92:8080/queryDB/getPhotoServlet",
