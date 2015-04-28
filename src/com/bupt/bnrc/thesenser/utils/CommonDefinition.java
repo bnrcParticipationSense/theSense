@@ -4,7 +4,7 @@ public class CommonDefinition {
 	
 	// Collection
 	public static boolean AUTO_COLLECTION = true;
-	public final static int COLLECTION_SPACE_TIME = 1000*60*60;  //1800000
+	public final static int COLLECTION_SPACE_TIME = 1000*60*60*3;  //1800000
 	
 	//Upload URL
 	public final static String SERVER_URL_ROOT = "http://10.108.109.124:8080/";

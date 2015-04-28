@@ -9,9 +9,29 @@
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:text="设置界面"/>
-	<Switch 
-	    android:layout_width="match_parent"
+
+	<TextView
+	    android:id="@+id/textView1"
+	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:textOn="开"
-	    android:textOff="关"/>
+	    android:text="当前场景：Home" />
+	
+	<Button
+        android:id="@+id/button1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView2"
+        android:text="关闭场景推测                            " />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_below="@+id/button1"
+        android:text="开启场景推测                            " />
+
+    
+	
 </LinearLayout>
